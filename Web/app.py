@@ -167,6 +167,20 @@ def checkpoint1_js(filename):
     static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio', 'js', 'checkpoint1')
     return send_from_directory(static_dir, filename)
 
+# =============== RUTAS PARA CHECKPOINT2 ===============
+@app.route('/static/Portfolio/css/checkpoint2/<path:filename>')
+def checkpoint2_css(filename):
+    """Servir CSS de Checkpoint 2"""
+    static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio', 'css', 'checkpoint2')
+    return send_from_directory(static_dir, filename)
+
+@app.route('/static/Portfolio/js/checkpoint2/<path:filename>')
+def checkpoint2_js(filename):
+    """Servir JS de Checkpoint 2"""
+    static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio', 'js', 'checkpoint2')
+    return send_from_directory(static_dir, filename)
+
+
 # Ejecutar la aplicación solo si este archivo se ejecuta directamente
 if __name__ == '__main__':
     print("\n=== FLASK INICIADO CORRECTAMENTE ===")

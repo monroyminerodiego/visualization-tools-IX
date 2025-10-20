@@ -1,6 +1,6 @@
 /**
  * ═══════════════════════════════════════════════════════════════════
- * CRYPTOCURRENCY ANALYTICS DASHBOARD - APPLE STYLE
+ * GLOBAL MARKET ANALYTICS DASHBOARD - APPLE STYLE
  * ═══════════════════════════════════════════════════════════════════
  */
 
@@ -107,6 +107,7 @@ body {
 .back-button i {
     font-size: 18px;
 }
+
 /* ═══════════════════════════════════════════════════════════════════
    HEADER
    ═══════════════════════════════════════════════════════════════════ */
@@ -264,97 +265,18 @@ body {
     font-weight: 600;
 }
 
-.chart-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-    gap: 24px;
-    margin-bottom: 24px;
-}
-
-@media (max-width: 1100px) {
-    .chart-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 /* ═══════════════════════════════════════════════════════════════════
    CHART DIMENSIONS
    ═══════════════════════════════════════════════════════════════════ */
 
-#world-map-chart {
-    width: 100%;
-    height: 500px;
-    overflow: hidden;
-    position: relative;
-}
-
-#top-countries-chart,
-#regional-distribution-chart,
-#volatility-comparison-chart,
-#correlation-chart,
+#treemap-chart,
 #scatter-chart,
-#regime-chart,
-#acf-chart,
-#returns-vol-chart,
-#scatter-vol-chart {
+#matrix-chart,
+#sunburst-chart {
     width: 100%;
-    height: 400px;
+    height: 600px;
     overflow: hidden;
     position: relative;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   SELECTORS - Apple Style
-   ═══════════════════════════════════════════════════════════════════ */
-
-.selector-container {
-    margin-bottom: 24px;
-    padding: 18px;
-    background: var(--apple-gray-light);
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    border: 1px solid var(--apple-gray);
-}
-
-.selector-container label {
-    font-weight: 500;
-    color: var(--apple-text);
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.selector-container label i {
-    font-size: 18px;
-    color: var(--apple-blue);
-}
-
-.selector-container select {
-    padding: 10px 16px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--apple-gray);
-    font-size: 15px;
-    cursor: pointer;
-    background: var(--apple-white);
-    color: var(--apple-text);
-    transition: all var(--transition);
-    min-width: 200px;
-    font-weight: 500;
-}
-
-.selector-container select:hover {
-    border-color: var(--apple-blue);
-    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
-}
-
-.selector-container select:focus {
-    outline: none;
-    border-color: var(--apple-blue);
-    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -362,18 +284,18 @@ body {
    ═══════════════════════════════════════════════════════════════════ */
 
 .tooltip {
-    position: fixed;  /* ← Debe ser fixed, NO absolute */
+    position: fixed;
     background: rgba(0, 0, 0, 0.92);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     color: white;
     padding: 12px 16px;
     border-radius: var(--radius-sm);
-    pointer-events: none;  /* ← Importante para que no interfiera */
+    pointer-events: none;
     opacity: 0;
     transition: opacity var(--transition);
     font-size: 14px;
-    z-index: 10000;  /* ← Debe estar muy arriba */
+    z-index: 10000;
     box-shadow: var(--shadow-lg);
     max-width: 300px;
     line-height: 1.5;
@@ -384,50 +306,6 @@ body {
     margin-bottom: 6px;
     font-size: 15px;
     font-weight: 600;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   SVG & D3 STYLES
-   ═══════════════════════════════════════════════════════════════════ */
-
-svg {
-    display: block;
-    max-width: 100%;
-    height: auto;
-}
-
-.axis path,
-.axis line {
-    stroke: var(--apple-gray);
-    stroke-width: 1;
-}
-
-.axis text {
-    font-size: 12px;
-    fill: var(--apple-text-secondary);
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-}
-
-.grid line {
-    stroke: var(--apple-gray);
-    stroke-opacity: 0.5;
-    shape-rendering: crispEdges;
-}
-
-.grid path {
-    stroke-width: 0;
-}
-
-.country {
-    stroke: var(--apple-white);
-    stroke-width: 0.5;
-    transition: all var(--transition);
-}
-
-.country:hover {
-    stroke: var(--apple-blue);
-    stroke-width: 2;
-    filter: brightness(1.1);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -460,8 +338,6 @@ svg {
     }
     
     .back-button {
-        top: 10px;
-        left: 10px;
         padding: 8px 14px;
         font-size: 14px;
     }
@@ -507,29 +383,11 @@ svg {
         padding: 12px;
     }
     
-    .selector-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .selector-container select {
-        width: 100%;
-    }
-    
-    #world-map-chart {
-        height: 400px;
-    }
-    
-    #top-countries-chart,
-    #regional-distribution-chart,
-    #volatility-comparison-chart,
-    #correlation-chart,
+    #treemap-chart,
     #scatter-chart,
-    #regime-chart,
-    #acf-chart,
-    #returns-vol-chart,
-    #scatter-vol-chart {
-        height: 350px;
+    #matrix-chart,
+    #sunburst-chart {
+        height: 450px;
     }
 }
 
@@ -549,20 +407,11 @@ svg {
         padding: 14px 20px;
     }
     
-    #world-map-chart {
-        height: 350px;
-    }
-    
-    #top-countries-chart,
-    #regional-distribution-chart,
-    #volatility-comparison-chart,
-    #correlation-chart,
+    #treemap-chart,
     #scatter-chart,
-    #regime-chart,
-    #acf-chart,
-    #returns-vol-chart,
-    #scatter-vol-chart {
-        height: 300px;
+    #matrix-chart,
+    #sunburst-chart {
+        height: 400px;
     }
 }
 
