@@ -445,7 +445,7 @@ function drawScatterPlot() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 7. MATRIX COMPARISON - 4 METRICS
+// 7. MATRIX COMPARISON - 4 METRICS (CORREGIDO COMPLETAMENTE)
 // ═══════════════════════════════════════════════════════════════════
 
 function drawMatrixComparison() {
@@ -483,6 +483,7 @@ function drawMatrixComparison() {
         marker: { color: colors, opacity: 0.85 },
         text: regionMetrics.map(r => `$${r.totalGDP.toFixed(0)}B`),
         textposition: 'outside',
+        textfont: { size: 9 },
         hovertemplate: '<b>%{x}</b><br>Total GDP: $%{y:.0f}B<extra></extra>',
         xaxis: 'x1',
         yaxis: 'y1'
@@ -497,6 +498,7 @@ function drawMatrixComparison() {
         marker: { color: colors, opacity: 0.85 },
         text: regionMetrics.map(r => `$${(r.avgGdpPerCapita/1000).toFixed(1)}K`),
         textposition: 'outside',
+        textfont: { size: 9 },
         hovertemplate: '<b>%{x}</b><br>GDP per Capita: $%{y:,.0f}<extra></extra>',
         xaxis: 'x2',
         yaxis: 'y2'
@@ -511,6 +513,7 @@ function drawMatrixComparison() {
         marker: { color: colors, opacity: 0.85 },
         text: regionMetrics.map(r => r.numCountries),
         textposition: 'outside',
+        textfont: { size: 9 },
         hovertemplate: '<b>%{x}</b><br>Countries: %{y}<extra></extra>',
         xaxis: 'x3',
         yaxis: 'y3'
@@ -525,6 +528,7 @@ function drawMatrixComparison() {
         marker: { color: colors, opacity: 0.85 },
         text: regionMetrics.map(r => `${(r.totalPop/1000000).toFixed(0)}M`),
         textposition: 'outside',
+        textfont: { size: 9 },
         hovertemplate: '<b>%{x}</b><br>Population: %{y:.0f}M<extra></extra>',
         xaxis: 'x4',
         yaxis: 'y4'
@@ -544,73 +548,101 @@ function drawMatrixComparison() {
             columns: 2,
             pattern: 'independent',
             roworder: 'top to bottom',
-            xgap: 0.12,
-            ygap: 0.12
+            xgap: 0.18,
+            ygap: 0.25
         },
         showlegend: false,
         
-        // Subplot 1: Total GDP
+        // Subplot 1: Total GDP (top-left)
         xaxis1: { 
-            title: '<b>Total GDP</b><br><i>(Market Capacity)</i>',
-            titlefont: { size: 11, color: '#64748b' },
-            tickangle: -45,
-            domain: [0, 0.44],
-            showgrid: false
+            title: {
+                text: '<b>Total GDP</b><br><i>(Market Capacity)</i>',
+                font: { size: 10, color: '#64748b' }
+            },
+            tickangle: 0,
+            tickfont: { size: 8 },
+            domain: [0, 0.41],
+            showgrid: false,
+            automargin: true
         },
         yaxis1: { 
-            title: 'Billions USD',
-            titlefont: { size: 10 },
-            domain: [0.56, 1],
-            gridcolor: '#e2e8f0'
+            title: {
+                text: 'Billions USD',
+                font: { size: 9 }
+            },
+            domain: [0.62, 1],
+            gridcolor: '#e2e8f0',
+            tickfont: { size: 8 }
         },
         
-        // Subplot 2: GDP per Capita
+        // Subplot 2: GDP per Capita (top-right)
         xaxis2: { 
-            title: '<b>GDP per Capita</b><br><i>(Purchasing Power)</i>',
-            titlefont: { size: 11, color: '#64748b' },
-            tickangle: -45,
-            domain: [0.56, 1],
-            showgrid: false
+            title: {
+                text: '<b>GDP per Capita</b><br><i>(Purchasing Power)</i>',
+                font: { size: 10, color: '#64748b' }
+            },
+            tickangle: 0,
+            tickfont: { size: 8 },
+            domain: [0.59, 1],
+            showgrid: false,
+            automargin: true
         },
         yaxis2: { 
-            title: 'USD per Capita',
-            titlefont: { size: 10 },
-            domain: [0.56, 1],
-            gridcolor: '#e2e8f0'
+            title: {
+                text: 'USD per Capita',
+                font: { size: 9 }
+            },
+            domain: [0.62, 1],
+            gridcolor: '#e2e8f0',
+            tickfont: { size: 8 }
         },
         
-        // Subplot 3: Number of Countries
+        // Subplot 3: Number of Countries (bottom-left)
         xaxis3: { 
-            title: '<b>Number of Countries</b><br><i>(Diversification)</i>',
-            titlefont: { size: 11, color: '#64748b' },
-            tickangle: -45,
-            domain: [0, 0.44],
-            showgrid: false
+            title: {
+                text: '<b>Number of Countries</b><br><i>(Diversification)</i>',
+                font: { size: 10, color: '#64748b' }
+            },
+            tickangle: 0,
+            tickfont: { size: 8 },
+            domain: [0, 0.41],
+            showgrid: false,
+            automargin: true
         },
         yaxis3: { 
-            title: 'Country Count',
-            titlefont: { size: 10 },
-            domain: [0, 0.44],
-            gridcolor: '#e2e8f0'
+            title: {
+                text: 'Country Count',
+                font: { size: 9 }
+            },
+            domain: [0, 0.38],
+            gridcolor: '#e2e8f0',
+            tickfont: { size: 8 }
         },
         
-        // Subplot 4: Population
+        // Subplot 4: Population (bottom-right)
         xaxis4: { 
-            title: '<b>Total Population</b><br><i>(Workforce)</i>',
-            titlefont: { size: 11, color: '#64748b' },
-            tickangle: -45,
-            domain: [0.56, 1],
-            showgrid: false
+            title: {
+                text: '<b>Total Population</b><br><i>(Workforce)</i>',
+                font: { size: 10, color: '#64748b' }
+            },
+            tickangle: 0,
+            tickfont: { size: 8 },
+            domain: [0.59, 1],
+            showgrid: false,
+            automargin: true
         },
         yaxis4: { 
-            title: 'Millions',
-            titlefont: { size: 10 },
-            domain: [0, 0.44],
-            gridcolor: '#e2e8f0'
+            title: {
+                text: 'Millions',
+                font: { size: 9 }
+            },
+            domain: [0, 0.38],
+            gridcolor: '#e2e8f0',
+            tickfont: { size: 8 }
         },
         
-        margin: { t: 100, r: 40, b: 120, l: 80 },
-        height: 700
+        margin: { t: 100, r: 50, b: 160, l: 80 },
+        height: 850
     };
     
     Plotly.newPlot(container, traces, layout, plotlyConfig);

@@ -345,17 +345,24 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   CHART DIMENSIONS
+   CHART DIMENSIONS - ACTUALIZADO PARA MATRIZ
    ═══════════════════════════════════════════════════════════════════ */
 
 #treemap-chart,
 #scatter-chart,
-#matrix-chart,
 #sunburst-chart {
     width: 100%;
     height: 600px;
     overflow: visible;
     position: relative;
+}
+
+#matrix-chart {
+    width: 100%;
+    height: 850px;
+    overflow: visible;
+    position: relative;
+    min-height: 850px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -508,9 +515,13 @@ body {
     
     #treemap-chart,
     #scatter-chart,
-    #matrix-chart,
     #sunburst-chart {
         height: 450px;
+    }
+    
+    #matrix-chart {
+        height: 900px;
+        min-height: 900px;
     }
 }
 
@@ -536,9 +547,13 @@ body {
     
     #treemap-chart,
     #scatter-chart,
-    #matrix-chart,
     #sunburst-chart {
         height: 400px;
+    }
+    
+    #matrix-chart {
+        height: 950px;
+        min-height: 950px;
     }
 }
 
