@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Market Analytics Dashboard</title>
+    <title>Terra Cotta Foods - Global Market Analytics</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
@@ -12,36 +12,518 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.26.0/plotly.min.js"></script>
     
     <!-- Tabler Icons -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" as="style">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     
-    <!-- CSS -->
-    <link rel="stylesheet" href="../../../static/Portfolio/css/checkpoint2/main.css">
+    <style>
+        /**
+         * ═══════════════════════════════════════════════════════════════════
+         * TERRA COTTA FOODS - GLOBAL MARKET ANALYTICS DASHBOARD
+         * Diseño optimizado para análisis ejecutivo
+         * ═══════════════════════════════════════════════════════════════════
+         */
+
+        /* RESET & VARIABLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* TCF Brand Colors */
+            --tcf-primary: #667eea;
+            --tcf-primary-dark: #5568d3;
+            --tcf-secondary: #764ba2;
+            --tcf-accent: #f093fb;
+            
+            /* Apple-inspired Base Colors */
+            --apple-bg: #F5F5F7;
+            --apple-white: #FFFFFF;
+            --apple-gray-light: #F9F9F9;
+            --apple-gray: #E5E5EA;
+            --apple-gray-dark: #8E8E93;
+            --apple-text: #1e293b;
+            --apple-text-secondary: #64748b;
+            
+            /* Region Colors */
+            --color-asia: #10b981;
+            --color-namerica: #667eea;
+            --color-europe: #f59e0b;
+            --color-latam: #ec4899;
+            --color-mea: #8b5cf6;
+            
+            /* Shadows - Apple Style */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            
+            /* Transitions */
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* BASE STYLES */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--apple-bg);
+            color: var(--apple-text);
+            padding: 20px;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .dashboard {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: var(--apple-white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, var(--tcf-primary) 0%, var(--tcf-secondary) 100%);
+            color: white;
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: 100px;
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+        }
+
+        .header .tagline {
+            font-size: 0.95em;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        /* BACK BUTTON */
+        .back-button {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            color: white;
+            transition: all var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .back-button:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* KPI CARDS */
+        .kpi-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: var(--apple-gray-light);
+            border-bottom: 1px solid var(--apple-gray);
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+            border: 1px solid var(--apple-gray);
+        }
+
+        .kpi-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .kpi-label {
+            font-size: 0.85em;
+            color: var(--apple-text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--tcf-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .kpi-icon {
+            font-size: 32px;
+            opacity: 0.2;
+            float: right;
+            margin-top: -10px;
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            background: var(--apple-gray-light);
+            border-bottom: 1px solid var(--apple-gray);
+            padding: 0;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 18px 28px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--apple-text-secondary);
+            transition: all var(--transition);
+            position: relative;
+            min-width: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tab-button i {
+            font-size: 20px;
+        }
+
+        .tab-button:hover {
+            background: rgba(102, 126, 234, 0.05);
+            color: var(--tcf-primary);
+        }
+
+        .tab-button.active {
+            color: var(--tcf-primary);
+            background: var(--apple-white);
+            border-bottom-color: var(--tcf-primary);
+            font-weight: 600;
+        }
+
+        /* TAB CONTENT */
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CHART CONTAINERS */
+        .chart-container {
+            background: var(--apple-white);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            margin-bottom: 30px;
+            border: 1px solid var(--apple-gray);
+            transition: all var(--transition);
+            overflow: hidden;
+        }
+
+        .chart-container:hover {
+            border-color: var(--apple-gray-dark);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .chart-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--apple-text);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .chart-title i {
+            font-size: 28px;
+            color: var(--tcf-primary);
+        }
+
+        .chart-description {
+            font-size: 0.95em;
+            color: var(--apple-text-secondary);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border-left: 4px solid var(--tcf-primary);
+            border-radius: var(--radius-sm);
+        }
+
+        .chart-description strong {
+            color: var(--apple-text);
+            font-weight: 600;
+        }
+
+        /* CHART DIMENSIONS */
+        #treemap-chart,
+        #scatter-chart,
+        #matrix-chart,
+        #sunburst-chart {
+            width: 100%;
+            height: 600px;
+            overflow: visible;
+            position: relative;
+        }
+
+        /* RECOMMENDATIONS TABLE */
+        #recommendations-table {
+            margin-top: 20px;
+        }
+
+        /* LOADING STATE */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--apple-gray);
+            border-top-color: var(--tcf-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .dashboard {
+                border-radius: 0;
+            }
+
+            body {
+                padding: 0;
+            }
+
+            .kpi-section {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .tab-content {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 32px 24px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header .subtitle {
+                font-size: 1em;
+            }
+
+            .kpi-section {
+                grid-template-columns: 1fr;
+            }
+
+            .kpi-value {
+                font-size: 1.8em;
+            }
+
+            .tab-button {
+                padding: 14px 18px;
+                font-size: 14px;
+                min-width: 140px;
+            }
+
+            .tab-content {
+                padding: 20px 15px;
+            }
+
+            .chart-container {
+                padding: 20px;
+            }
+
+            .chart-title {
+                font-size: 1.2em;
+            }
+
+            #treemap-chart,
+            #scatter-chart,
+            #matrix-chart,
+            #sunburst-chart {
+                height: 450px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                width: 100%;
+                justify-content: flex-start;
+                padding: 16px 24px;
+            }
+
+            #treemap-chart,
+            #scatter-chart,
+            #matrix-chart,
+            #sunburst-chart {
+                height: 400px;
+            }
+        }
+
+        /* UTILITIES */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+    </style>
 </head>
 <body>
 
     <div class="dashboard">
         <!-- Header -->
         <div class="header">
-            <h1>Global Market Analytics</h1>
-            <p>Strategic Insights for Market Expansion</p>
-            
-            <!-- Back Button -->
-            <button class="back-button" onclick="window.history.back()">
-                <i class="ti ti-arrow-left"></i>
-                <span>Back</span>
-            </button>
+            <div class="header-content">
+                <h1>🌍 Terra Cotta Foods</h1>
+                <p class="subtitle">Global Market Expansion Analytics</p>
+                <p class="tagline">Análisis Jerárquico de Viabilidad de Mercados • Dashboard Ejecutivo para Marco Antonelli</p>
+                
+                <!-- Back Button -->
+                <button class="back-button" onclick="window.history.back()">
+                    <i class="ti ti-arrow-left"></i>
+                    <span>Volver</span>
+                </button>
+            </div>
         </div>
 
-        <!-- Tab System - Only 2 Tabs -->
+        <!-- KPI Cards Section -->
+        <div class="kpi-section">
+            <div class="kpi-card">
+                <i class="ti ti-world kpi-icon"></i>
+                <div class="kpi-label">PIB Global Total</div>
+                <div class="kpi-value" id="total-gdp">$0.0T</div>
+            </div>
+            <div class="kpi-card">
+                <i class="ti ti-trending-up kpi-icon"></i>
+                <div class="kpi-label">Concentración Top 5</div>
+                <div class="kpi-value" id="top5-concentration">0%</div>
+            </div>
+            <div class="kpi-card">
+                <i class="ti ti-map-pin kpi-icon"></i>
+                <div class="kpi-label">Regiones Cubiertas</div>
+                <div class="kpi-value" id="regions-covered">0</div>
+            </div>
+            <div class="kpi-card">
+                <i class="ti ti-users kpi-icon"></i>
+                <div class="kpi-label">Población Total</div>
+                <div class="kpi-value" id="total-population">0B</div>
+            </div>
+        </div>
+
+        <!-- Tab System -->
         <div class="tabs">
-            <button class="tab-button active" data-tab="market-overview" onclick="changeTab('market-overview')">
+            <button class="tab-button active" onclick="changeTab('market-overview')">
                 <i class="ti ti-hierarchy-2"></i>
-                <span>Market Overview</span>
+                <span>Panorama de Mercado</span>
             </button>
-            <button class="tab-button" data-tab="regional-analysis" onclick="changeTab('regional-analysis')">
-                <i class="ti ti-world"></i>
-                <span>Regional Analysis</span>
+            <button class="tab-button" onclick="changeTab('regional-analysis')">
+                <i class="ti ti-chart-pie"></i>
+                <span>Análisis Regional</span>
+            </button>
+            <button class="tab-button" onclick="changeTab('strategic-insights')">
+                <i class="ti ti-bulb"></i>
+                <span>Recomendaciones</span>
             </button>
         </div>
 
@@ -52,12 +534,13 @@
             <div class="chart-container">
                 <div class="chart-title">
                     <i class="ti ti-hierarchy"></i>
-                    Hierarchical Market Treemap
+                    Jerarquía de Capacidad de Compra
                 </div>
                 <div class="chart-description">
-                    Interactive <strong>drill-down visualization</strong> showing Region → Country hierarchy. 
-                    <strong>Size</strong> represents Total GDP (market capacity), while <strong>color intensity</strong> 
-                    indicates GDP per capita (purchasing power). Click on any region to explore individual countries.
+                    <strong>Visualización jerárquica interactiva</strong> mostrando la estructura Global → Región → País. 
+                    El <strong>tamaño</strong> representa el PIB Total (capacidad de mercado), que es el indicador clave para 
+                    decisiones de inversión en centros de distribución. 
+                    <strong>Haz clic en cualquier región</strong> para explorar los países individuales.
                 </div>
                 <div id="treemap-chart"></div>
             </div>
@@ -66,12 +549,13 @@
             <div class="chart-container">
                 <div class="chart-title">
                     <i class="ti ti-chart-dots"></i>
-                    Population vs. GDP per Capita Analysis
+                    Matriz de Viabilidad: Población vs Poder Adquisitivo
                 </div>
                 <div class="chart-description">
-                    <strong>Bubble chart</strong> revealing the relationship between workforce size (X-axis: Population) 
-                    and purchasing power (Y-axis: GDP per capita). <strong>Bubble size</strong> represents Total GDP. 
-                    Hover over bubbles to see detailed country metrics.
+                    <strong>Análisis de correlación</strong> que revela la relación entre el tamaño de la fuerza laboral 
+                    (Eje X: Población en escala logarítmica) y el poder adquisitivo individual (Eje Y: PIB per cápita). 
+                    El <strong>tamaño de la burbuja</strong> representa el PIB Total. Esta visualización responde directamente 
+                    la pregunta: <em>¿Dónde hay suficiente población para manufactura con viabilidad económica?</em>
                 </div>
                 <div id="scatter-chart"></div>
             </div>
@@ -83,13 +567,14 @@
             <!-- Matrix Comparison Container -->
             <div class="chart-container">
                 <div class="chart-title">
-                    <i class="ti ti-table"></i>
-                    Regional Comparison Matrix
+                    <i class="ti ti-layout-grid"></i>
+                    Comparación Regional Multi-Dimensional
                 </div>
                 <div class="chart-description">
-                    Comprehensive <strong>4-metric dashboard</strong> comparing regions across key dimensions: 
-                    Total GDP, Average GDP per Capita, Number of Countries, and Total Population. 
-                    This multi-dimensional view helps prioritize regional strategies.
+                    <strong>Dashboard de 4 métricas</strong> que compara regiones según dimensiones estratégicas clave: 
+                    <strong>PIB Total</strong> (capacidad de mercado), <strong>PIB per Cápita Promedio</strong> (poder adquisitivo), 
+                    <strong>Número de Países</strong> (diversificación de riesgo), y <strong>Población Total</strong> (fuerza laboral disponible). 
+                    Esta vista multi-dimensional permite justificar decisiones de "¿por qué Región X sobre Región Y?"
                 </div>
                 <div id="matrix-chart"></div>
             </div>
@@ -98,22 +583,35 @@
             <div class="chart-container">
                 <div class="chart-title">
                     <i class="ti ti-sun"></i>
-                    Market Share Sunburst
+                    Estructura Proporcional de Mercados
                 </div>
                 <div class="chart-description">
-                    <strong>Hierarchical sunburst</strong> showing the proportional contribution of each market. 
-                    Inner ring represents regions, outer ring shows individual countries. 
-                    Click on segments to zoom in and explore market composition.
+                    <strong>Gráfica sunburst jerárquica</strong> que muestra la contribución proporcional de cada mercado al total global. 
+                    El <strong>anillo interior</strong> representa las regiones, el <strong>anillo exterior</strong> muestra los países individuales. 
+                    Haz clic en los segmentos para hacer zoom y explorar la composición detallada del mercado.
                 </div>
                 <div id="sunburst-chart"></div>
             </div>
         </div>
+
+        <!-- Tab 3: Strategic Insights -->
+        <div id="strategic-insights" class="tab-content">
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-bulb"></i>
+                    Recomendaciones Estratégicas para Expansión
+                </div>
+                <div class="chart-description">
+                    <strong>Análisis ejecutivo</strong> con los principales mercados prioritarios y 
+                    recomendaciones accionables para la estrategia de expansión de Terra Cotta Foods en 
+                    América Latina y Asia Pacific.
+                </div>
+                <div id="recommendations-table"></div>
+            </div>
+        </div>
     </div>
 
-    <!-- Global Tooltip (for compatibility) -->
-    <div class="tooltip" id="tooltip"></div>
-
-    <!-- JavaScript -->
+    <!-- JavaScript - RUTA ORIGINAL -->
     <script src="../../../static/Portfolio/js/checkpoint2/main.js"></script>
 </body>
 </html>
