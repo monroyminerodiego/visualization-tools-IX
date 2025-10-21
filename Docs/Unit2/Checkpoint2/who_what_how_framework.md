@@ -3,7 +3,7 @@
 
 ---
 
-## WHO: Target Audience
+## WHO:
 
 ### Primary Decision-Maker
 **Marco Antonelli** - CEO, Terra Cotta Foods (TCF)
@@ -27,7 +27,7 @@
 
 ---
 
-## WHAT: Key Actions & Decisions
+## WHAT:
 
 ### Critical Questions Marco Needs Answered:
 
@@ -44,7 +44,7 @@
 
 ---
 
-## HOW: Data Strategy & Visualization Approach
+## HOW: 
 
 ### Core Data Framework
 **3-Layer Analysis:**
@@ -65,7 +65,7 @@
 - Show absolute values ($B USD) and percentages simultaneously
 - Highlight Top 10 countries with contrasting colors
 
-#### 3. Horizontal Bar Charts (Not Pie!)
+#### 3. Horizontal Bar Charts
 - For regional comparisons and country rankings
 - Enable quick scanning and comparison
 - Sort by descending value for instant prioritization
@@ -119,4 +119,44 @@
 - Rectangle size = Total GDP (market capacity)
 - Color = Regional identification (consistent across all visualizations)
 - Interactive drill-down (click regions to explore countries)
-- Grouping strategy: Countries with GDP < $100B grouped as "Other [Region]" Labels: Direct labels on rectangles with GDP values Design Rationale: Matches Marco's hierarchical thinking: "Region first,
+- Grouping strategy: Countries with GDP < $100B grouped as "Other [Region]"
+**Labels:** Direct labels on rectangles with GDP values
+**Design Rationale:** Matches Marco's hierarchical thinking: "Region first, then country details"
+
+### Chart 2: Scatter Plot - Viability Matrix (Top 10 Countries Only)
+**Purpose:** Validate population-GDP correlation for supply chain decisions  
+**Key Feature:** 
+- X-axis = Population (log scale) - workforce availability
+- Y-axis = GDP per capita - purchasing power
+- Bubble size = Total GDP - market size
+- Top 10 markets only (reduces clutter, focuses on actionable targets)
+- Country codes (3-letter) displayed on bubbles for quick identification
+**Insight Callout:** "Strong correlation (0.80-0.98) validates workforce = opportunity hypothesis"
+**Design Rationale:** Answers Marco's specific question about population-economic potential correlation
+
+### Chart 3: Matrix Comparison (2×2 Grid of Bar Charts)
+**Purpose:** Multi-dimensional regional comparison across 4 strategic metrics  
+**Key Feature:** 
+- Small multiples layout (4 independent bar charts)
+- Metrics: Total GDP, GDP per Capita, Number of Countries, Total Population
+- Same regional colors across all 4 charts
+- Direct value labels on bars
+**Design Rationale:** Enables "Region X vs. Y" comparison across multiple decision factors simultaneously
+
+### Chart 4: Sunburst Chart
+**Purpose:** Show hierarchical proportions in visually engaging format  
+**Key Feature:** 
+- Inner ring = Regions
+- Outer ring = Countries (GDP < $100B grouped)
+- Wedge size = GDP proportion
+- Click-to-zoom interaction
+**Design Rationale:** Complements treemap by emphasizing "part-of-whole" relationships instead of absolute sizes
+
+### Chart 5: Top 10 Recommendations Table
+**Purpose:** Translate data into actionable priorities  
+**Key Feature:** 
+- Ranked list with 7 columns (Rank, Country, Region, Total GDP, GDP per Capita, Population, Strategic Recommendation)
+- Color-coded region badges
+- Icon-based recommendation categories (🌟 Giant Market, 💎 Premium, 👥 Volume, etc.)
+- Strategic Insights box below with 5 key takeaways
+**Design Rationale:** Provides the "so what?" - clear actions Marco can assign to his team
