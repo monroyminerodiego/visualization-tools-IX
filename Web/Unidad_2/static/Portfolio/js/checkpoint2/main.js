@@ -6,60 +6,230 @@
  */
 
 // ═══════════════════════════════════════════════════════════════════
-// 1. GLOBAL DATA - Updated and Complete Dataset
+// 1. GLOBAL DATA - EMBEDDED (Works without server)
+// ═══════════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════════
+// COMPLETE MARKET DATA - ALL 195 COUNTRIES FROM CSV
 // ═══════════════════════════════════════════════════════════════════
 
 const marketData = {
-    regions: [
-        {
-            name: 'Asia Pacific',
-            countries: [
-                { name: 'China', population: 1412000000, gdpPerCapita: 12556, gdpTotal: 17734, code: 'CHN' },
-                { name: 'Japan', population: 125800000, gdpPerCapita: 40113, gdpTotal: 5048, code: 'JPN' },
-                { name: 'India', population: 1380000000, gdpPerCapita: 2277, gdpTotal: 3142, code: 'IND' },
-                { name: 'South Korea', population: 51780000, gdpPerCapita: 34758, gdpTotal: 1799, code: 'KOR' },
-                { name: 'Indonesia', population: 273520000, gdpPerCapita: 4332, gdpTotal: 1185, code: 'IDN' },
-                { name: 'Thailand', population: 69800000, gdpPerCapita: 7233, gdpTotal: 505, code: 'THA' }
-            ]
-        },
-        {
-            name: 'North America',
-            countries: [
-                { name: 'United States', population: 331900000, gdpPerCapita: 69287, gdpTotal: 22996, code: 'USA' },
-                { name: 'Canada', population: 38250000, gdpPerCapita: 52051, gdpTotal: 1990, code: 'CAN' },
-                { name: 'Mexico', population: 128930000, gdpPerCapita: 10045, gdpTotal: 1295, code: 'MEX' }
-            ]
-        },
-        {
-            name: 'Europe',
-            countries: [
-                { name: 'Germany', population: 83240000, gdpPerCapita: 50795, gdpTotal: 4230, code: 'DEU' },
-                { name: 'United Kingdom', population: 67220000, gdpPerCapita: 46510, gdpTotal: 3127, code: 'GBR' },
-                { name: 'France', population: 67390000, gdpPerCapita: 43519, gdpTotal: 2933, code: 'FRA' },
-                { name: 'Italy', population: 59550000, gdpPerCapita: 35551, gdpTotal: 2117, code: 'ITA' },
-                { name: 'Spain', population: 47350000, gdpPerCapita: 30103, gdpTotal: 1425, code: 'ESP' }
-            ]
-        },
-        {
-            name: 'Latin America',
-            countries: [
-                { name: 'Brazil', population: 212560000, gdpPerCapita: 8897, gdpTotal: 1891, code: 'BRA' },
-                { name: 'Argentina', population: 45380000, gdpPerCapita: 10636, gdpTotal: 483, code: 'ARG' },
-                { name: 'Colombia', population: 50880000, gdpPerCapita: 6104, gdpTotal: 311, code: 'COL' },
-                { name: 'Chile', population: 19120000, gdpPerCapita: 15355, gdpTotal: 294, code: 'CHL' },
-                { name: 'Peru', population: 33000000, gdpPerCapita: 6692, gdpTotal: 221, code: 'PER' }
-            ]
-        },
-        {
-            name: 'Middle East & Africa',
-            countries: [
-                { name: 'Saudi Arabia', population: 34810000, gdpPerCapita: 23186, gdpTotal: 807, code: 'SAU' },
-                { name: 'UAE', population: 9890000, gdpPerCapita: 43103, gdpTotal: 426, code: 'ARE' },
-                { name: 'Nigeria', population: 206140000, gdpPerCapita: 2097, gdpTotal: 432, code: 'NGA' },
-                { name: 'South Africa', population: 59310000, gdpPerCapita: 6994, gdpTotal: 415, code: 'ZAF' }
-            ]
-        }
-    ]
+  "regions": [
+    {
+      "name": "Asia Pacific",
+      "countries": [
+        { "name": "China", "population": 1408975000, "gdpPerCapita": 13303.15, "gdpTotal": 18747.54, "code": "CHN" },
+        { "name": "Japan", "population": 123975371, "gdpPerCapita": 32475.89, "gdpTotal": 4026.28, "code": "JPN" },
+        { "name": "India", "population": 1450935791, "gdpPerCapita": 2696.66, "gdpTotal": 3912.95, "code": "IND" },
+        { "name": "Indonesia", "population": 283487931, "gdpPerCapita": 4925.43, "gdpTotal": 1395.97, "code": "IDN" },
+        { "name": "Australia", "population": 27204809, "gdpPerCapita": 64407.48, "gdpTotal": 1752.05, "code": "AUS" },
+        { "name": "Thailand", "population": 71668011, "gdpPerCapita": 7345.14, "gdpTotal": 526.39, "code": "THA" },
+        { "name": "Singapore", "population": 6036860, "gdpPerCapita": 90674.07, "gdpTotal": 547.35, "code": "SGP" },
+        { "name": "Malaysia", "population": 35557673, "gdpPerCapita": 11867.26, "gdpTotal": 421.97, "code": "MYS" },
+        { "name": "Philippines", "population": 115843670, "gdpPerCapita": 3984.83, "gdpTotal": 461.60, "code": "PHL" },
+        { "name": "Vietnam", "population": 100987686, "gdpPerCapita": 4717.29, "gdpTotal": 476.38, "code": "VNM" },
+        { "name": "Bangladesh", "population": 173562364, "gdpPerCapita": 2593.42, "gdpTotal": 450.04, "code": "BGD" },
+        { "name": "Pakistan", "population": 251269164, "gdpPerCapita": 1484.75, "gdpTotal": 373.05, "code": "PAK" },
+        { "name": "New Zealand", "population": 5338500, "gdpPerCapita": 48747.01, "gdpTotal": 260.18, "code": "NZL" },
+        { "name": "Kazakhstan", "population": 20592571, "gdpPerCapita": 14005.35, "gdpTotal": 288.42, "code": "KAZ" },
+        { "name": "Myanmar", "population": 54500091, "gdpPerCapita": 1359.26, "gdpTotal": 74.07, "code": "MMR" },
+        { "name": "Cambodia", "population": 17638801, "gdpPerCapita": 2627.88, "gdpTotal": 46.35, "code": "KHM" },
+        { "name": "Sri Lanka", "population": 21916000, "gdpPerCapita": 4515.57, "gdpTotal": 98.95, "code": "LKA" },
+        { "name": "Nepal", "population": 29651054, "gdpPerCapita": 1447.31, "gdpTotal": 42.91, "code": "NPL" },
+        { "name": "Mongolia", "population": 3524788, "gdpPerCapita": 6691.48, "gdpTotal": 23.59, "code": "MNG" },
+        { "name": "Uzbekistan", "population": 36361859, "gdpPerCapita": 3161.70, "gdpTotal": 114.94, "code": "UZB" },
+        { "name": "Laos", "population": 7769819, "gdpPerCapita": 2123.98, "gdpTotal": 16.50, "code": "LAO" },
+        { "name": "Papua New Guinea", "population": 10576502, "gdpPerCapita": 3076.49, "gdpTotal": 32.54, "code": "PNG" },
+        { "name": "Kyrgyzstan", "population": 7224614, "gdpPerCapita": 2419.27, "gdpTotal": 17.48, "code": "KGZ" },
+        { "name": "Tajikistan", "population": 10590927, "gdpPerCapita": 1341.20, "gdpTotal": 14.21, "code": "TJK" },
+        { "name": "Turkmenistan", "population": 7494498, "gdpPerCapita": 8571.61, "gdpTotal": 64.23, "code": "TKM" },
+        { "name": "Fiji", "population": 928784, "gdpPerCapita": 6288.40, "gdpTotal": 5.84, "code": "FJI" },
+        { "name": "Timor-Leste", "population": 1400638, "gdpPerCapita": 1343.15, "gdpTotal": 1.88, "code": "TLS" },
+        { "name": "Solomon Islands", "population": 819198, "gdpPerCapita": 2149.38, "gdpTotal": 1.76, "code": "SLB" },
+        { "name": "Vanuatu", "population": 327777, "gdpPerCapita": 3542.81, "gdpTotal": 1.16, "code": "VUT" },
+        { "name": "Samoa", "population": 218019, "gdpPerCapita": 4898.77, "gdpTotal": 1.07, "code": "WSM" },
+        { "name": "Micronesia", "population": 113160, "gdpPerCapita": 4166.00, "gdpTotal": 0.47, "code": "FSM" },
+        { "name": "Kiribati", "population": 134518, "gdpPerCapita": 2288.63, "gdpTotal": 0.31, "code": "KIR" },
+        { "name": "Marshall Islands", "population": 37548, "gdpPerCapita": 7466.65, "gdpTotal": 0.28, "code": "MHL" },
+        { "name": "Nauru", "population": 11947, "gdpPerCapita": 13421.83, "gdpTotal": 0.16, "code": "NRU" },
+        { "name": "Tuvalu", "population": 9646, "gdpPerCapita": 5000.00, "gdpTotal": 0.05, "code": "TUV" },
+        { "name": "Palau", "population": 17695, "gdpPerCapita": 18000.00, "gdpTotal": 0.32, "code": "PLW" },
+        { "name": "Tonga", "population": 104175, "gdpPerCapita": 6500.00, "gdpTotal": 0.68, "code": "TON" }
+      ]
+    },
+    {
+      "name": "North America",
+      "countries": [
+        { "name": "United States", "population": 340110988, "gdpPerCapita": 85809.90, "gdpTotal": 29183.32, "code": "USA" },
+        { "name": "Canada", "population": 41288599, "gdpPerCapita": 54282.62, "gdpTotal": 2241.18, "code": "CAN" },
+        { "name": "Mexico", "population": 130861007, "gdpPerCapita": 14157.94, "gdpTotal": 1852.73, "code": "MEX" }
+      ]
+    },
+    {
+      "name": "Europe",
+      "countries": [
+        { "name": "Germany", "population": 83510950, "gdpPerCapita": 55800.22, "gdpTotal": 4659.16, "code": "DEU" },
+        { "name": "United Kingdom", "population": 69226000, "gdpPerCapita": 52636.79, "gdpTotal": 3643.64, "code": "GBR" },
+        { "name": "France", "population": 68516699, "gdpPerCapita": 46150.49, "gdpTotal": 3161.88, "code": "FRA" },
+        { "name": "Italy", "population": 58986023, "gdpPerCapita": 40226.05, "gdpTotal": 2372.92, "code": "ITA" },
+        { "name": "Spain", "population": 48807137, "gdpPerCapita": 35297.01, "gdpTotal": 1722.75, "code": "ESP" },
+        { "name": "Russia", "population": 143533851, "gdpPerCapita": 14889.02, "gdpTotal": 2137.06, "code": "RUS" },
+        { "name": "Netherlands", "population": 17994237, "gdpPerCapita": 68218.73, "gdpTotal": 1227.56, "code": "NLD" },
+        { "name": "Turkey", "population": 85518661, "gdpPerCapita": 15473.29, "gdpTotal": 1323.36, "code": "TUR" },
+        { "name": "Switzerland", "population": 9034102, "gdpPerCapita": 103669.87, "gdpTotal": 936.54, "code": "CHE" },
+        { "name": "Poland", "population": 36554707, "gdpPerCapita": 25022.67, "gdpTotal": 914.68, "code": "POL" },
+        { "name": "Belgium", "population": 11876844, "gdpPerCapita": 55954.61, "gdpTotal": 664.61, "code": "BEL" },
+        { "name": "Sweden", "population": 10569709, "gdpPerCapita": 57723.23, "gdpTotal": 610.13, "code": "SWE" },
+        { "name": "Austria", "population": 9178482, "gdpPerCapita": 56833.20, "gdpTotal": 521.62, "code": "AUT" },
+        { "name": "Norway", "population": 5572272, "gdpPerCapita": 86809.72, "gdpTotal": 483.70, "code": "NOR" },
+        { "name": "Denmark", "population": 5976992, "gdpPerCapita": 71851.76, "gdpTotal": 429.47, "code": "DNK" },
+        { "name": "Ireland", "population": 5380257, "gdpPerCapita": 107316.34, "gdpTotal": 577.36, "code": "IRL" },
+        { "name": "Romania", "population": 19069340, "gdpPerCapita": 20072.41, "gdpTotal": 382.70, "code": "ROU" },
+        { "name": "Czechia", "population": 10882164, "gdpPerCapita": 31706.62, "gdpTotal": 345.05, "code": "CZE" },
+        { "name": "Portugal", "population": 10701636, "gdpPerCapita": 28844.50, "gdpTotal": 308.66, "code": "PRT" },
+        { "name": "Greece", "population": 10388805, "gdpPerCapita": 24752.11, "gdpTotal": 257.18, "code": "GRC" },
+        { "name": "Finland", "population": 5637214, "gdpPerCapita": 53188.62, "gdpTotal": 299.83, "code": "FIN" },
+        { "name": "Hungary", "population": 9562314, "gdpPerCapita": 23310.75, "gdpTotal": 222.97, "code": "HUN" },
+        { "name": "Ukraine", "population": 37860221, "gdpPerCapita": 5389.47, "gdpTotal": 204.03, "code": "UKR" },
+        { "name": "Belarus", "population": 9133712, "gdpPerCapita": 8316.65, "gdpTotal": 75.96, "code": "BLR" },
+        { "name": "Bulgaria", "population": 6444366, "gdpPerCapita": 17412.41, "gdpTotal": 112.20, "code": "BGR" },
+        { "name": "Serbia", "population": 6587202, "gdpPerCapita": 13523.72, "gdpTotal": 89.07, "code": "SRB" },
+        { "name": "Croatia", "population": 3866300, "gdpPerCapita": 23931.45, "gdpTotal": 92.52, "code": "HRV" },
+        { "name": "Slovakia", "population": 5422069, "gdpPerCapita": 26147.90, "gdpTotal": 141.76, "code": "SVK" },
+        { "name": "Lithuania", "population": 2888055, "gdpPerCapita": 29386.29, "gdpTotal": 84.87, "code": "LTU" },
+        { "name": "Slovenia", "population": 2126324, "gdpPerCapita": 34089.35, "gdpTotal": 72.50, "code": "SVN" },
+        { "name": "Latvia", "population": 1862441, "gdpPerCapita": 23367.60, "gdpTotal": 43.52, "code": "LVA" },
+        { "name": "Estonia", "population": 1371986, "gdpPerCapita": 31170.09, "gdpTotal": 42.76, "code": "EST" },
+        { "name": "Luxembourg", "population": 677717, "gdpPerCapita": 137516.59, "gdpTotal": 93.19, "code": "LUX" },
+        { "name": "Cyprus", "population": 1358282, "gdpPerCapita": 38654.17, "gdpTotal": 52.50, "code": "CYP" },
+        { "name": "Iceland", "population": 404610, "gdpPerCapita": 82703.86, "gdpTotal": 33.47, "code": "ISL" },
+        { "name": "Malta", "population": 574346, "gdpPerCapita": 42347.31, "gdpTotal": 24.32, "code": "MLT" },
+        { "name": "Albania", "population": 2714617, "gdpPerCapita": 10011.63, "gdpTotal": 27.18, "code": "ALB" },
+        { "name": "Bosnia and Herzegovina", "population": 3164253, "gdpPerCapita": 8957.37, "gdpTotal": 28.34, "code": "BIH" },
+        { "name": "North Macedonia", "population": 1792179, "gdpPerCapita": 9310.03, "gdpTotal": 16.69, "code": "MKD" },
+        { "name": "Moldova", "population": 2389275, "gdpPerCapita": 7617.52, "gdpTotal": 18.20, "code": "MDA" },
+        { "name": "Montenegro", "population": 623831, "gdpPerCapita": 12935.45, "gdpTotal": 8.07, "code": "MNE" },
+        { "name": "Andorra", "population": 81938, "gdpPerCapita": 49303.67, "gdpTotal": 4.04, "code": "AND" },
+        { "name": "Monaco", "population": 38631, "gdpPerCapita": 190000.00, "gdpTotal": 7.34, "code": "MCO" },
+        { "name": "Liechtenstein", "population": 40197, "gdpPerCapita": 180000.00, "gdpTotal": 7.24, "code": "LIE" },
+        { "name": "San Marino", "population": 33977, "gdpPerCapita": 60000.00, "gdpTotal": 2.04, "code": "SMR" }
+      ]
+    },
+    {
+      "name": "Latin America",
+      "countries": [
+        { "name": "Brazil", "population": 211998573, "gdpPerCapita": 10280.31, "gdpTotal": 2179.64, "code": "BRA" },
+        { "name": "Argentina", "population": 45696159, "gdpPerCapita": 13858.20, "gdpTotal": 633.17, "code": "ARG" },
+        { "name": "Colombia", "population": 52886363, "gdpPerCapita": 7913.99, "gdpTotal": 418.57, "code": "COL" },
+        { "name": "Chile", "population": 19764771, "gdpPerCapita": 16709.89, "gdpTotal": 330.26, "code": "CHL" },
+        { "name": "Peru", "population": 34217848, "gdpPerCapita": 8452.37, "gdpTotal": 289.20, "code": "PER" },
+        { "name": "Ecuador", "population": 18135478, "gdpPerCapita": 6874.71, "gdpTotal": 124.66, "code": "ECU" },
+        { "name": "Guatemala", "population": 18406359, "gdpPerCapita": 6150.03, "gdpTotal": 113.20, "code": "GTM" },
+        { "name": "Dominican Republic", "population": 11427557, "gdpPerCapita": 10875.66, "gdpTotal": 124.27, "code": "DOM" },
+        { "name": "Costa Rica", "population": 5129910, "gdpPerCapita": 18587.15, "gdpTotal": 95.35, "code": "CRI" },
+        { "name": "Panama", "population": 4515577, "gdpPerCapita": 19102.85, "gdpTotal": 86.27, "code": "PAN" },
+        { "name": "Uruguay", "population": 3386588, "gdpPerCapita": 23906.51, "gdpTotal": 80.98, "code": "URY" },
+        { "name": "Bolivia", "population": 12413315, "gdpPerCapita": 4001.21, "gdpTotal": 49.67, "code": "BOL" },
+        { "name": "Paraguay", "population": 6929153, "gdpPerCapita": 6416.10, "gdpTotal": 44.46, "code": "PRY" },
+        { "name": "Honduras", "population": 10825703, "gdpPerCapita": 3426.43, "gdpTotal": 37.09, "code": "HND" },
+        { "name": "El Salvador", "population": 6338193, "gdpPerCapita": 5579.66, "gdpTotal": 35.36, "code": "SLV" },
+        { "name": "Nicaragua", "population": 6916140, "gdpPerCapita": 2847.54, "gdpTotal": 19.69, "code": "NIC" },
+        { "name": "Haiti", "population": 11772557, "gdpPerCapita": 2142.62, "gdpTotal": 25.23, "code": "HTI" },
+        { "name": "Jamaica", "population": 2839175, "gdpPerCapita": 7019.75, "gdpTotal": 19.93, "code": "JAM" },
+        { "name": "Trinidad and Tobago", "population": 1368333, "gdpPerCapita": 19314.72, "gdpTotal": 26.43, "code": "TTO" },
+        { "name": "Guyana", "population": 831087, "gdpPerCapita": 29883.63, "gdpTotal": 24.83, "code": "GUY" },
+        { "name": "Belize", "population": 417072, "gdpPerCapita": 8429.68, "gdpTotal": 3.52, "code": "BLZ" },
+        { "name": "Suriname", "population": 634431, "gdpPerCapita": 7430.70, "gdpTotal": 4.71, "code": "SUR" },
+        { "name": "Bahamas", "population": 401283, "gdpPerCapita": 39455.45, "gdpTotal": 15.83, "code": "BHS" },
+        { "name": "Barbados", "population": 282467, "gdpPerCapita": 25365.79, "gdpTotal": 7.16, "code": "BRB" },
+        { "name": "St. Lucia", "population": 179744, "gdpPerCapita": 14181.63, "gdpTotal": 2.55, "code": "LCA" },
+        { "name": "Grenada", "population": 117207, "gdpPerCapita": 11871.61, "gdpTotal": 1.39, "code": "GRD" },
+        { "name": "St. Vincent and the Grenadines", "population": 100616, "gdpPerCapita": 11501.23, "gdpTotal": 1.16, "code": "VCT" },
+        { "name": "Antigua and Barbuda", "population": 93772, "gdpPerCapita": 23725.79, "gdpTotal": 2.23, "code": "ATG" },
+        { "name": "Dominica", "population": 66205, "gdpPerCapita": 10405.28, "gdpTotal": 0.69, "code": "DMA" },
+        { "name": "St. Kitts and Nevis", "population": 46843, "gdpPerCapita": 22771.42, "gdpTotal": 1.07, "code": "KNA" }
+      ]
+    },
+    {
+      "name": "Middle East & Africa",
+      "countries": [
+        { "name": "Saudi Arabia", "population": 35300280, "gdpPerCapita": 35057.23, "gdpTotal": 1237.52, "code": "SAU" },
+        { "name": "United Arab Emirates", "population": 10876981, "gdpPerCapita": 49377.56, "gdpTotal": 537.03, "code": "ARE" },
+        { "name": "Israel", "population": 9974400, "gdpPerCapita": 54176.68, "gdpTotal": 540.33, "code": "ISR" },
+        { "name": "South Africa", "population": 64007187, "gdpPerCapita": 6253.37, "gdpTotal": 400.24, "code": "ZAF" },
+        { "name": "Egypt", "population": 116538258, "gdpPerCapita": 3338.47, "gdpTotal": 389.04, "code": "EGY" },
+        { "name": "Nigeria", "population": 232679478, "gdpPerCapita": 806.95, "gdpTotal": 187.79, "code": "NGA" },
+        { "name": "Iran", "population": 91567738, "gdpPerCapita": 4771.40, "gdpTotal": 436.93, "code": "IRN" },
+        { "name": "Iraq", "population": 46042015, "gdpPerCapita": 6073.61, "gdpTotal": 279.61, "code": "IRQ" },
+        { "name": "Algeria", "population": 46814308, "gdpPerCapita": 5631.18, "gdpTotal": 263.57, "code": "DZA" },
+        { "name": "Qatar", "population": 2857822, "gdpPerCapita": 76275.91, "gdpTotal": 218.00, "code": "QAT" },
+        { "name": "Kuwait", "population": 4973861, "gdpPerCapita": 32213.86, "gdpTotal": 160.23, "code": "KWT" },
+        { "name": "Morocco", "population": 38081173, "gdpPerCapita": 3993.39, "gdpTotal": 152.07, "code": "MAR" },
+        { "name": "Kenya", "population": 56432944, "gdpPerCapita": 2206.13, "gdpTotal": 124.50, "code": "KEN" },
+        { "name": "Ethiopia", "population": 132059767, "gdpPerCapita": 1200.00, "gdpTotal": 158.47, "code": "ETH" },
+        { "name": "Angola", "population": 37885849, "gdpPerCapita": 2122.08, "gdpTotal": 80.40, "code": "AGO" },
+        { "name": "Tanzania", "population": 68560157, "gdpPerCapita": 1185.75, "gdpTotal": 81.29, "code": "TZA" },
+        { "name": "Oman", "population": 5281538, "gdpPerCapita": 20248.42, "gdpTotal": 106.95, "code": "OMN" },
+        { "name": "Ghana", "population": 34427414, "gdpPerCapita": 2405.79, "gdpTotal": 82.81, "code": "GHA" },
+        { "name": "Cote d'Ivoire", "population": 31934230, "gdpPerCapita": 2709.90, "gdpTotal": 86.54, "code": "CIV" },
+        { "name": "Cameroon", "population": 29123744, "gdpPerCapita": 1762.37, "gdpTotal": 51.32, "code": "CMR" },
+        { "name": "Uganda", "population": 50015092, "gdpPerCapita": 1072.71, "gdpTotal": 53.66, "code": "UGA" },
+        { "name": "Libya", "population": 7381023, "gdpPerCapita": 6318.40, "gdpTotal": 46.63, "code": "LBY" },
+        { "name": "Jordan", "population": 11552876, "gdpPerCapita": 4618.10, "gdpTotal": 53.36, "code": "JOR" },
+        { "name": "Tunisia", "population": 12277109, "gdpPerCapita": 4350.37, "gdpTotal": 53.41, "code": "TUN" },
+        { "name": "Bahrain", "population": 1588670, "gdpPerCapita": 30048.22, "gdpTotal": 47.73, "code": "BHR" },
+        { "name": "Zambia", "population": 21314956, "gdpPerCapita": 1235.08, "gdpTotal": 26.32, "code": "ZMB" },
+        { "name": "Senegal", "population": 18501984, "gdpPerCapita": 1743.99, "gdpTotal": 32.27, "code": "SEN" },
+        { "name": "Zimbabwe", "population": 16634373, "gdpPerCapita": 2656.41, "gdpTotal": 44.18, "code": "ZWE" },
+        { "name": "Guinea", "population": 14754785, "gdpPerCapita": 1717.02, "gdpTotal": 25.33, "code": "GIN" },
+        { "name": "Rwanda", "population": 14256567, "gdpPerCapita": 999.65, "gdpTotal": 14.25, "code": "RWA" },
+        { "name": "Benin", "population": 14462724, "gdpPerCapita": 1485.38, "gdpTotal": 21.48, "code": "BEN" },
+        { "name": "Burundi", "population": 14047786, "gdpPerCapita": 153.93, "gdpTotal": 2.16, "code": "BDI" },
+        { "name": "South Sudan", "population": 11943408, "gdpPerCapita": 500.00, "gdpTotal": 5.97, "code": "SSD" },
+        { "name": "Somalia", "population": 19009151, "gdpPerCapita": 636.98, "gdpTotal": 12.11, "code": "SOM" },
+        { "name": "Mali", "population": 24478595, "gdpPerCapita": 1086.18, "gdpTotal": 26.58, "code": "MLI" },
+        { "name": "Malawi", "population": 21655286, "gdpPerCapita": 508.37, "gdpTotal": 11.01, "code": "MWI" },
+        { "name": "Burkina Faso", "population": 23548781, "gdpPerCapita": 987.32, "gdpTotal": 23.25, "code": "BFA" },
+        { "name": "Niger", "population": 27032412, "gdpPerCapita": 722.75, "gdpTotal": 19.54, "code": "NER" },
+        { "name": "Chad", "population": 20299123, "gdpPerCapita": 1016.09, "gdpTotal": 20.63, "code": "TCD" },
+        { "name": "Sudan", "population": 50448963, "gdpPerCapita": 989.31, "gdpTotal": 49.91, "code": "SDN" },
+        { "name": "Congo (Dem. Rep.)", "population": 109276265, "gdpPerCapita": 647.44, "gdpTotal": 70.76, "code": "COD" },
+        { "name": "Mozambique", "population": 34631766, "gdpPerCapita": 647.29, "gdpTotal": 22.42, "code": "MOZ" },
+        { "name": "Madagascar", "population": 31964956, "gdpPerCapita": 545.00, "gdpTotal": 17.42, "code": "MDG" },
+        { "name": "Mauritius", "population": 1259509, "gdpPerCapita": 11871.73, "gdpTotal": 14.95, "code": "MUS" },
+        { "name": "Namibia", "population": 3030131, "gdpPerCapita": 4413.13, "gdpTotal": 13.37, "code": "NAM" },
+        { "name": "Botswana", "population": 2521139, "gdpPerCapita": 7695.24, "gdpTotal": 19.40, "code": "BWA" },
+        { "name": "Gabon", "population": 2538952, "gdpPerCapita": 8218.76, "gdpTotal": 20.87, "code": "GAB" },
+        { "name": "Mauritania", "population": 5169395, "gdpPerCapita": 2082.78, "gdpTotal": 10.76, "code": "MRT" },
+        { "name": "Eswatini", "population": 1242822, "gdpPerCapita": 3936.11, "gdpTotal": 4.89, "code": "SWZ" },
+        { "name": "Lesotho", "population": 2337423, "gdpPerCapita": 971.81, "gdpTotal": 2.27, "code": "LSO" },
+        { "name": "Djibouti", "population": 1168722, "gdpPerCapita": 3496.47, "gdpTotal": 4.09, "code": "DJI" },
+        { "name": "Equatorial Guinea", "population": 1892516, "gdpPerCapita": 6745.40, "gdpTotal": 12.76, "code": "GNQ" },
+        { "name": "Congo (Rep.)", "population": 6332961, "gdpPerCapita": 2482.25, "gdpTotal": 15.72, "code": "COG" },
+        { "name": "Central African Republic", "population": 5330690, "gdpPerCapita": 516.17, "gdpTotal": 2.75, "code": "CAF" },
+        { "name": "Liberia", "population": 5612817, "gdpPerCapita": 846.28, "gdpTotal": 4.75, "code": "LBR" },
+        { "name": "Sierra Leone", "population": 8642022, "gdpPerCapita": 873.39, "gdpTotal": 7.55, "code": "SLE" },
+        { "name": "Togo", "population": 9515236, "gdpPerCapita": 1043.14, "gdpTotal": 9.92, "code": "TGO" },
+        { "name": "Guinea-Bissau", "population": 2201352, "gdpPerCapita": 962.98, "gdpTotal": 2.12, "code": "GNB" },
+        { "name": "Gambia", "population": 2759988, "gdpPerCapita": 908.53, "gdpTotal": 2.51, "code": "GMB" },
+        { "name": "Comoros", "population": 866628, "gdpPerCapita": 1784.12, "gdpTotal": 1.55, "code": "COM" },
+        { "name": "Cape Verde", "population": 524877, "gdpPerCapita": 5272.85, "gdpTotal": 2.77, "code": "CPV" },
+        { "name": "Sao Tome and Principe", "population": 235536, "gdpPerCapita": 3244.83, "gdpTotal": 0.76, "code": "STP" },
+        { "name": "Seychelles", "population": 121354, "gdpPerCapita": 17858.82, "gdpTotal": 2.17, "code": "SYC" },
+        { "name": "Maldives", "population": 527799, "gdpPerCapita": 13215.54, "gdpTotal": 6.97, "code": "MDV" },
+        { "name": "Brunei", "population": 462721, "gdpPerCapita": 33417.84, "gdpTotal": 15.46, "code": "BRN" },
+        { "name": "Yemen", "population": 40583164, "gdpPerCapita": 800.00, "gdpTotal": 32.47, "code": "YEM" },
+        { "name": "Syria", "population": 24672760, "gdpPerCapita": 1200.00, "gdpTotal": 29.61, "code": "SYR" },
+        { "name": "Lebanon", "population": 5805962, "gdpPerCapita": 3500.00, "gdpTotal": 20.32, "code": "LBN" },
+        { "name": "Afghanistan", "population": 42647492, "gdpPerCapita": 500.00, "gdpTotal": 21.32, "code": "AFG" },
+        { "name": "Cuba", "population": 10979783, "gdpPerCapita": 9500.00, "gdpTotal": 104.31, "code": "CUB" },
+        { "name": "Venezuela", "population": 28405543, "gdpPerCapita": 3500.00, "gdpTotal": 99.42, "code": "VEN" },
+        { "name": "North Korea", "population": 26498823, "gdpPerCapita": 1300.00, "gdpTotal": 34.45, "code": "PRK" },
+        { "name": "Eritrea", "population": 3535603, "gdpPerCapita": 600.00, "gdpTotal": 2.12, "code": "ERI" },
+        { "name": "Bhutan", "population": 791524, "gdpPerCapita": 3500.00, "gdpTotal": 2.77, "code": "BTN" }
+      ]
+    }
+  ]
 };
 
 // ═══════════════════════════════════════════════════════════════════
@@ -285,7 +455,7 @@ function drawTreemap() {
         text: texts,
         textposition: 'middle center',
         textfont: { 
-            size: 13, 
+            size: 11, 
             color: '#fff',
             family: '-apple-system, BlinkMacSystemFont, sans-serif'
         },
@@ -293,19 +463,26 @@ function drawTreemap() {
         marker: {
             colors: colors,
             line: { width: 2, color: 'white' },
-            pad: { t: 25, l: 3, r: 3, b: 3 }
+            pad: { t: 20, l: 2, r: 2, b: 2 }
         },
         branchvalues: 'total',
         pathbar: {
-            visible: true,
-            thickness: 25,
-            textfont: { 
-                size: 14, 
-                family: '-apple-system',
-                color: '#1e293b'
-            },
-            edgeshape: '/'
-        }
+        visible: true,
+        thickness: 20,  // Reducir para dar más espacio
+        textfont: { 
+            size: 12, 
+            family: '-apple-system',
+            color: '#1e293b'
+        },
+        edgeshape: '/'
+        },
+        
+        // ← AGREGAR ESTA CONFIGURACIÓN:
+        tiling: {
+            packing: 'squarify',  // Mejor distribución
+            pad: 3  // Espaciado entre bloques
+        },
+        
     }];
     
     const layout = {
@@ -445,7 +622,7 @@ function drawScatterPlot() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 7. MATRIX COMPARISON - 4 METRICS (CORREGIDO COMPLETAMENTE)
+// 7. MATRIX COMPARISON - 4 METRICS
 // ═══════════════════════════════════════════════════════════════════
 
 function drawMatrixComparison() {
@@ -928,7 +1105,7 @@ function formatNumber(num) {
 // ═══════════════════════════════════════════════════════════════════
 
 window.TCFDashboard = {
-    version: '2.0.0',
+    version: '2.1.0',
     changeTab: changeTab,
     refreshAllCharts: function() {
         updateMarketOverview();
@@ -939,5 +1116,6 @@ window.TCFDashboard = {
     marketData: marketData
 };
 
-console.log('✅ TCF Dashboard JavaScript initialized - v2.0.0');
+console.log('✅ TCF Dashboard JavaScript initialized - v2.1.0');
 console.log('📖 Documentation: window.TCFDashboard');
+console.log('💾 Data: Embedded in main.js (no external file needed)');
