@@ -305,18 +305,33 @@ To execute from the **docker-compose.yml**, you must be located in the `/visuali
 
 ## Portfolio-2
 
-## Checkpoint 1
+## _Checkpoint 1_
 The first checkpoint showcases the practical application of visualization concepts covered in the course. It includes curated examples that reflect the design decisions, frameworks, and storytelling strategies developed throughout the project. This section is intended to demonstrate how theoretical insights—such as those documented in big_ideas_document.md, design_rationale.md, and who_what_how_framework.md—translate into compelling visual narratives.
 
-## Execution
+### Execution
 To launch the interactive web application:
 - Navigate to the Web folder in your terminal.
 - Run the following command:
 ``` bash
+pip install -r requirements.txt
 python app.py
 ```
 This will start a Flask local server and it will allow you to explore the visualizations through your browser.
 In the UI, select the Portfolio button.
+
+## _Checkpoint 2_
+The second checkpoint provides an overview of hierarchical visualizations through a practice application, applied in a study case of that involves an expansion strategy of a large food company. This part of the second portfolio encompasses the discovering and presentation of information in a hierarchical way, showing the advantages of this approach, such as the relation that certain values have with other ones or the presence of them.
+
+### Execution
+Just as the previous checkpoint, to launch the interactive web application:
+- Navigate to the Web folder in your terminal.
+- Run the following commands:
+``` bash
+pip install -r requirements.txt
+python app.py
+```
+This will start a Flask local server and it will allow you to explore the visualizations through your browser.
+In the UI, select the Portfolio button and then the Checkpoint 2 option.
 
 
 ## Autor(es)
