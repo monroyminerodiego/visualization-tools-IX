@@ -18,6 +18,7 @@ The project is organized into a main analysis notebook and a dedicated data dire
 ML/U2/PortfolioU2/
 ├── 📂 data/
 │   ├── 📄 acf_returns_squared.json
+│   ├── 📄 acf_returns_squared.json
 │   ├── 📄 ccf_full.json
 │   ├── 📄 correlation.json
 │   ├── 📄 interests.json
@@ -26,8 +27,13 @@ ML/U2/PortfolioU2/
 │   ├── 📄 trends.csv
 │   ├── 📄 trends_fixed.csv
 │   └── 📄 vol_stats.json
+├── 📂 Docs/
+│   ├── 📄 01_AI_Disclosure_Ariel.md
+│   ├── 📄 AI_Disclosure hierarchical_analysis.md
 │
-└── 📓 03_spatiotemporal_analysis_fixed.ipynb
+├── 📓 01_hierarchical_analysis.ipynb
+├── 📓 03_spatiotemporal_analysis_fixed.ipynb
+├── 📓 03_spatiotemporal_analysis.ipynb
 ```
 
 ## 🎯 **Analysis Goals & Workflow**
@@ -142,3 +148,45 @@ To replicate this analysis, please follow the steps below.
 
 5.  **Run the Notebook:**
     Open the `03_spatiotemporal_analysis_fixed.ipynb` file in the Jupyter interface and execute the cells sequentially from top to bottom. All data paths are relative and should work without modification.
+
+## Additional Notebook — Hierarchical analysis: Supply risk (Terra Cotta Foods)
+
+This repository also includes an additional notebook that complements the spatiotemporal analysis: a hierarchical, country-level study developed to evaluate supply risk and expansion strategy for Terra Cotta Foods (TCF).
+
+- Notebook: `01_hierarchical_analysis.ipynb`
+- Purpose: shortlist candidate countries in Latin America and Asia by "Total GDP" (GDP per capita × population), produce hierarchical visualizations (dendrogram, treemap, sunburst, Sankey, comparative charts), and propose tactical labor & budget reallocations to enable incremental expansion.
+- Key input: `data/01_gdp_population.csv`
+- Key outputs (exported JSON artifacts for dashboard integration):
+  - `data/organization.json`
+  - `data/budget.json`
+  - `data/countries.json`
+  - `data/asia_latam.json`
+  - `data/top10_asia_latam.json`
+  - `data/job_rellocation.json`
+  - `data/budget_rellocation.json`
+
+Main methods & visuals
+- Data enrichment: continent mapping via country_converter and a custom region mapping that isolates Latin America.
+- Metrics: computed Total GDP and per-continent correlations (Population, GDP per capita, Total GDP) to evaluate market scale vs. purchasing power.
+- Clustering: geographic proximity clustering (Ward linkage on lat/lon) used to build a dendrogram for hub/cluster planning.
+- Hierarchical visuals:
+  - Interactive treemap (Region → Country) — size = Total GDP, color = GDP per capita.
+  - Sunburst — organizational headcount distribution.
+  - Dendrogram — proximity clusters for regional hub candidates.
+  - Scatter/bubble — Population vs GDP per capita, bubble size = Total GDP.
+  - Sankey — proposed budget reallocation flows into expansion investments.
+- Exports: dataframes converted to JSON to feed a web dashboard (see listed output files).
+
+Quick run instructions (Windows)
+1. Open the repository folder in a terminal (PowerShell or CMD) and create/activate a venv:
+    - python -m venv venv
+    - venv\Scripts\activate
+2. Install required packages (not exhaustive; see notebook imports):
+    - pip install pandas numpy matplotlib seaborn plotly country_converter scipy squarify
+3. Launch Jupyter and run the hierarchical notebook:
+    - jupyter notebook
+    - Open `01_hierarchical_analysis.ipynb` and run cells top-to-bottom.
+
+Notes and caveats
+- Total GDP is used as a first-order proxy for market & production potential; final site selection requires supplier, logistics cost, political risk, labor market, and regulatory analysis.
+- Interactive Plotly figures require a browser-capable environment; static PNG exports can be produced if needed.
