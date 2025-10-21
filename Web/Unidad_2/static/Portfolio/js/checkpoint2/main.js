@@ -2,15 +2,12 @@
  * ═══════════════════════════════════════════════════════════════════
  * TERRA COTTA FOODS - GLOBAL MARKET ANALYTICS DASHBOARD
  * Hierarchical Market Analysis for Global Expansion
+ * Version 2.2.0 - Updated without Europe
  * ═══════════════════════════════════════════════════════════════════
  */
 
 // ═══════════════════════════════════════════════════════════════════
 // 1. GLOBAL DATA - EMBEDDED (Works without server)
-// ═══════════════════════════════════════════════════════════════════
-
-// ═══════════════════════════════════════════════════════════════════
-// COMPLETE MARKET DATA - ALL 195 COUNTRIES FROM CSV
 // ═══════════════════════════════════════════════════════════════════
 
 const marketData = {
@@ -63,56 +60,6 @@ const marketData = {
         { "name": "United States", "population": 340110988, "gdpPerCapita": 85809.90, "gdpTotal": 29183.32, "code": "USA" },
         { "name": "Canada", "population": 41288599, "gdpPerCapita": 54282.62, "gdpTotal": 2241.18, "code": "CAN" },
         { "name": "Mexico", "population": 130861007, "gdpPerCapita": 14157.94, "gdpTotal": 1852.73, "code": "MEX" }
-      ]
-    },
-    {
-      "name": "Europe",
-      "countries": [
-        { "name": "Germany", "population": 83510950, "gdpPerCapita": 55800.22, "gdpTotal": 4659.16, "code": "DEU" },
-        { "name": "United Kingdom", "population": 69226000, "gdpPerCapita": 52636.79, "gdpTotal": 3643.64, "code": "GBR" },
-        { "name": "France", "population": 68516699, "gdpPerCapita": 46150.49, "gdpTotal": 3161.88, "code": "FRA" },
-        { "name": "Italy", "population": 58986023, "gdpPerCapita": 40226.05, "gdpTotal": 2372.92, "code": "ITA" },
-        { "name": "Spain", "population": 48807137, "gdpPerCapita": 35297.01, "gdpTotal": 1722.75, "code": "ESP" },
-        { "name": "Russia", "population": 143533851, "gdpPerCapita": 14889.02, "gdpTotal": 2137.06, "code": "RUS" },
-        { "name": "Netherlands", "population": 17994237, "gdpPerCapita": 68218.73, "gdpTotal": 1227.56, "code": "NLD" },
-        { "name": "Turkey", "population": 85518661, "gdpPerCapita": 15473.29, "gdpTotal": 1323.36, "code": "TUR" },
-        { "name": "Switzerland", "population": 9034102, "gdpPerCapita": 103669.87, "gdpTotal": 936.54, "code": "CHE" },
-        { "name": "Poland", "population": 36554707, "gdpPerCapita": 25022.67, "gdpTotal": 914.68, "code": "POL" },
-        { "name": "Belgium", "population": 11876844, "gdpPerCapita": 55954.61, "gdpTotal": 664.61, "code": "BEL" },
-        { "name": "Sweden", "population": 10569709, "gdpPerCapita": 57723.23, "gdpTotal": 610.13, "code": "SWE" },
-        { "name": "Austria", "population": 9178482, "gdpPerCapita": 56833.20, "gdpTotal": 521.62, "code": "AUT" },
-        { "name": "Norway", "population": 5572272, "gdpPerCapita": 86809.72, "gdpTotal": 483.70, "code": "NOR" },
-        { "name": "Denmark", "population": 5976992, "gdpPerCapita": 71851.76, "gdpTotal": 429.47, "code": "DNK" },
-        { "name": "Ireland", "population": 5380257, "gdpPerCapita": 107316.34, "gdpTotal": 577.36, "code": "IRL" },
-        { "name": "Romania", "population": 19069340, "gdpPerCapita": 20072.41, "gdpTotal": 382.70, "code": "ROU" },
-        { "name": "Czechia", "population": 10882164, "gdpPerCapita": 31706.62, "gdpTotal": 345.05, "code": "CZE" },
-        { "name": "Portugal", "population": 10701636, "gdpPerCapita": 28844.50, "gdpTotal": 308.66, "code": "PRT" },
-        { "name": "Greece", "population": 10388805, "gdpPerCapita": 24752.11, "gdpTotal": 257.18, "code": "GRC" },
-        { "name": "Finland", "population": 5637214, "gdpPerCapita": 53188.62, "gdpTotal": 299.83, "code": "FIN" },
-        { "name": "Hungary", "population": 9562314, "gdpPerCapita": 23310.75, "gdpTotal": 222.97, "code": "HUN" },
-        { "name": "Ukraine", "population": 37860221, "gdpPerCapita": 5389.47, "gdpTotal": 204.03, "code": "UKR" },
-        { "name": "Belarus", "population": 9133712, "gdpPerCapita": 8316.65, "gdpTotal": 75.96, "code": "BLR" },
-        { "name": "Bulgaria", "population": 6444366, "gdpPerCapita": 17412.41, "gdpTotal": 112.20, "code": "BGR" },
-        { "name": "Serbia", "population": 6587202, "gdpPerCapita": 13523.72, "gdpTotal": 89.07, "code": "SRB" },
-        { "name": "Croatia", "population": 3866300, "gdpPerCapita": 23931.45, "gdpTotal": 92.52, "code": "HRV" },
-        { "name": "Slovakia", "population": 5422069, "gdpPerCapita": 26147.90, "gdpTotal": 141.76, "code": "SVK" },
-        { "name": "Lithuania", "population": 2888055, "gdpPerCapita": 29386.29, "gdpTotal": 84.87, "code": "LTU" },
-        { "name": "Slovenia", "population": 2126324, "gdpPerCapita": 34089.35, "gdpTotal": 72.50, "code": "SVN" },
-        { "name": "Latvia", "population": 1862441, "gdpPerCapita": 23367.60, "gdpTotal": 43.52, "code": "LVA" },
-        { "name": "Estonia", "population": 1371986, "gdpPerCapita": 31170.09, "gdpTotal": 42.76, "code": "EST" },
-        { "name": "Luxembourg", "population": 677717, "gdpPerCapita": 137516.59, "gdpTotal": 93.19, "code": "LUX" },
-        { "name": "Cyprus", "population": 1358282, "gdpPerCapita": 38654.17, "gdpTotal": 52.50, "code": "CYP" },
-        { "name": "Iceland", "population": 404610, "gdpPerCapita": 82703.86, "gdpTotal": 33.47, "code": "ISL" },
-        { "name": "Malta", "population": 574346, "gdpPerCapita": 42347.31, "gdpTotal": 24.32, "code": "MLT" },
-        { "name": "Albania", "population": 2714617, "gdpPerCapita": 10011.63, "gdpTotal": 27.18, "code": "ALB" },
-        { "name": "Bosnia and Herzegovina", "population": 3164253, "gdpPerCapita": 8957.37, "gdpTotal": 28.34, "code": "BIH" },
-        { "name": "North Macedonia", "population": 1792179, "gdpPerCapita": 9310.03, "gdpTotal": 16.69, "code": "MKD" },
-        { "name": "Moldova", "population": 2389275, "gdpPerCapita": 7617.52, "gdpTotal": 18.20, "code": "MDA" },
-        { "name": "Montenegro", "population": 623831, "gdpPerCapita": 12935.45, "gdpTotal": 8.07, "code": "MNE" },
-        { "name": "Andorra", "population": 81938, "gdpPerCapita": 49303.67, "gdpTotal": 4.04, "code": "AND" },
-        { "name": "Monaco", "population": 38631, "gdpPerCapita": 190000.00, "gdpTotal": 7.34, "code": "MCO" },
-        { "name": "Liechtenstein", "population": 40197, "gdpPerCapita": 180000.00, "gdpTotal": 7.24, "code": "LIE" },
-        { "name": "San Marino", "population": 33977, "gdpPerCapita": 60000.00, "gdpTotal": 2.04, "code": "SMR" }
       ]
     },
     {
@@ -239,7 +186,6 @@ const marketData = {
 const regionColors = {
     'Asia Pacific': '#10b981',
     'North America': '#667eea',
-    'Europe': '#f59e0b',
     'Latin America': '#ec4899',
     'Middle East & Africa': '#8b5cf6'
 };
@@ -386,12 +332,14 @@ function updateStrategicInsights() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 5. TREEMAP - FIXED WITH PROPER HIERARCHY
+// 5. TREEMAP - WITH GROUPING FOR LOW GDP COUNTRIES
 // ═══════════════════════════════════════════════════════════════════
 
 function drawTreemap() {
     const container = document.getElementById('treemap-chart');
     if (!container) return;
+    
+    const GDP_THRESHOLD = 100; // Países con GDP < 100B se agrupan
     
     const labels = [];
     const parents = [];
@@ -425,27 +373,52 @@ function drawTreemap() {
         parents.push('Global Market');
         values.push(regionTotal);
         colors.push(regionColors[region.name]);
-        texts.push(`<b>${region.name}</b><br>$${regionTotal.toFixed(0)}B`);
+        texts.push(`<b>${region.name}</b><br>${regionTotal.toFixed(0)}B`);
         
-        // Sort countries within region
-        const sortedCountries = [...region.countries].sort((a, b) => b.gdpTotal - a.gdpTotal);
+        // Separate countries into major and minor
+        const majorCountries = [];
+        const minorCountries = [];
         
-        // Add countries
-        sortedCountries.forEach(country => {
+        region.countries.forEach(country => {
+            if (country.gdpTotal >= GDP_THRESHOLD) {
+                majorCountries.push(country);
+            } else {
+                minorCountries.push(country);
+            }
+        });
+        
+        // Sort major countries
+        majorCountries.sort((a, b) => b.gdpTotal - a.gdpTotal);
+        
+        // Add major countries individually
+        majorCountries.forEach(country => {
             labels.push(country.name);
             parents.push(region.name);
             values.push(country.gdpTotal);
             
-            // Lighter shade for countries
             const rgb = hexToRgb(regionColors[region.name]);
             colors.push(`rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.8)`);
-            texts.push(`<b>${country.name}</b><br>$${country.gdpTotal.toFixed(0)}B`);
+            texts.push(`<b>${country.name}</b><br>${country.gdpTotal.toFixed(0)}B`);
         });
+        
+        // Group minor countries
+        if (minorCountries.length > 0) {
+            const minorTotal = minorCountries.reduce((sum, c) => sum + c.gdpTotal, 0);
+            const minorCount = minorCountries.length;
+            
+            labels.push(`Other ${region.name} (${minorCount})`);
+            parents.push(region.name);
+            values.push(minorTotal);
+            
+            const rgb = hexToRgb(regionColors[region.name]);
+            colors.push(`rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.5)`);
+            texts.push(`<b>Other ${region.name}</b><br>${minorCount} countries<br>${minorTotal.toFixed(0)}B`);
+        }
     });
     
     // Update global value
     values[0] = totalGlobal;
-    texts[0] = `<b>Total Global GDP</b><br>$${totalGlobal.toFixed(0)}B`;
+    texts[0] = `<b>Total Global GDP</b><br>${totalGlobal.toFixed(0)}B`;
     
     const data = [{
         type: 'treemap',
@@ -467,29 +440,26 @@ function drawTreemap() {
         },
         branchvalues: 'total',
         pathbar: {
-        visible: true,
-        thickness: 20,  // Reducir para dar más espacio
-        textfont: { 
-            size: 12, 
-            family: '-apple-system',
-            color: '#1e293b'
+            visible: true,
+            thickness: 20,
+            textfont: { 
+                size: 12, 
+                family: '-apple-system',
+                color: '#1e293b'
+            },
+            edgeshape: '/'
         },
-        edgeshape: '/'
-        },
-        
-        // ← AGREGAR ESTA CONFIGURACIÓN:
         tiling: {
-            packing: 'squarify',  // Mejor distribución
-            pad: 3  // Espaciado entre bloques
-        },
-        
+            packing: 'squarify',
+            pad: 3
+        }
     }];
     
     const layout = {
         ...plotlyLayout,
         title: {
             text: '<b>Purchasing Power Hierarchy: Global → Region → Country</b><br>' +
-                  '<sub>Size = Total GDP (market capacity) | Click to explore regions</sub>',
+                  '<sub>Size = Total GDP (market capacity) | Countries with GDP < $100B grouped | Click to explore</sub>',
             font: { size: 17, color: '#1e293b', family: '-apple-system' },
             x: 0.05,
             xanchor: 'left'
@@ -502,25 +472,50 @@ function drawTreemap() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 6. SCATTER PLOT - ENHANCED
+// 6. SCATTER PLOT - TOP 10 COUNTRIES ONLY
 // ═══════════════════════════════════════════════════════════════════
 
 function drawScatterPlot() {
     const container = document.getElementById('scatter-chart');
     if (!container) return;
     
+    // Get all countries and find top 10 by GDP
+    const allCountries = [];
+    marketData.regions.forEach(region => {
+        region.countries.forEach(country => {
+            allCountries.push({
+                ...country,
+                region: region.name
+            });
+        });
+    });
+    
+    const top10Countries = allCountries
+        .sort((a, b) => b.gdpTotal - a.gdpTotal)
+        .slice(0, 10);
+    
+    // Group by region for traces
+    const tracesByRegion = {};
+    
+    top10Countries.forEach(country => {
+        if (!tracesByRegion[country.region]) {
+            tracesByRegion[country.region] = [];
+        }
+        tracesByRegion[country.region].push(country);
+    });
+    
     const traces = [];
     
-    marketData.regions.forEach(region => {
-        const x = region.countries.map(c => c.population);
-        const y = region.countries.map(c => c.gdpPerCapita);
-        const sizes = region.countries.map(c => c.gdpTotal);
-        const labels = region.countries.map(c => c.name);
-        const codes = region.countries.map(c => c.code);
+    Object.entries(tracesByRegion).forEach(([regionName, countries]) => {
+        const x = countries.map(c => c.population);
+        const y = countries.map(c => c.gdpPerCapita);
+        const sizes = countries.map(c => c.gdpTotal);
+        const labels = countries.map(c => c.name);
+        const codes = countries.map(c => c.code);
         
         // Scale bubble sizes proportionally
-        const MIN_SIZE = 15;
-        const MAX_SIZE = 60;
+        const MIN_SIZE = 25;
+        const MAX_SIZE = 70;
         const maxGDP = Math.max(...sizes);
         const minGDP = Math.min(...sizes);
         
@@ -534,19 +529,19 @@ function drawScatterPlot() {
             y: y,
             mode: 'markers+text',
             type: 'scatter',
-            name: region.name,
+            name: regionName,
             text: codes,
             textposition: 'middle center',
             textfont: {
-                size: 9,
+                size: 10,
                 color: '#fff',
                 family: 'monospace',
                 weight: 'bold'
             },
             marker: {
                 size: scaledSizes,
-                color: regionColors[region.name],
-                opacity: 0.75,
+                color: regionColors[regionName],
+                opacity: 0.8,
                 line: {
                     color: '#fff',
                     width: 2
@@ -578,7 +573,7 @@ function drawScatterPlot() {
     const layout = {
         ...plotlyLayout,
         title: {
-            text: '<b>Viability Matrix: Population vs Purchasing Power</b><br>' +
+            text: '<b>Viability Matrix: Top 10 Markets by GDP</b><br>' +
                   '<sub>X-Axis = Workforce | Y-Axis = Purchasing Power | Size = Total GDP</sub>',
             font: { size: 17, color: '#1e293b' },
             x: 0.05,
@@ -622,7 +617,7 @@ function drawScatterPlot() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 7. MATRIX COMPARISON - 4 METRICS
+// 7. MATRIX COMPARISON - 4 METRICS (WITHOUT EUROPE)
 // ═══════════════════════════════════════════════════════════════════
 
 function drawMatrixComparison() {
@@ -658,7 +653,7 @@ function drawMatrixComparison() {
         type: 'bar',
         name: 'Total GDP',
         marker: { color: colors, opacity: 0.85 },
-        text: regionMetrics.map(r => `$${r.totalGDP.toFixed(0)}B`),
+        text: regionMetrics.map(r => `${r.totalGDP.toFixed(0)}B`),
         textposition: 'outside',
         textfont: { size: 9 },
         hovertemplate: '<b>%{x}</b><br>Total GDP: $%{y:.0f}B<extra></extra>',
@@ -673,7 +668,7 @@ function drawMatrixComparison() {
         type: 'bar',
         name: 'GDP per Capita',
         marker: { color: colors, opacity: 0.85 },
-        text: regionMetrics.map(r => `$${(r.avgGdpPerCapita/1000).toFixed(1)}K`),
+        text: regionMetrics.map(r => `${(r.avgGdpPerCapita/1000).toFixed(1)}K`),
         textposition: 'outside',
         textfont: { size: 9 },
         hovertemplate: '<b>%{x}</b><br>GDP per Capita: $%{y:,.0f}<extra></extra>',
@@ -730,7 +725,6 @@ function drawMatrixComparison() {
         },
         showlegend: false,
         
-        // Subplot 1: Total GDP (top-left)
         xaxis1: { 
             title: {
                 text: '<b>Total GDP</b><br><i>(Market Capacity)</i>',
@@ -752,7 +746,6 @@ function drawMatrixComparison() {
             tickfont: { size: 8 }
         },
         
-        // Subplot 2: GDP per Capita (top-right)
         xaxis2: { 
             title: {
                 text: '<b>GDP per Capita</b><br><i>(Purchasing Power)</i>',
@@ -774,7 +767,6 @@ function drawMatrixComparison() {
             tickfont: { size: 8 }
         },
         
-        // Subplot 3: Number of Countries (bottom-left)
         xaxis3: { 
             title: {
                 text: '<b>Number of Countries</b><br><i>(Diversification)</i>',
@@ -796,7 +788,6 @@ function drawMatrixComparison() {
             tickfont: { size: 8 }
         },
         
-        // Subplot 4: Population (bottom-right)
         xaxis4: { 
             title: {
                 text: '<b>Total Population</b><br><i>(Workforce)</i>',
@@ -826,12 +817,14 @@ function drawMatrixComparison() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 8. SUNBURST CHART - PROPORTIONAL STRUCTURE
+// 8. SUNBURST CHART - WITH GROUPING FOR LOW GDP COUNTRIES
 // ═══════════════════════════════════════════════════════════════════
 
 function drawSunburst() {
     const container = document.getElementById('sunburst-chart');
     if (!container) return;
+    
+    const GDP_THRESHOLD = 100; // Países con GDP < 100B se agrupan
     
     const labels = [];
     const parents = [];
@@ -863,18 +856,42 @@ function drawSunburst() {
         values.push(regionTotal);
         colors.push(regionColors[region.name]);
         
-        // Sort countries within region
-        const sortedCountries = [...region.countries].sort((a, b) => b.gdpTotal - a.gdpTotal);
+        // Separate countries into major and minor
+        const majorCountries = [];
+        const minorCountries = [];
         
-        sortedCountries.forEach(country => {
+        region.countries.forEach(country => {
+            if (country.gdpTotal >= GDP_THRESHOLD) {
+                majorCountries.push(country);
+            } else {
+                minorCountries.push(country);
+            }
+        });
+        
+        // Sort major countries
+        majorCountries.sort((a, b) => b.gdpTotal - a.gdpTotal);
+        
+        // Add major countries individually
+        majorCountries.forEach(country => {
             labels.push(country.name);
             parents.push(region.name);
             values.push(country.gdpTotal);
             
-            // Lighter shade for countries
             const rgb = hexToRgb(regionColors[region.name]);
             colors.push(`rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.75)`);
         });
+        
+        // Group minor countries
+        if (minorCountries.length > 0) {
+            const minorTotal = minorCountries.reduce((sum, c) => sum + c.gdpTotal, 0);
+            
+            labels.push(`Other ${region.name}`);
+            parents.push(region.name);
+            values.push(minorTotal);
+            
+            const rgb = hexToRgb(regionColors[region.name]);
+            colors.push(`rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.4)`);
+        }
     });
     
     values[0] = totalGlobal;
@@ -907,7 +924,7 @@ function drawSunburst() {
         ...plotlyLayout,
         title: {
             text: '<b>Hierarchical Market Structure</b><br>' +
-                  '<sub>Center = Regions | Outer rings = Countries | Click to explore</sub>',
+                  '<sub>Center = Regions | Outer = Countries (GDP < $100B grouped) | Click to explore</sub>',
             font: { size: 17, color: '#1e293b' },
             x: 0.5,
             xanchor: 'center'
@@ -921,7 +938,7 @@ function drawSunburst() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 9. RECOMMENDATIONS TABLE
+// 9. RECOMMENDATIONS TABLE - WITHOUT EUROPE
 // ═══════════════════════════════════════════════════════════════════
 
 function generateRecommendationsTable() {
@@ -1013,23 +1030,23 @@ function generateRecommendationsTable() {
             <ul style="list-style: none; padding: 0;">
                 <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
                     <span style="position: absolute; left: 0; font-size: 18px;">✓</span>
-                    <strong>Priority Distribution Centers:</strong> Asia Pacific (highest total GDP), followed by North America and Europe
+                    <strong>Priority Distribution Centers:</strong> Asia Pacific dominates with highest total GDP, followed by North America
                 </li>
                 <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
                     <span style="position: absolute; left: 0; font-size: 18px;">✓</span>
-                    <strong>High-Value Markets:</strong> USA, China, Japan, and Germany represent the core of global market
+                    <strong>High-Value Markets:</strong> USA, China, Japan, and India represent 75%+ of target market opportunity
                 </li>
                 <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
                     <span style="position: absolute; left: 0; font-size: 18px;">✓</span>
-                    <strong>Latin America Opportunity:</strong> Brazil and Mexico offer significant population with growing market
+                    <strong>Latin America Opportunity:</strong> Brazil and Mexico offer significant population with growing middle class
                 </li>
                 <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
                     <span style="position: absolute; left: 0; font-size: 18px;">✓</span>
-                    <strong>Pricing Strategy:</strong> Europe requires premium products; Asia needs cost-quality balance
+                    <strong>Pricing Strategy:</strong> North America requires premium positioning; Asia needs cost-quality balance
                 </li>
                 <li style="padding-left: 24px; position: relative;">
                     <span style="position: absolute; left: 0; font-size: 18px;">✓</span>
-                    <strong>Population-Economy Correlation:</strong> China and India have massive population but require lower unit-cost products
+                    <strong>Manufacturing Strategy:</strong> China and India provide massive workforce; Mexico offers proximity to North America
                 </li>
             </ul>
         </div>
@@ -1105,7 +1122,7 @@ function formatNumber(num) {
 // ═══════════════════════════════════════════════════════════════════
 
 window.TCFDashboard = {
-    version: '2.1.0',
+    version: '2.2.0',
     changeTab: changeTab,
     refreshAllCharts: function() {
         updateMarketOverview();
@@ -1116,6 +1133,7 @@ window.TCFDashboard = {
     marketData: marketData
 };
 
-console.log('✅ TCF Dashboard JavaScript initialized - v2.1.0');
+console.log('✅ TCF Dashboard JavaScript initialized - v2.2.0');
 console.log('📖 Documentation: window.TCFDashboard');
 console.log('💾 Data: Embedded in main.js (no external file needed)');
+console.log('🌍 Regions: Asia Pacific, North America, Latin America, Middle East & Africa');
