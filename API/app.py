@@ -7,7 +7,7 @@ from pymongo import MongoClient
 import psycopg2
 
 # ===== Cargar variables de entorno
-load_dotenv('../.env')
+load_dotenv()
 
 # ===== Configuración de conexiones
 def get_mongo_client():
@@ -54,28 +54,20 @@ api.add_resource(PostgresTables,   '/postgres')
 from Endpoints.Unit1.portfolio import Portfolio_1
 from Endpoints.Unit1.proyecto import Proyecto_1
 
-api.add_resource(Portfolio_1,    '/unit-1/portfolio')
+api.add_resource(Portfolio_1,   '/unit-1/portfolio')
 api.add_resource(Proyecto_1,    '/unit-1/project')
 
 # === Unidad 2
 from Endpoints.Unit2.portfolio import Portfolio_2
 from Endpoints.Unit2.proyecto import Proyecto_2
 
-api.add_resource(Portfolio_2,    '/unit-2/portfolio')
-api.add_resource(Proyecto_2,    '/unit-2/project')
+api.add_resource(Portfolio_2,  '/unit-2/portfolio')
+api.add_resource(Proyecto_2,   '/unit-2/project')
 
 # === Unidad 3
 from Endpoints.Unit3.portfolio import Portfolio_3
 from Endpoints.Unit3.proyecto import Proyecto_3
 
-api.add_resource(Portfolio_3,    '/unit-3/portfolio')
+api.add_resource(Portfolio_3,   '/unit-3/portfolio')
 api.add_resource(Proyecto_3,    '/unit-3/project')
 
-
-if __name__ == '__main__':
-    print("=== FLASK INICIADO CORRECTAMENTE ===")
-    print("Accede a estas URLs en POSTMAN:")
-    print("• URL Base: http://127.0.0.1:5003/api")
-
-    print("====================================")
-    app.run(debug=True, host='127.0.0.1', port=5003)

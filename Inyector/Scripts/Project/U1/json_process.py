@@ -1,7 +1,7 @@
 import os, json, requests, pandas as pd
 from dotenv import load_dotenv
 from typing import Literal
-from Scripts.utils import transform_types
+from .utils import transform_types
 
 URL_API = os.getenv('URL_API')
 

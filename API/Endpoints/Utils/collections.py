@@ -8,7 +8,7 @@ from werkzeug.datastructures import ImmutableMultiDict
 class MongoCollections(Resource):
     # =============== CONSTRUCTOR ===============
     def __init__(self):
-        self.db:MongoClient = current_app.config["mongo_db"]
+        self.db: MongoClient = current_app.config["mongo_db"]
 
     # =============== METODOS PRIVADOS ===============
     def __create_args_from_params(self, collection_name, filters=None, limit=None, skip=None):
@@ -149,6 +149,7 @@ class MongoCollections(Resource):
 
             return {
                 "status": "fetched",
+                "database": "mongodb",
                 "collection": collection_name,
                 "count": len(documents),
                 "data": documents
@@ -160,78 +161,11 @@ class MongoCollections(Resource):
                 "info": traceback.format_exc().splitlines()
             }, 500
 
-    def __query_collection(self, collection_name, filters=None, limit=None, skip=None):
+    def __execute_insert(self, collection_name, data):
         """
-        Método para consultar colecciones directamente desde código
-        
-        Args:
-            collection_name (str): Nombre de la colección
-            filters (dict): Filtros, ej: {'status': 'active', 'type': ['A', 'B']}
-            limit (int): Límite de documentos
-            skip (int): Documentos a saltar
-        
-        Returns:
-            tuple: (response_data, status_code)
+        Ejecuta la inserción en MongoDB
         """
-        # Crear args simulados
-        mock_args = self.__create_args_from_params(collection_name, filters, limit, skip)
-        
-        # Parsear argumentos
-        parsed_data, error_response, status_code = self.__parse_args(mock_args)
-        
-        if error_response:
-            return error_response, status_code
-        
-        collection_name, query_filters, limit, skip = parsed_data
-        
-        # Ejecutar consulta
-        return self.__execute_query(collection_name, query_filters, limit, skip)
-
-    
-    
-    # =============== METODOS HTTP ===============
-    def get(self, collection_name=None, filters=None, limit=None, skip=None):
-        """
-        Endpoint HTTP o método directo
-        
-        Si se llama como endpoint HTTP: usa request.args
-        Si se pasan parámetros: los usa directamente
-        """
-        if collection_name:
-            # Llamada directa con parámetros
-            return self.__query_collection(collection_name, filters, limit, skip)
-        else:
-            # Llamada como endpoint HTTP
-            parsed_data, error_response, status_code = self.__parse_args(request.args)
-            
-            if error_response:
-                return error_response, status_code
-            
-            collection_name, query_filters, limit, skip = parsed_data
-            
-            # Ejecutar consulta
-            return self.__execute_query(collection_name, query_filters, limit, skip)
-    
-    def post(self):
         try:
-            # ===== Data
-            payload = request.json
-            collection_name = payload.get("collection")
-            data = payload.get("data")
-        
-            # ===== Validaciones
-            if not collection_name:
-                return {
-                    "status": "error",
-                    "info": "Valida que se encuentre 'collection' en el payload"
-                }, 400
-            
-            if not data:
-                return {
-                    "status": "error",
-                    "info": "Valida que se encuentre 'data' en el payload"
-                }, 400
-            
             # ===== Normalizar data a lista de documentos
             if isinstance(data, dict):
                 # Si es un solo documento, usar insert_one
@@ -282,20 +216,177 @@ class MongoCollections(Resource):
                     "info": "Valida que 'data' sea un documento o una lista de documentos"
                 }, 400
         
-        # ===== Manejo de errores
         except Exception:
             return {
                 "status": "error", 
                 "info": traceback.format_exc().splitlines()
             }, 500
 
-    def patch(self):
+    def __execute_update(self, collection_name, doc_id, update_data):
+        """
+        Ejecuta la actualización en MongoDB
+        """
         try:
-            # ===== Data
-            payload = request.json
-            collection_name = payload.get("collection")
-            doc_id = payload.get("id")
-            update_data = payload.get("data")
+            result = self.db[collection_name].update_one(
+                {"_id": ObjectId(doc_id)},
+                {"$set": update_data}
+            )
+            
+            if result.matched_count == 0:
+                return {
+                    "status": "error",
+                    "info": "No se encontró el documento con el id especificado"
+                }, 404
+            
+            return {
+                "status": "updated",
+                "database": "mongodb",
+                "collection": collection_name,
+                "info": f"Se actualizó el documento con id {doc_id}",
+                "matched_count": result.matched_count,
+                "modified_count": result.modified_count
+            }, 200
+        
+        except Exception:
+            return {
+                "status": "error", 
+                "info": traceback.format_exc().splitlines()
+            }, 500
+
+    def __execute_delete(self, collection_name, doc_id=None):
+        """
+        Ejecuta la eliminación en MongoDB
+        """
+        try:
+            collection = self.db[collection_name]
+
+            # ===== Eliminar toda la colección si no hay ID
+            if not doc_id:
+                result = collection.delete_many({})
+                return {
+                    "status": "deleted_all",
+                    "database": "mongodb",
+                    "collection": collection_name,
+                    "info": f"Se eliminaron {result.deleted_count} documentos"
+                }, 200
+
+            # ===== Eliminar un solo documento por ID
+            result = collection.delete_one({"_id": ObjectId(doc_id)})
+            
+            if result.deleted_count == 0:
+                return {
+                    "status": "error",
+                    "info": "No se encontró el documento con el id especificado"
+                }, 404
+
+            return {
+                "status": "deleted",
+                "database": "mongodb",
+                "collection": collection_name,
+                "info": f"Se eliminó el documento con id {doc_id}"
+            }, 200
+
+        except Exception:
+            return {
+                "status": "error", 
+                "info": traceback.format_exc().splitlines()
+            }, 500
+
+    
+    
+    # =============== METODOS HTTP ===============
+    def get(self, collection_name=None, filters=None, limit=None, skip=None):
+        """
+        Endpoint HTTP o método directo
+        
+        Si se llama como endpoint HTTP: usa request.args
+        Si se pasan parámetros: los usa directamente
+        """
+        if collection_name is not None:
+            # Llamada directa con parámetros
+            mock_args = self.__create_args_from_params(collection_name, filters, limit, skip)
+            parsed_data, error_response, status_code = self.__parse_args(mock_args)
+            
+            if error_response:
+                return error_response, status_code
+            
+            collection_name, query_filters, limit, skip = parsed_data
+            return self.__execute_query(collection_name, query_filters, limit, skip)
+        else:
+            # Llamada como endpoint HTTP
+            parsed_data, error_response, status_code = self.__parse_args(request.args)
+            
+            if error_response:
+                return error_response, status_code
+            
+            collection_name, query_filters, limit, skip = parsed_data
+            return self.__execute_query(collection_name, query_filters, limit, skip)
+    
+    def post(self, collection_name=None, data=None):
+        """
+        Endpoint HTTP o método directo
+        
+        Si se llama como endpoint HTTP: usa request.json
+        Si se pasan parámetros: los usa directamente
+        """
+        try:
+            # ===== Determinar origen de datos
+            if collection_name is not None and data is not None:
+                # Llamada directa con parámetros
+                payload = {
+                    "collection": collection_name,
+                    "data": data
+                }
+            else:
+                # Llamada como endpoint HTTP
+                payload = request.json
+                collection_name = payload.get("collection")
+                data = payload.get("data")
+        
+            # ===== Validaciones
+            if not collection_name:
+                return {
+                    "status": "error",
+                    "info": "Valida que se encuentre 'collection' en el payload"
+                }, 400
+            
+            if not data:
+                return {
+                    "status": "error",
+                    "info": "Valida que se encuentre 'data' en el payload"
+                }, 400
+            
+            # ===== Ejecutar inserción
+            return self.__execute_insert(collection_name, data)
+        
+        except Exception:
+            return {
+                "status": "error", 
+                "info": traceback.format_exc().splitlines()
+            }, 500
+
+    def patch(self, collection_name=None, doc_id=None, data=None):
+        """
+        Endpoint HTTP o método directo
+        
+        Si se llama como endpoint HTTP: usa request.json
+        Si se pasan parámetros: los usa directamente
+        """
+        try:
+            # ===== Determinar origen de datos
+            if collection_name is not None and doc_id is not None and data is not None:
+                # Llamada directa con parámetros
+                payload = {
+                    "collection": collection_name,
+                    "id": doc_id,
+                    "data": data
+                }
+            else:
+                # Llamada como endpoint HTTP
+                payload = request.json
+                collection_name = payload.get("collection")
+                doc_id = payload.get("id")
+                data = payload.get("data")
 
             # ===== Validaciones
             if not collection_name:
@@ -310,47 +401,45 @@ class MongoCollections(Resource):
                     "info": "Valida que se encuentre 'id' en el payload"
                 }, 400
 
-            if not update_data:
+            if not data:
                 return {
                     "status": "error", 
                     "info": "Valida que se encuentre 'data' en el payload"
                 }, 400
 
-            # ===== Consulta en BD
-            result = self.db[collection_name].update_one(
-                {"_id": ObjectId(doc_id)},
-                {"$set": update_data}
-            )
-            
-            if result.matched_count == 0:
-                return {
-                    "status": "error",
-                    "info": "No se encontró el documento con el id especificado"
-                }, 404
-            
-            # ===== Confirmación
-            return {
-                "status": "updated", 
-                
-                "collection": collection_name,
-                "info": f"Se actualizó el documento con id {doc_id}",
-                "matched_count": result.matched_count,
-                "modified_count": result.modified_count
-            }, 200
+            # ===== Ejecutar actualización
+            return self.__execute_update(collection_name, doc_id, data)
         
-        # ===== Manejo de errores
         except Exception:
             return {
                 "status": "error", 
                 "info": traceback.format_exc().splitlines()
             }, 500
 
-    def delete(self):
+    def delete(self, collection_name=None, doc_id=None):
+        """
+        Endpoint HTTP o método directo
+        
+        Si se llama como endpoint HTTP: usa request.json
+        Si se pasan parámetros: los usa directamente
+        
+        Args:
+            collection_name (str): Nombre de la colección
+            doc_id (str, optional): ID del documento. Si no se proporciona, elimina toda la colección
+        """
         try:
-            # ===== Data
-            payload = request.json
-            doc_id = payload.get("id")
-            collection_name = payload.get("collection")
+            # ===== Determinar origen de datos
+            if collection_name is not None:
+                # Llamada directa con parámetros
+                payload = {
+                    "collection": collection_name,
+                    "id": doc_id
+                }
+            else:
+                # Llamada como endpoint HTTP
+                payload = request.json
+                collection_name = payload.get("collection")
+                doc_id = payload.get("id")
 
             # ===== Validaciones
             if not collection_name:
@@ -359,36 +448,9 @@ class MongoCollections(Resource):
                     "info": "Valida que se encuentre 'collection' en el payload"
                 }, 400
 
-            collection = self.db[collection_name]
+            # ===== Ejecutar eliminación
+            return self.__execute_delete(collection_name, doc_id)
 
-            # ===== Eliminar toda la colección si no hay ID
-            if not doc_id:
-                result = collection.delete_many({})
-                return {
-                    "status": "deleted_all",
-                    
-                    "collection": collection_name,
-                    "info": f"Se eliminaron {result.deleted_count} documentos"
-                }, 200
-
-            # ===== Eliminar un solo documento por ID
-            result = collection.delete_one({"_id": ObjectId(doc_id)})
-            
-            if result.deleted_count == 0:
-                return {
-                    "status": "error",
-                    "info": "No se encontró el documento con el id especificado"
-                }, 404
-
-            # ===== Confirmación de eliminación individual
-            return {
-                "status": "deleted",
-                
-                "collection": collection_name,
-                "info": f"Se eliminó el documento con id {doc_id}"
-            }, 200
-
-        # ===== Manejo de errores
         except Exception:
             return {
                 "status": "error", 
