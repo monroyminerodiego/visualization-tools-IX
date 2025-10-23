@@ -1,9 +1,12 @@
 import os, traceback, pandas as pd, requests
+from typing import Literal
 
 class Proyecto_2_Data:
     # =============== CONSTRUCTOR ===============
-    def __init__(self):
+    def __init__(self,tipo_envio:Literal['local','cloud'] = 'local'):
         self.location_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+        if tipo_envio == 'local':   self.link = 'http://api_visualization:503'
+        elif tipo_envio == 'cloud': self.link = 'https://upy-homeworks.xpert-ia.com.mx/visualization-tools/'
 
     # =============== METODOS PRIVADOS ===============
     def __cargar_datos(self,):
@@ -48,7 +51,7 @@ class Proyecto_2_Data:
             
             try:
                 response = requests.post(
-                    url='http://api_visualization:503/api/postgres',
+                    url=f'{self.link}/api/postgres',
                     json={
                         "table": table,
                         "data": batch.to_dict(orient='records')
@@ -85,7 +88,7 @@ class Proyecto_2_Data:
         ''' 
         '''
         response = requests.get(
-            url='http://api_visualization:503/api/info',
+            url=f'{self.link}/api/info',
             headers={"Content-Type": "application/json; charset=utf-8"},
         )
         response.raise_for_status()
@@ -539,3 +542,6 @@ class Proyecto_2_Data:
         except:
             return {"status":"error","info":"Fallo el metodo GET","detalles":traceback.format_exc().splitlines()}, 500
         
+if __name__ == '__main__':
+    data = Proyecto_2_Data('cloud')
+    data.inyectar_información()
