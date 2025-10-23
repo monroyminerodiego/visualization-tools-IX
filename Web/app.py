@@ -70,11 +70,23 @@ def unidad2_portafolio_static(filename):
     static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio')
     return send_from_directory(static_dir, filename)
 
-# =============== NUEVAS RUTAS PARA ARCHIVOS ESTÁTICOS DE CHECKPOINTS ===============
+# =============== RUTAS PARA ARCHIVOS ESTÁTICOS DE CHECKPOINTS ===============
 @app.route('/unidad2/portafolio/checkpoint1/<path:filename>')
 def unidad2_portafolio_checkpoint1_static(filename):
     """Servir archivos estáticos de Checkpoint 1 - Unidad 2"""
     static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio', 'checkpoint1')
+    return send_from_directory(static_dir, filename)
+
+@app.route('/unidad2/portafolio/checkpoint2/<path:filename>')
+def unidad2_portafolio_checkpoint2_static(filename):
+    """Servir archivos estáticos de Checkpoint 2 - Unidad 2"""
+    static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio', 'checkpoint2')
+    return send_from_directory(static_dir, filename)
+
+@app.route('/unidad2/portafolio/checkpoint3/<path:filename>')
+def unidad2_portafolio_checkpoint3_static(filename):
+    """Servir archivos estáticos de Checkpoint 3 - Unidad 2"""
+    static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio', 'checkpoint3')
     return send_from_directory(static_dir, filename)
 
 # =============== Rutas de páginas ===============
@@ -180,6 +192,19 @@ def checkpoint2_js(filename):
     static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio', 'js', 'checkpoint2')
     return send_from_directory(static_dir, filename)
 
+# =============== RUTAS PARA CHECKPOINT3 ===============
+@app.route('/static/Portfolio/css/checkpoint3/<path:filename>')
+def checkpoint3_css(filename):
+    """Servir CSS de Checkpoint 3"""
+    static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio', 'css', 'checkpoint3')
+    return send_from_directory(static_dir, filename)
+
+@app.route('/static/Portfolio/js/checkpoint3/<path:filename>')
+def checkpoint3_js(filename):
+    """Servir JS de Checkpoint 3"""
+    static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio', 'js', 'checkpoint3')
+    return send_from_directory(static_dir, filename)
+
 
 # Ejecutar la aplicación solo si este archivo se ejecuta directamente
 if __name__ == '__main__':
@@ -201,5 +226,7 @@ if __name__ == '__main__':
     print("  • /unidad2/proyecto/")
     print("  • /unidad2/portafolio/")
     print("  • /unidad2/portafolio/checkpoint1/")
+    print("  • /unidad2/portafolio/checkpoint2/")
+    print("  • /unidad2/portafolio/checkpoint3/")
     print("====================================\n")
     app.run(debug=True, host='127.0.0.1', port=502)
