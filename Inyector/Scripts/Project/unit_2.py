@@ -1,12 +1,16 @@
 import os, traceback, pandas as pd, requests
 from typing import Literal
+from tqdm import tqdm
 
 class Proyecto_2_Data:
     # =============== CONSTRUCTOR ===============
-    def __init__(self,tipo_envio:Literal['local','cloud'] = 'local'):
+    def __init__(self,tipo_envio:Literal['local','cloud','docker'] = 'docker'):
         self.location_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-        if tipo_envio == 'local':   self.link = 'http://api_visualization:503'
+        if tipo_envio == 'docker':  self.link = 'http://api_visualization:503'
         elif tipo_envio == 'cloud': self.link = 'https://upy-homeworks.xpert-ia.com.mx/visualization-tools/'
+        elif tipo_envio == 'local': self.link = 'http://0.0.0.0:503/'
+        else: raise Exception(f'Favor de ingresar un tipo de envio: {tipo_envio}')
+        print(f'{"="*15} Subiendo info a: {self.link} {"="*15}')
 
     # =============== METODOS PRIVADOS ===============
     def __cargar_datos(self,):
@@ -18,14 +22,14 @@ class Proyecto_2_Data:
 
         return jobs_df, locations_df
 
-    def __subir_df(self,dataframe: pd.DataFrame, table: str, batch_size: int = 250):
+    def __subir_df(self,dataframe: pd.DataFrame, table: str, batch_size: int = 1000):
         """
         Sube un DataFrame a la base de datos en lotes.
         
         Args:
             dataframe: DataFrame a subir
             table: Nombre de la tabla destino
-            batch_size: Tamaño de cada lote (default: 250)
+            batch_size: Tamaño de cada lote (default: 1000)
         
         Returns:
             dict: Resumen de la operación con éxitos y errores
@@ -42,9 +46,8 @@ class Proyecto_2_Data:
         }
         
         print(f"📊 Iniciando carga de {total_filas:,} registros en {total_lotes} lotes de {batch_size}")
-        print("=" * 70)
         
-        for i in range(0, total_filas, batch_size):
+        for i in tqdm(range(0, total_filas, batch_size)):
             lote_num = (i // batch_size) + 1
             batch = dataframe.iloc[i:i + batch_size]
             registros_en_lote = len(batch)
@@ -69,7 +72,6 @@ class Proyecto_2_Data:
                 resultados['errores'].append(error_msg)
         
         # Resumen final
-        print("=" * 70)
         print(f"🏁 Carga completada:")
         print(f"   ✅ Registros exitosos: {resultados['exitosos']:,}/{total_filas:,}")
         print(f"   ❌ Registros fallidos: {resultados['fallidos']:,}/{total_filas:,}")
@@ -542,6 +544,3 @@ class Proyecto_2_Data:
         except:
             return {"status":"error","info":"Fallo el metodo GET","detalles":traceback.format_exc().splitlines()}, 500
         
-if __name__ == '__main__':
-    data = Proyecto_2_Data('cloud')
-    data.inyectar_información()
