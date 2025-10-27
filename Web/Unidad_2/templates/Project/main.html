@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Salary Analytics Dashboard</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
+    
+    <!-- D3.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://d3js.org/topojson.v3.min.js"></script>
+    
+    <!-- Tabler Icons -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" as="style">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('unidad2_proyecto_static', filename='css/main.css') }}">
+</head>
+<body>
+
+    <div class="dashboard">
+        <!-- Header -->
+        <div class="header">
+            <h1>Tech Salary Analytics</h1>
+            <p>AI Impact Analysis & Global Workforce Intelligence</p>
+            
+            <!-- Back Button inside header -->
+            <button class="back-button" onclick="window.history.back()">
+                <i class="ti ti-arrow-left"></i>
+                <span>Back</span>
+            </button>
+        </div>
+
+        <!-- Tab System -->
+        <div class="tabs">
+            <button class="tab-button active" data-tab="overview" onclick="changeTab('overview')">
+                <i class="ti ti-chart-line"></i>
+                <span>Salary Evolution</span>
+            </button>
+            <button class="tab-button" data-tab="volatilidad" onclick="changeTab('volatilidad')">
+                <i class="ti ti-world"></i>
+                <span>Global Distribution</span>
+            </button>
+            <button class="tab-button" data-tab="detalle" onclick="changeTab('detalle')">
+                <i class="ti ti-chart-bar"></i>
+                <span>Details</span>
+            </button>
+        </div>
+
+        <!-- Tab 1: Salary Evolution -->
+        <div id="overview" class="tab-content active">
+            
+            <!-- Temporal Evolution Chart -->
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-chart-line"></i>
+                    Global Tech Salary Evolution: Pre/Post-AI Impact (2020-2025)
+                </div>
+                <div class="chart-description">
+                    This chart shows the <strong>evolution of average tech salaries</strong> from 2020 to 2025. 
+                    The vertical line in <strong>2023</strong> marks the massive adoption of AI, showing a clear 
+                    <strong>inflection point</strong> with peak salaries at <strong>$156,580</strong> before stabilization. 
+                    Total growth 2020-2025: <strong>~40%</strong>.
+                </div>
+                <div id="temporal-evolution-chart"></div>
+            </div>
+
+            <!-- Chart Grid -->
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <div class="chart-title">
+                        <i class="ti ti-users"></i>
+                        Salary Evolution by Department (2020-2025)
+                    </div>
+                    <div class="chart-description">
+                        Multi-line chart showing <strong>salary trends</strong> across 11 departments. 
+                        Interactive legend to show/hide specific departments. Animated progression by year.
+                    </div>
+                    <div id="department-evolution-chart"></div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">
+                        <i class="ti ti-building"></i>
+                        AI Impact by Experience Level
+                    </div>
+                    <div class="chart-description">
+                        Grouped bar chart comparing <strong>Pre-AI (2020-2022)</strong> vs <strong>Post-AI (2023-2025)</strong> 
+                        salaries across experience levels. Percentage changes annotated.
+                    </div>
+                    <div id="experience-impact-chart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Global Distribution -->
+        <div id="volatilidad" class="tab-content">
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-map-2"></i>
+                    Global Tech Talent Distribution Map (Post-AI Era 2023-2025)
+                </div>
+                <div class="chart-description">
+                    Interactive <strong>choropleth world map</strong> visualizing geographic concentration of tech jobs 
+                    in the post-AI era. Color intensity represents job density. <strong>United States</strong> leads 
+                    with over 15,000 positions. Hover over countries for detailed metrics.
+                </div>
+                <div id="world-map-chart"></div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <div class="chart-title">
+                        <i class="ti ti-trophy"></i>
+                        Top 10 Countries by Tech Employment
+                    </div>
+                    <div class="chart-description">
+                        Ranking of countries with highest tech job concentration in the post-AI period.
+                    </div>
+                    <div id="top-countries-chart"></div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">
+                        <i class="ti ti-chart-pie"></i>
+                        Organizational Investment by Structure
+                    </div>
+                    <div class="chart-description">
+                        Treemap showing salary investment distribution across organizational hierarchy.
+                    </div>
+                    <div id="treemap-chart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Details -->
+        <div id="detalle" class="tab-content">
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-info-circle"></i>
+                    Additional Analytics
+                </div>
+                <div class="chart-description">
+                    This section is reserved for additional detailed analytics and insights.
+                </div>
+                <div style="padding: 40px; text-align: center; color: #999;">
+                    <i class="ti ti-chart-dots" style="font-size: 64px; margin-bottom: 20px;"></i>
+                    <p style="font-size: 18px;">Additional visualizations coming soon...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('unidad2_proyecto_static', filename='js/main.js') }}"></script>
+</body>
+</html>
