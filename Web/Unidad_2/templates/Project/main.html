@@ -13,11 +13,11 @@
     <script src="https://d3js.org/topojson.v3.min.js"></script>
     
     <!-- Tabler Icons -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" as="style">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('unidad2_proyecto_static', filename='css/main.css') }}">
+
 </head>
 <body>
 
@@ -36,13 +36,13 @@
 
         <!-- Tab System -->
         <div class="tabs">
-            <button class="tab-button active" data-tab="overview" onclick="changeTab('overview')">
+            <button class="tab-button active" data-tab="spatiotemporal" onclick="changeTab('spatiotemporal')">
                 <i class="ti ti-chart-line"></i>
-                <span>Salary Evolution</span>
+                <span>Spatiotemporal Analysis</span>
             </button>
-            <button class="tab-button" data-tab="volatilidad" onclick="changeTab('volatilidad')">
-                <i class="ti ti-world"></i>
-                <span>Global Distribution</span>
+            <button class="tab-button" data-tab="hierarchical" onclick="changeTab('hierarchical')">
+                <i class="ti ti-hierarchy"></i>
+                <span>Hierarchical Analysis</span>
             </button>
             <button class="tab-button" data-tab="detalle" onclick="changeTab('detalle')">
                 <i class="ti ti-chart-bar"></i>
@@ -50,54 +50,10 @@
             </button>
         </div>
 
-        <!-- Tab 1: Salary Evolution -->
-        <div id="overview" class="tab-content active">
+        <!-- Tab 1: Spatiotemporal Analysis -->
+        <div id="spatiotemporal" class="tab-content active">
             
-            <!-- Temporal Evolution Chart -->
-            <div class="chart-container">
-                <div class="chart-title">
-                    <i class="ti ti-chart-line"></i>
-                    Global Tech Salary Evolution: Pre/Post-AI Impact (2020-2025)
-                </div>
-                <div class="chart-description">
-                    This chart shows the <strong>evolution of average tech salaries</strong> from 2020 to 2025. 
-                    The vertical line in <strong>2023</strong> marks the massive adoption of AI, showing a clear 
-                    <strong>inflection point</strong> with peak salaries at <strong>$156,580</strong> before stabilization. 
-                    Total growth 2020-2025: <strong>~40%</strong>.
-                </div>
-                <div id="temporal-evolution-chart"></div>
-            </div>
-
-            <!-- Chart Grid -->
-            <div class="chart-grid">
-                <div class="chart-container">
-                    <div class="chart-title">
-                        <i class="ti ti-users"></i>
-                        Salary Evolution by Department (2020-2025)
-                    </div>
-                    <div class="chart-description">
-                        Multi-line chart showing <strong>salary trends</strong> across 11 departments. 
-                        Interactive legend to show/hide specific departments. Animated progression by year.
-                    </div>
-                    <div id="department-evolution-chart"></div>
-                </div>
-
-                <div class="chart-container">
-                    <div class="chart-title">
-                        <i class="ti ti-building"></i>
-                        AI Impact by Experience Level
-                    </div>
-                    <div class="chart-description">
-                        Grouped bar chart comparing <strong>Pre-AI (2020-2022)</strong> vs <strong>Post-AI (2023-2025)</strong> 
-                        salaries across experience levels. Percentage changes annotated.
-                    </div>
-                    <div id="experience-impact-chart"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 2: Global Distribution -->
-        <div id="volatilidad" class="tab-content">
+            <!-- World Map Chart - PRINCIPAL -->
             <div class="chart-container">
                 <div class="chart-title">
                     <i class="ti ti-map-2"></i>
@@ -111,6 +67,7 @@
                 <div id="world-map-chart"></div>
             </div>
 
+            <!-- Two Medium Charts Grid -->
             <div class="chart-grid">
                 <div class="chart-container">
                     <div class="chart-title">
@@ -125,14 +82,89 @@
 
                 <div class="chart-container">
                     <div class="chart-title">
-                        <i class="ti ti-chart-pie"></i>
-                        Organizational Investment by Structure
+                        <i class="ti ti-users"></i>
+                        Salary Evolution by Department (2020-2025)
                     </div>
                     <div class="chart-description">
-                        Treemap showing salary investment distribution across organizational hierarchy.
+                        Multi-line chart showing <strong>salary trends</strong> across 11 departments. 
+                        Interactive legend to show/hide specific departments.
                     </div>
-                    <div id="treemap-chart"></div>
+                    <div id="department-evolution-chart"></div>
                 </div>
+            </div>
+
+            <!-- Global Salary Evolution Chart - PRINCIPAL -->
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-chart-line"></i>
+                    Global Tech Salary Evolution: Pre/Post-AI Impact (2020-2025)
+                </div>
+                <div class="chart-description">
+                    This chart shows the <strong>evolution of average tech salaries</strong> from 2020 to 2025. 
+                    The vertical line in <strong>2023</strong> marks the massive adoption of AI, showing a clear 
+                    <strong>inflection point</strong> with peak salaries at <strong>$156,580</strong> before stabilization. 
+                    Total growth 2020-2025: <strong>~40%</strong>.
+                </div>
+                <div id="temporal-evolution-chart"></div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Hierarchical Analysis -->
+        <div id="hierarchical" class="tab-content">
+            
+            <!-- Treemap Chart - PRINCIPAL -->
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-hierarchy"></i>
+                    Tech Salary Hierarchy: Region → Country → Department (Treemap)
+                </div>
+                <div class="chart-description">
+                    Hierarchical <strong>treemap visualization</strong> showing salary structure from global regions down to individual departments. 
+                    Size represents <strong>total compensation (salary × jobs)</strong>. 
+                    <strong>Hover to see details</strong> and explore the hierarchy.
+                </div>
+                <div id="hierarchical-treemap-chart"></div>
+            </div>
+
+            <!-- Two Medium Charts Grid -->
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <div class="chart-title">
+                        <i class="ti ti-chart-bubble"></i>
+                        Salary vs Employment Matrix (Bubble Chart)
+                    </div>
+                    <div class="chart-description">
+                        <strong>Bubble scatter plot</strong> analyzing top countries. X-axis = number of jobs (market size), 
+                        Y-axis = average salary (compensation level), bubble size = total payroll investment.
+                    </div>
+                    <div id="hierarchical-bubble-chart"></div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">
+                        <i class="ti ti-chart-donut"></i>
+                        Proportional Workforce Structure (Sunburst)
+                    </div>
+                    <div class="chart-description">
+                        Interactive <strong>sunburst chart</strong> displaying the hierarchical relationship between regions and countries. 
+                        Center represents total workforce, outer rings show regional distribution.
+                    </div>
+                    <div id="hierarchical-sunburst-chart"></div>
+                </div>
+            </div>
+
+            <!-- Matrix Comparison Chart - PRINCIPAL -->
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-layout-grid"></i>
+                    Multi-Dimensional Regional Comparison (4 Metrics)
+                </div>
+                <div class="chart-description">
+                    Comprehensive <strong>4-metric comparison matrix</strong> evaluating regions across: 
+                    Average Salary (compensation level), Total Jobs (market size), Number of Countries (diversification), 
+                    and Salary Range (variance). Enables side-by-side strategic assessment.
+                </div>
+                <div id="hierarchical-matrix-chart"></div>
             </div>
         </div>
 
@@ -146,7 +178,7 @@
                 <div class="chart-description">
                     This section is reserved for additional detailed analytics and insights.
                 </div>
-                <div style="padding: 40px; text-align: center; color: #999;">
+                <div style="padding: 40px; text-align: center; color: #999;">   
                     <i class="ti ti-chart-dots" style="font-size: 64px; margin-bottom: 20px;"></i>
                     <p style="font-size: 18px;">Additional visualizations coming soon...</p>
                 </div>
@@ -159,5 +191,6 @@
 
     <!-- JavaScript -->
     <script src="{{ url_for('unidad2_proyecto_static', filename='js/main.js') }}"></script>
+
 </body>
 </html>
