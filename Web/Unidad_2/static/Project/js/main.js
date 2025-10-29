@@ -229,6 +229,46 @@ const hierarchicalColors = {
     'Asia Pacific': '#10b981'
 };
 
+// Top 10 job roles con salarios (simulados por región)
+const topJobsByRegion = {
+    'North America': [
+        { role: 'AI/ML Engineer', avgSalary: 175000, jobs: 3200 },
+        { role: 'Solutions Architect', avgSalary: 168000, jobs: 2800 },
+        { role: 'DevOps Engineer', avgSalary: 155000, jobs: 3500 },
+        { role: 'Data Scientist', avgSalary: 152000, jobs: 2900 },
+        { role: 'Cloud Engineer', avgSalary: 148000, jobs: 3100 },
+        { role: 'Security Engineer', avgSalary: 145000, jobs: 2400 },
+        { role: 'Full Stack Developer', avgSalary: 138000, jobs: 4200 },
+        { role: 'Product Manager', avgSalary: 142000, jobs: 1800 },
+        { role: 'Backend Engineer', avgSalary: 135000, jobs: 3600 },
+        { role: 'Frontend Developer', avgSalary: 128000, jobs: 2950 }
+    ],
+    'Europe': [
+        { role: 'AI/ML Engineer', avgSalary: 142000, jobs: 2100 },
+        { role: 'Solutions Architect', avgSalary: 135000, jobs: 1850 },
+        { role: 'DevOps Engineer', avgSalary: 125000, jobs: 2400 },
+        { role: 'Data Scientist', avgSalary: 122000, jobs: 1950 },
+        { role: 'Cloud Engineer', avgSalary: 118000, jobs: 2200 },
+        { role: 'Security Engineer', avgSalary: 115000, jobs: 1600 },
+        { role: 'Full Stack Developer', avgSalary: 108000, jobs: 2800 },
+        { role: 'Product Manager', avgSalary: 112000, jobs: 1200 },
+        { role: 'Backend Engineer', avgSalary: 105000, jobs: 2500 },
+        { role: 'Frontend Developer', avgSalary: 98000, jobs: 1900 }
+    ],
+    'Asia Pacific': [
+        { role: 'AI/ML Engineer', avgSalary: 98000, jobs: 1450 },
+        { role: 'Solutions Architect', avgSalary: 92000, jobs: 1200 },
+        { role: 'DevOps Engineer', avgSalary: 85000, jobs: 1600 },
+        { role: 'Data Scientist', avgSalary: 82000, jobs: 1350 },
+        { role: 'Cloud Engineer', avgSalary: 78000, jobs: 1500 },
+        { role: 'Security Engineer', avgSalary: 75000, jobs: 1100 },
+        { role: 'Full Stack Developer', avgSalary: 68000, jobs: 1900 },
+        { role: 'Product Manager', avgSalary: 72000, jobs: 850 },
+        { role: 'Backend Engineer', avgSalary: 65000, jobs: 1700 },
+        { role: 'Frontend Developer', avgSalary: 58000, jobs: 1300 }
+    ]
+};
+
 // ═══════════════════════════════════════════════════════════════════
 // 3. TOOLTIP SYSTEM
 // ═══════════════════════════════════════════════════════════════════
@@ -618,7 +658,7 @@ function drawDepartmentEvolution() {
     const containerWidth = container.node().getBoundingClientRect().width;
     const containerHeight = container.node().getBoundingClientRect().height;
 
-    const margin = { top: 20, right: 30, bottom: 60, left: 80 };
+    const margin = { top: 20, right: 120, bottom: 60, left: 80 };
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
 
@@ -637,10 +677,12 @@ function drawDepartmentEvolution() {
         .domain([60000, d3.max(allSalaries)])
         .range([height, 0]);
 
+    // Grid
     svg.append('g')
         .attr('class', 'grid')
         .call(d3.axisLeft(y).tickSize(-width).tickFormat(''));
 
+    // Axes
     svg.append('g')
         .attr('class', 'axis')
         .attr('transform', `translate(0,${height})`)
@@ -650,6 +692,7 @@ function drawDepartmentEvolution() {
         .attr('class', 'axis')
         .call(d3.axisLeft(y).tickFormat(d => `${(d / 1000).toFixed(0)}K`));
 
+    // Labels
     svg.append('text')
         .attr('x', width / 2)
         .attr('y', height + 50)
@@ -674,9 +717,10 @@ function drawDepartmentEvolution() {
 
     const activeDepartments = new Set(Object.keys(departmentData));
 
+    // Draw lines and points
     Object.entries(departmentData).forEach(([dept, data]) => {
         const lineGroup = svg.append('g')
-            .attr('class', `dept-group-${dept.replace(/\s+/g, '-')}`);
+            .attr('class', `dept-group dept-group-${dept.replace(/\s+/g, '-')}`);
 
         lineGroup.append('path')
             .datum(data)
@@ -719,43 +763,71 @@ function drawDepartmentEvolution() {
             });
     });
 
-    // Create external legend
-    const legendContainer = container.node().parentElement;
-    let externalLegend = legendContainer.querySelector('.department-legend');
+    // Create COMPACT legend on the right side
+    const legendX = width + 15;
+    const legendY = 0;
+    const lineHeight = 20;
 
-    if (!externalLegend) {
-        externalLegend = document.createElement('div');
-        externalLegend.className = 'department-legend';
-        legendContainer.appendChild(externalLegend);
-    }
+    const legend = svg.append('g')
+        .attr('class', 'compact-legend')
+        .attr('transform', `translate(${legendX},${legendY})`);
 
-    externalLegend.innerHTML = '';
+    Object.keys(departmentData).forEach((dept, i) => {
+        const legendItem = legend.append('g')
+            .attr('class', `legend-item legend-item-${dept.replace(/\s+/g, '-')}`)
+            .attr('transform', `translate(0,${i * lineHeight})`)
+            .style('cursor', 'pointer')
+            .on('click', function() {
+                const isActive = activeDepartments.has(dept);
+                if (isActive) {
+                    activeDepartments.delete(dept);
+                    d3.select(this).style('opacity', 0.3);
+                    svg.select(`.dept-group-${dept.replace(/\s+/g, '-')}`).style('opacity', 0.1);
+                } else {
+                    activeDepartments.add(dept);
+                    d3.select(this).style('opacity', 1);
+                    svg.select(`.dept-group-${dept.replace(/\s+/g, '-')}`).style('opacity', 1);
+                }
+            });
 
-    Object.keys(departmentData).forEach(dept => {
-        const legendItem = document.createElement('div');
-        legendItem.className = 'department-legend-item';
-        legendItem.innerHTML = `
-            <div class="department-legend-color" style="background-color: ${departmentColors[dept]}"></div>
-            <div class="department-legend-text">${dept}</div>
-        `;
+        // Color line
+        legendItem.append('line')
+            .attr('x1', 0)
+            .attr('x2', 18)
+            .attr('y1', 0)
+            .attr('y2', 0)
+            .attr('stroke', departmentColors[dept])
+            .attr('stroke-width', 3);
 
-        legendItem.addEventListener('click', function() {
+        // Text label (shortened for space)
+        const shortLabel = dept.length > 18 ? dept.substring(0, 16) + '...' : dept;
+        legendItem.append('text')
+            .attr('x', 22)
+            .attr('y', 4)
+            .style('font-size', '10px')
+            .style('font-weight', '500')
+            .attr('fill', '#333')
+            .text(shortLabel)
+            .append('title')
+            .text(dept);
+
+        legendItem.on('mouseover', function() {
+            d3.select(this).style('opacity', 0.7);
+        })
+        .on('mouseout', function() {
             const isActive = activeDepartments.has(dept);
-            if (isActive) {
-                activeDepartments.delete(dept);
-                this.classList.add('inactive');
-                svg.select(`.dept-group-${dept.replace(/\s+/g, '-')}`).style('opacity', 0.1);
-            } else {
-                activeDepartments.add(dept);
-                this.classList.remove('inactive');
-                svg.select(`.dept-group-${dept.replace(/\s+/g, '-')}`).style('opacity', 1);
-            }
+            d3.select(this).style('opacity', isActive ? 1 : 0.3);
         });
-
-        externalLegend.appendChild(legendItem);
     });
 
-    console.log('✅ Department evolution chart drawn');
+    // Remove external legend if exists
+    const legendContainer = container.node().parentElement;
+    const externalLegend = legendContainer.querySelector('.department-legend');
+    if (externalLegend) {
+        externalLegend.remove();
+    }
+
+    console.log('✅ Department evolution chart with compact legend drawn');
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -960,138 +1032,306 @@ function updateHierarchicalCharts() {
 // ═══════════════════════════════════════════════════════════════════
 // 12. HIERARCHICAL TREEMAP (D3 Pure)
 // ═══════════════════════════════════════════════════════════════════
-
 function drawHierarchicalTreemap() {
     const container = d3.select('#hierarchical-treemap-chart');
-    container.html('');
+    
+    if (!container.select('svg').node()) {
+        container.html('');
+    }
 
     const containerWidth = container.node().getBoundingClientRect().width;
     const containerHeight = container.node().getBoundingClientRect().height;
 
-    const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+    const margin = { top: 60, right: 10, bottom: 30, left: 10 };
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
 
-    const svg = container.append('svg')
-        .attr('width', containerWidth)
-        .attr('height', containerHeight)
-        .append('g')
-        .attr('transform', `translate(${margin.left},${margin.top})`);
-
-    // Build hierarchical data structure
-    const rootData = {
-        name: 'Global',
-        children: hierarchicalData.regions.map(region => ({
-            name: region.name,
-            children: region.countries.map(country => ({
-                name: country.name,
-                value: country.avgSalary * country.jobs,
-                avgSalary: country.avgSalary,
-                jobs: country.jobs
-            })),
-            color: hierarchicalColors[region.name]
-        }))
-    };
-
-    const root = d3.hierarchy(rootData)
-        .sum(d => d.value)
-        .sort((a, b) => b.value - a.value);
-
-    d3.treemap()
-        .size([width, height])
-        .paddingTop(20)
-        .paddingInner(2)
-        (root);
-
-    // Draw cells
-    const cell = svg.selectAll('g')
-        .data(root.leaves())
-        .enter()
-        .append('g')
-        .attr('transform', d => `translate(${d.x0},${d.y0})`);
-
-    cell.append('rect')
-        .attr('width', d => d.x1 - d.x0)
-        .attr('height', d => d.y1 - d.y0)
-        .attr('fill', d => {
-            const region = d.parent.data.name;
-            return hierarchicalColors[region] || '#ccc';
-        })
-        .attr('opacity', 0.8)
-        .attr('stroke', 'white')
-        .attr('stroke-width', 2)
-        .style('cursor', 'pointer')
-        .on('mouseover', function(event, d) {
-            d3.select(this).attr('opacity', 1);
-            showTooltip(event, `
-                <strong>${d.data.name}</strong><br/>
-                Region: ${d.parent.data.name}<br/>
-                Jobs: ${d.data.jobs.toLocaleString()}<br/>
-                Avg Salary: ${d.data.avgSalary.toLocaleString()}<br/>
-                Total Value: ${(d.value / 1000000).toFixed(1)}M
-            `);
-        })
-        .on('mousemove', function(event, d) {
-            showTooltip(event, `
-                <strong>${d.data.name}</strong><br/>
-                Region: ${d.parent.data.name}<br/>
-                Jobs: ${d.data.jobs.toLocaleString()}<br/>
-                Avg Salary: ${d.data.avgSalary.toLocaleString()}<br/>
-                Total Value: ${(d.value / 1000000).toFixed(1)}M
-            `);
-        })
-        .on('mouseout', function() {
-            d3.select(this).attr('opacity', 0.8);
-            hideTooltip();
-        });
-
-    cell.append('text')
-        .attr('x', 5)
-        .attr('y', 15)
-        .style('font-size', '11px')
-        .style('font-weight', 'bold')
-        .style('fill', 'white')
-        .style('pointer-events', 'none')
-        .text(d => {
-            const rectWidth = d.x1 - d.x0;
-            return rectWidth > 80 ? d.data.name : '';
-        });
-
-    cell.append('text')
-        .attr('x', 5)
-        .attr('y', 30)
-        .style('font-size', '9px')
-        .style('fill', 'white')
-        .style('pointer-events', 'none')
-        .text(d => {
-            const rectWidth = d.x1 - d.x0;
-            return rectWidth > 80 ? `${(d.data.avgSalary / 1000).toFixed(0)}K` : '';
-        });
-
-    // Add legend
-    const legendContainer = container.node().parentElement;
-    let legend = legendContainer.querySelector('.hierarchical-legend');
-    
-    if (!legend) {
-        legend = document.createElement('div');
-        legend.className = 'hierarchical-legend';
-        legendContainer.appendChild(legend);
+    let svg = container.select('svg');
+    if (svg.empty()) {
+        svg = container.append('svg')
+            .attr('width', containerWidth)
+            .attr('height', containerHeight);
     }
 
-    legend.innerHTML = '';
-    Object.entries(hierarchicalColors).forEach(([region, color]) => {
-        const item = document.createElement('div');
-        item.className = 'hierarchical-legend-item';
-        item.innerHTML = `
-            <div class="hierarchical-legend-color" style="background-color: ${color}"></div>
-            <div>${region}</div>
-        `;
-        legend.appendChild(item);
-    });
+    let g = svg.select('g.main-group');
+    if (g.empty()) {
+        g = svg.append('g')
+            .attr('class', 'main-group')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+    }
 
-    console.log('✅ Hierarchical Treemap drawn');
+    // Estado global
+    if (!window.treemapState) {
+        window.treemapState = { view: 'global', region: null };
+    }
+
+    // Calcular total global
+    const globalTotal = hierarchicalData.regions.reduce((sum, r) => 
+        sum + r.countries.reduce((s, c) => s + (c.avgSalary * c.jobs), 0), 0);
+
+    function updateTreemap(viewType, selectedRegion = null) {
+        let rootData, total, titleText;
+
+        if (viewType === 'global') {
+            // Vista Global: Mostrar regiones con porcentajes
+            total = globalTotal;
+            const children = hierarchicalData.regions.map(region => {
+                const regionTotal = region.countries.reduce((s, c) => s + (c.avgSalary * c.jobs), 0);
+                const percentage = ((regionTotal / total) * 100).toFixed(1);
+                
+                return {
+                    name: region.name,
+                    value: regionTotal,
+                    percentage: percentage,
+                    avgSalary: region.avgSalary,
+                    totalJobs: region.totalJobs,
+                    type: 'region'
+                };
+            });
+
+            rootData = {
+                name: 'Global',
+                children: children
+            };
+
+            titleText = 'Global View - Click region to drill down';
+
+        } else {
+            // Vista Regional: Mostrar países con porcentajes relativos a la región
+            const regionData = hierarchicalData.regions.find(r => r.name === selectedRegion);
+            total = regionData.countries.reduce((s, c) => s + (c.avgSalary * c.jobs), 0);
+
+            const children = regionData.countries.map(country => {
+                const countryValue = country.avgSalary * country.jobs;
+                const percentage = ((countryValue / total) * 100).toFixed(1);
+
+                return {
+                    name: country.name,
+                    value: countryValue,
+                    percentage: percentage,
+                    avgSalary: country.avgSalary,
+                    jobs: country.jobs,
+                    type: 'country'
+                };
+            });
+
+            rootData = {
+                name: selectedRegion,
+                children: children
+            };
+
+            titleText = `${selectedRegion} (100%) - Right-click to go back`;
+        }
+
+        const root = d3.hierarchy(rootData)
+            .sum(d => d.value)
+            .sort((a, b) => b.value - a.value);
+
+        d3.treemap()
+            .size([width, height])
+            .paddingTop(30)
+            .paddingInner(3)
+            (root);
+
+        // Actualizar celdas con transición
+        const cells = g.selectAll('.treemap-cell')
+            .data(root.leaves(), d => d.data.name);
+
+        // Exit
+        cells.exit()
+            .transition()
+            .duration(600)
+            .style('opacity', 0)
+            .remove();
+
+        // Enter
+        const cellsEnter = cells.enter()
+            .append('g')
+            .attr('class', 'treemap-cell')
+            .style('opacity', 0);
+
+        cellsEnter.append('rect')
+            .attr('class', 'treemap-rect');
+
+        cellsEnter.append('text')
+            .attr('class', 'treemap-name');
+
+        cellsEnter.append('text')
+            .attr('class', 'treemap-percent');
+
+        cellsEnter.append('text')
+            .attr('class', 'treemap-info');
+
+        // Merge
+        const cellsMerge = cellsEnter.merge(cells);
+
+        cellsMerge
+            .transition()
+            .duration(600)
+            .style('opacity', 1)
+            .attr('transform', d => `translate(${d.x0},${d.y0})`);
+
+        cellsMerge.select('.treemap-rect')
+            .style('cursor', d => d.data.type === 'region' ? 'pointer' : 'default')
+            .on('click', function(event, d) {
+                if (d.data.type === 'region') {
+                    window.treemapState.view = 'region';
+                    window.treemapState.region = d.data.name;
+                    updateTreemap('region', d.data.name);
+                }
+            })
+            .on('contextmenu', function(event) {
+                event.preventDefault();
+                if (window.treemapState.view === 'region') {
+                    window.treemapState.view = 'global';
+                    window.treemapState.region = null;
+                    updateTreemap('global');
+                }
+            })
+            .on('mouseover', function(event, d) {
+                d3.select(this).attr('stroke-width', 4);
+                
+                let tooltip = `<strong>${d.data.name}</strong><br/>`;
+                tooltip += `<strong>Percentage: ${d.data.percentage}%</strong><br/><br/>`;
+                
+                if (d.data.type === 'region') {
+                    tooltip += `Total Jobs: ${d.data.totalJobs.toLocaleString()}<br/>`;
+                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}<br/>`;
+                    tooltip += `Total Payroll: $${(d.value / 1000000).toFixed(1)}M<br/>`;
+                    tooltip += `<em>Click to explore countries</em>`;
+                } else {
+                    tooltip += `Jobs: ${d.data.jobs.toLocaleString()}<br/>`;
+                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}<br/>`;
+                    tooltip += `Total Payroll: $${(d.value / 1000000).toFixed(1)}M`;
+                }
+                
+                showTooltip(event, tooltip);
+            })
+            .on('mouseout', function() {
+                d3.select(this).attr('stroke-width', 2);
+                hideTooltip();
+            })
+            .transition()
+            .duration(600)
+            .attr('width', d => d.x1 - d.x0)
+            .attr('height', d => d.y1 - d.y0)
+            .attr('fill', d => {
+                if (d.data.type === 'region') {
+                    return hierarchicalColors[d.data.name];
+                } else {
+                    const region = window.treemapState.region;
+                    return d3.color(hierarchicalColors[region]).brighter(0.3);
+                }
+            })
+            .attr('opacity', 0.85)
+            .attr('stroke', 'white')
+            .attr('stroke-width', 2)
+            .attr('rx', 4);
+
+        // Nombre
+        cellsMerge.select('.treemap-name')
+            .transition()
+            .duration(600)
+            .attr('x', 8)
+            .attr('y', 18)
+            .style('font-size', '13px')
+            .style('font-weight', 'bold')
+            .style('fill', 'white')
+            .style('pointer-events', 'none')
+            .text(d => (d.x1 - d.x0) > 70 ? d.data.name : '');
+
+        // Porcentaje (grande y destacado)
+        cellsMerge.select('.treemap-percent')
+            .transition()
+            .duration(600)
+            .attr('x', 8)
+            .attr('y', 40)
+            .style('font-size', '20px')
+            .style('font-weight', 'bold')
+            .style('fill', 'white')
+            .style('pointer-events', 'none')
+            .text(d => (d.x1 - d.x0) > 70 ? `${d.data.percentage}%` : '');
+
+        // Info adicional
+        cellsMerge.select('.treemap-info')
+            .transition()
+            .duration(600)
+            .attr('x', 8)
+            .attr('y', 56)
+            .style('font-size', '11px')
+            .style('fill', 'white')
+            .style('pointer-events', 'none')
+            .text(d => {
+                if ((d.x1 - d.x0) < 70) return '';
+                if (d.data.type === 'region') {
+                    return `${d.data.totalJobs.toLocaleString()} jobs`;
+                } else {
+                    return `$${(d.data.avgSalary / 1000).toFixed(0)}K avg`;
+                }
+            });
+
+        // Actualizar título
+        svg.selectAll('.treemap-title').remove();
+        
+        svg.append('text')
+            .attr('class', 'treemap-title')
+            .attr('x', containerWidth / 2)
+            .attr('y', 30)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '14px')
+            .style('font-weight', '600')
+            .style('fill', '#666')
+            .style('opacity', 0)
+            .text(titleText)
+            .transition()
+            .duration(400)
+            .style('opacity', 1);
+
+        updateLegend(viewType, selectedRegion);
+    }
+
+    function updateLegend(viewType, region) {
+        const legendContainer = container.node().parentElement;
+        let legend = legendContainer.querySelector('.hierarchical-legend');
+        
+        if (!legend) {
+            legend = document.createElement('div');
+            legend.className = 'hierarchical-legend';
+            legendContainer.appendChild(legend);
+        }
+
+        legend.style.opacity = '0';
+        setTimeout(() => {
+            legend.innerHTML = '';
+            
+            if (viewType === 'global') {
+                Object.entries(hierarchicalColors).forEach(([name, color]) => {
+                    const item = document.createElement('div');
+                    item.className = 'hierarchical-legend-item';
+                    item.innerHTML = `
+                        <div class="hierarchical-legend-color" style="background-color: ${color}"></div>
+                        <div>${name}</div>
+                    `;
+                    legend.appendChild(item);
+                });
+            } else {
+                const item = document.createElement('div');
+                item.className = 'hierarchical-legend-item';
+                item.innerHTML = `
+                    <div class="hierarchical-legend-color" style="background-color: ${hierarchicalColors[region]}"></div>
+                    <div>${region} = 100%</div>
+                `;
+                legend.appendChild(item);
+            }
+            
+            legend.style.transition = 'opacity 0.4s';
+            legend.style.opacity = '1';
+        }, 300);
+    }
+
+    updateTreemap(window.treemapState.view, window.treemapState.region);
+    console.log('✅ Interactive Treemap with percentages drawn');
 }
-
 // ═══════════════════════════════════════════════════════════════════
 // 13. HIERARCHICAL BUBBLE CHART
 // ═══════════════════════════════════════════════════════════════════
@@ -1219,139 +1459,268 @@ function drawHierarchicalBubble() {
         });
 
     // Country labels for larger bubbles
-    svg.selectAll('.country-label')
-        .data(bubbleData.filter(d => d.jobs > 5000))
-        .enter()
-        .append('text')
-        .attr('x', d => x(d.jobs))
-        .attr('y', d => y(d.avgSalary))
-        .attr('text-anchor', 'middle')
-        .attr('dominant-baseline', 'middle')
-        .style('font-size', '10px')
-        .style('font-weight', 'bold')
-        .style('fill', 'white')
-        .style('pointer-events', 'none')
-        .text(d => d.name.substring(0, 3).toUpperCase());
-
-    console.log('✅ Hierarchical Bubble chart drawn');
+    // Country labels for ALL bubbles
+svg.selectAll('.country-label')
+    .data(bubbleData)
+    .enter()
+    .append('text')
+    .attr('x', d => x(d.jobs))
+    .attr('y', d => y(d.avgSalary))
+    .attr('text-anchor', 'middle')
+    .attr('dominant-baseline', 'middle')
+    .style('font-size', d => d.jobs > 5000 ? '11px' : '9px')
+    .style('font-weight', 'bold')
+    .style('fill', 'white')
+    .style('pointer-events', 'none')
+    .text(d => {
+        if (d.jobs > 5000) return d.name.substring(0, 3).toUpperCase();
+        return d.name.substring(0, 2).toUpperCase();
+    });
 }
 
 // ═══════════════════════════════════════════════════════════════════
 // 14. HIERARCHICAL SUNBURST
 // ═══════════════════════════════════════════════════════════════════
-
 function drawHierarchicalSunburst() {
     const container = d3.select('#hierarchical-sunburst-chart');
-    container.html('');
+    
+    if (!container.select('svg').node()) {
+        container.html('');
+    }
 
     const containerWidth = container.node().getBoundingClientRect().width;
     const containerHeight = container.node().getBoundingClientRect().height;
 
-    const width = Math.min(containerWidth, containerHeight);
-    const height = width;
+    const width = Math.min(containerWidth, containerHeight - 40);
     const radius = width / 2;
 
-    const svg = container.append('svg')
-        .attr('width', containerWidth)
-        .attr('height', containerHeight)
-        .append('g')
-        .attr('transform', `translate(${containerWidth / 2},${containerHeight / 2})`);
+    let svg = container.select('svg');
+    if (svg.empty()) {
+        svg = container.append('svg')
+            .attr('width', containerWidth)
+            .attr('height', containerHeight);
+    }
 
-    // Build hierarchical data
-    const rootData = {
-        name: 'Global',
-        children: hierarchicalData.regions.map(region => ({
-            name: region.name,
-            children: region.countries.map(country => ({
-                name: country.name,
-                value: country.jobs
-            }))
-        }))
-    };
+    let g = svg.select('g.sunburst-group');
+    if (g.empty()) {
+        g = svg.append('g')
+            .attr('class', 'sunburst-group')
+            .attr('transform', `translate(${containerWidth / 2},${containerHeight / 2})`);
+    }
 
-    const root = d3.hierarchy(rootData)
-        .sum(d => d.value)
-        .sort((a, b) => b.value - a.value);
+    // Estado global
+    if (!window.sunburstState) {
+        window.sunburstState = { view: 'regions', region: null };
+    }
 
-    const partition = d3.partition()
-        .size([2 * Math.PI, radius]);
+    function updateSunburst(viewType, selectedRegion = null) {
+        let rootData, centerText;
 
-    partition(root);
+        if (viewType === 'regions') {
+            // Vista de regiones
+            const children = hierarchicalData.regions.map(region => ({
+                name: region.name,
+                value: region.totalJobs,
+                avgSalary: region.avgSalary,
+                totalJobs: region.totalJobs
+            }));
 
-    const arc = d3.arc()
-        .startAngle(d => d.x0)
-        .endAngle(d => d.x1)
-        .innerRadius(d => d.y0)
-        .outerRadius(d => d.y1);
+            rootData = {
+                name: 'Global',
+                children: children
+            };
 
-    const path = svg.selectAll('path')
-        .data(root.descendants())
-        .enter()
-        .append('path')
-        .attr('d', arc)
-        .attr('fill', d => {
-            if (d.depth === 0) return '#f5f5f7';
-            if (d.depth === 1) return hierarchicalColors[d.data.name] || '#ccc';
-            const region = d.parent.data.name;
-            const baseColor = hierarchicalColors[region];
-            return d3.color(baseColor).brighter(0.5);
-        })
-        .attr('opacity', d => d.depth === 0 ? 0.3 : 0.8)
-        .attr('stroke', 'white')
-        .attr('stroke-width', 2)
-        .style('cursor', d => d.depth > 0 ? 'pointer' : 'default')
-        .on('mouseover', function(event, d) {
-            if (d.depth === 0) return;
-            d3.select(this).attr('opacity', 1);
+            centerText = 'Click Region';
+
+        } else {
+            // Vista de roles (top 10 + agrupados)
+            const regionJobs = topJobsByRegion[selectedRegion] || [];
             
-            let tooltipHTML = `<strong>${d.data.name}</strong><br/>`;
-            if (d.depth === 1) {
-                const region = hierarchicalData.regions.find(r => r.name === d.data.name);
-                tooltipHTML += `Total Jobs: ${region.totalJobs.toLocaleString()}<br/>`;
-                tooltipHTML += `Avg Salary: ${region.avgSalary.toLocaleString()}`;
-            } else {
-                tooltipHTML += `Jobs: ${d.data.value.toLocaleString()}`;
+            // Ordenar por salario y tomar top 10
+            const sortedJobs = [...regionJobs].sort((a, b) => b.avgSalary - a.avgSalary);
+            const top10 = sortedJobs.slice(0, 10);
+            const rest = sortedJobs.slice(10);
+
+            const children = top10.map(role => ({
+                name: role.role,
+                value: role.jobs,
+                avgSalary: role.avgSalary,
+                jobs: role.jobs,
+                type: 'role'
+            }));
+
+            // Agrupar el resto
+            if (rest.length > 0) {
+                const restJobs = rest.reduce((sum, r) => sum + r.jobs, 0);
+                const restValue = rest.reduce((sum, r) => sum + (r.avgSalary * r.jobs), 0);
+                const restAvgSalary = Math.round(restValue / restJobs);
+
+                children.push({
+                    name: `Other Roles (${rest.length})`,
+                    value: restJobs,
+                    avgSalary: restAvgSalary,
+                    jobs: restJobs,
+                    type: 'grouped'
+                });
             }
-            showTooltip(event, tooltipHTML);
-        })
-        .on('mousemove', function(event, d) {
-            if (d.depth === 0) return;
-            let tooltipHTML = `<strong>${d.data.name}</strong><br/>`;
-            if (d.depth === 1) {
-                const region = hierarchicalData.regions.find(r => r.name === d.data.name);
-                tooltipHTML += `Total Jobs: ${region.totalJobs.toLocaleString()}<br/>`;
-                tooltipHTML += `Avg Salary: ${region.avgSalary.toLocaleString()}`;
-            } else {
-                tooltipHTML += `Jobs: ${d.data.value.toLocaleString()}`;
-            }
-            showTooltip(event, tooltipHTML);
-        })
-        .on('mouseout', function(event, d) {
-            if (d.depth === 0) return;
-            d3.select(this).attr('opacity', 0.8);
-            hideTooltip();
+
+            rootData = {
+                name: selectedRegion,
+                children: children
+            };
+
+            centerText = 'Right-click\nback';
+        }
+
+        const root = d3.hierarchy(rootData)
+            .sum(d => d.value || 0)
+            .sort((a, b) => b.value - a.value);
+
+        const partition = d3.partition()
+            .size([2 * Math.PI, radius]);
+
+        partition(root);
+
+        const arc = d3.arc()
+            .startAngle(d => d.x0)
+            .endAngle(d => d.x1)
+            .innerRadius(d => d.y0)
+            .outerRadius(d => d.y1);
+
+        // Actualizar paths
+        const paths = g.selectAll('path')
+            .data(root.descendants(), d => d.data.name);
+
+        // Exit
+        paths.exit()
+            .transition()
+            .duration(500)
+            .style('opacity', 0)
+            .remove();
+
+        // Enter
+        const pathsEnter = paths.enter()
+            .append('path')
+            .style('opacity', 0);
+
+        // Merge
+        const pathsMerge = pathsEnter.merge(paths);
+
+        pathsMerge
+            .style('cursor', d => d.depth > 0 ? 'pointer' : 'default')
+            .on('click', function(event, d) {
+                if (d.depth === 1 && window.sunburstState.view === 'regions') {
+                    window.sunburstState.view = 'roles';
+                    window.sunburstState.region = d.data.name;
+                    updateSunburst('roles', d.data.name);
+                }
+            })
+            .on('contextmenu', function(event) {
+                event.preventDefault();
+                if (window.sunburstState.view === 'roles') {
+                    window.sunburstState.view = 'regions';
+                    window.sunburstState.region = null;
+                    updateSunburst('regions');
+                }
+            })
+            .on('mouseover', function(event, d) {
+                if (d.depth === 0) return;
+                d3.select(this).attr('opacity', 0.7).attr('stroke-width', 3);
+                
+                let tooltip = `<strong>${d.data.name}</strong><br/>`;
+                
+                if (viewType === 'regions' && d.depth === 1) {
+                    tooltip += `Total Jobs: ${d.data.totalJobs.toLocaleString()}<br/>`;
+                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}<br/>`;
+                    tooltip += `<em>Click to see top 10 roles</em>`;
+                } else if (viewType === 'roles' && d.depth === 1) {
+                    tooltip += `Jobs: ${d.data.jobs.toLocaleString()}<br/>`;
+                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}`;
+                    if (d.data.type === 'grouped') {
+                        const count = parseInt(d.data.name.match(/\((\d+)\)/)[1]);
+                        tooltip += `<br/><em>${count} roles combined</em>`;
+                    }
+                }
+                
+                showTooltip(event, tooltip);
+            })
+            .on('mouseout', function(event, d) {
+                if (d.depth === 0) return;
+                d3.select(this).attr('opacity', 1).attr('stroke-width', 1.5);
+                hideTooltip();
+            })
+            .transition()
+            .duration(500)
+            .style('opacity', 1)
+            .attr('d', arc)
+            .attr('fill', d => {
+                if (d.depth === 0) return '#f5f5f7';
+                if (viewType === 'regions') {
+                    return hierarchicalColors[d.data.name] || '#ccc';
+                } else {
+                    const baseColor = hierarchicalColors[selectedRegion];
+                    return d.data.type === 'grouped' 
+                        ? d3.color(baseColor).brighter(0.8)
+                        : d3.color(baseColor).brighter(0.4);
+                }
+            })
+            .attr('stroke', 'white')
+            .attr('stroke-width', 1.5);
+
+        // Labels
+        g.selectAll('.sunburst-label').remove();
+        
+        g.selectAll('.sunburst-label')
+            .data(root.descendants().filter(d => d.depth === 1 && (d.x1 - d.x0) > 0.1))
+            .enter()
+            .append('text')
+            .attr('class', 'sunburst-label')
+            .attr('transform', d => {
+                const angle = (d.x0 + d.x1) / 2 * 180 / Math.PI - 90;
+                const radius = (d.y0 + d.y1) / 2;
+                return `rotate(${angle}) translate(${radius},0) rotate(${angle > 90 ? 180 : 0})`;
+            })
+            .attr('text-anchor', 'middle')
+            .style('font-size', viewType === 'regions' ? '13px' : '9px')
+            .style('font-weight', 'bold')
+            .style('fill', 'white')
+            .style('pointer-events', 'none')
+            .style('opacity', 0)
+            .text(d => {
+                if (viewType === 'regions') return d.data.name;
+                if (d.data.type === 'grouped') {
+                    const count = parseInt(d.data.name.match(/\((\d+)\)/)[1]);
+                    return `Other (${count})`;
+                }
+                return d.data.name.length > 15 ? d.data.name.substring(0, 12) + '...' : d.data.name;
+            })
+            .transition()
+            .duration(500)
+            .style('opacity', 1);
+
+        // Texto central
+        g.selectAll('.sunburst-center').remove();
+        
+        const centerLines = centerText.split('\n');
+        centerLines.forEach((line, i) => {
+            g.append('text')
+                .attr('class', 'sunburst-center')
+                .attr('text-anchor', 'middle')
+                .attr('y', (i - centerLines.length / 2 + 0.5) * 18)
+                .style('font-size', '14px')
+                .style('font-weight', 'bold')
+                .style('fill', '#333')
+                .style('opacity', 0)
+                .text(line)
+                .transition()
+                .duration(500)
+                .style('opacity', 1);
         });
+    }
 
-    // Add labels for regions (depth 1)
-    svg.selectAll('text')
-        .data(root.descendants().filter(d => d.depth === 1))
-        .enter()
-        .append('text')
-        .attr('transform', d => {
-            const angle = (d.x0 + d.x1) / 2 * 180 / Math.PI - 90;
-            const radius = (d.y0 + d.y1) / 2;
-            return `rotate(${angle}) translate(${radius},0) rotate(${angle > 90 ? 180 : 0})`;
-        })
-        .attr('text-anchor', 'middle')
-        .style('font-size', '11px')
-        .style('font-weight', 'bold')
-        .style('fill', 'white')
-        .style('pointer-events', 'none')
-        .text(d => d.data.name);
-
-    console.log('✅ Hierarchical Sunburst drawn');
+    updateSunburst(window.sunburstState.view, window.sunburstState.region);
+    console.log('✅ Interactive Sunburst with top 10 roles drawn');
 }
-
 // ═══════════════════════════════════════════════════════════════════
 // 15. HIERARCHICAL MATRIX (4 BAR CHARTS)
 // ═══════════════════════════════════════════════════════════════════
