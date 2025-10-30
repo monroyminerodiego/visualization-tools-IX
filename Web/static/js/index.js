@@ -19,7 +19,7 @@ const unitsData = [
         number: 2,
         title: "Statistical Analysis",
         description: "Statistical methods applied to visualization and analysis of complex datasets.",
-        projectEnabled: false,  // Project deshabilitado temporalmente
+        projectEnabled: true,  // Project deshabilitado temporalmente
         portfolioEnabled: true
     }
 ];
