@@ -201,9 +201,26 @@ def checkpoint3_css(filename):
 
 @app.route('/static/Portfolio/js/checkpoint3/<path:filename>')
 def checkpoint3_js(filename):
-    """Servir JS de Checkpoint 3"""
+    """Servir JS y JSON de Checkpoint 3"""
     static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio', 'js', 'checkpoint3')
+    # Debug logging
+    print(f"📁 Sirviendo: {filename}")
+    print(f"📂 Desde: {static_dir}")
+    if not os.path.exists(os.path.join(static_dir, filename)):
+        print(f"❌ Archivo no encontrado: {filename}")
     return send_from_directory(static_dir, filename)
+# =============== RUTA ESPECÍFICA PARA JSON DE CHECKPOINT 3 ===============
+@app.route('/portfolio/unit2/checkpoint3/congress_network_data.json')
+def checkpoint3_json_direct():
+    """Servir JSON de Checkpoint 3 directamente"""
+    static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Portfolio', 'js', 'checkpoint3')
+    json_file = 'congress_network_data.json'
+    print(f"📊 Sirviendo JSON de checkpoint3: {json_file}")
+    print(f"📂 Directorio: {static_dir}")
+    full_path = os.path.join(static_dir, json_file)
+    print(f"📍 Ruta completa: {full_path}")
+    print(f"✅ Existe: {os.path.exists(full_path)}")
+    return send_from_directory(static_dir, json_file)
 
 
 # Ejecutar la aplicación solo si este archivo se ejecuta directamente
