@@ -611,7 +611,7 @@ function drawCentralityComparison() {
     const containerWidth = container.node().getBoundingClientRect().width;
     const containerHeight = container.node().getBoundingClientRect().height;
     
-    const margin = { top: 40, right: 120, bottom: 80, left: 80 };
+    const margin = { top: 20, right: 30, bottom: 60, left: 60 };
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
     
@@ -622,83 +622,45 @@ function drawCentralityComparison() {
         .append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
     
-    // Obtener top 5 de cada métrica y unir los nodos únicos
+    const comparisonNodes = topInfluencers.pagerank.slice(0, 5).map(d => d.node);
     const metrics = ['pagerank', 'betweenness', 'indegree'];
-    const allTopNodes = new Set();
-    
-    metrics.forEach(metric => {
-        topInfluencers[metric].slice(0, 5).forEach(d => allTopNodes.add(d.node));
-    });
-    
-    const comparisonNodes = Array.from(allTopNodes).slice(0, 8); // Max 8 nodos
-    
-    // Normalizar datos por métrica (0-100 scale)
-    const normalizedData = comparisonNodes.map(node => {
-        const nodeData = { node };
-        metrics.forEach(metric => {
-            const influencer = topInfluencers[metric].find(d => d.node === node);
-            const rawValue = influencer ? influencer.score : 0;
-            
-            // Normalizar a escala 0-100 dentro de cada métrica
-            const maxInMetric = d3.max(topInfluencers[metric], d => d.score);
-            nodeData[metric] = (rawValue / maxInMetric) * 100;
-            nodeData[`${metric}_raw`] = rawValue;
-        });
-        
-        // Calcular ranking en cada métrica
-        metrics.forEach(metric => {
-            const ranking = topInfluencers[metric].findIndex(d => d.node === node) + 1;
-            nodeData[`${metric}_rank`] = ranking > 0 ? ranking : 'N/A';
-        });
-        
-        return nodeData;
-    });
-    
-    // Ordenar por promedio de métricas normalizadas
-    normalizedData.sort((a, b) => {
-        const avgA = (a.pagerank + a.betweenness + a.indegree) / 3;
-        const avgB = (b.pagerank + b.betweenness + b.indegree) / 3;
-        return avgB - avgA;
-    });
     
     const x0 = d3.scaleBand()
-        .domain(normalizedData.map(d => d.node))
+        .domain(comparisonNodes)
         .range([0, width])
-        .padding(0.2);
+        .padding(0.1);
     
     const x1 = d3.scaleBand()
         .domain(metrics)
         .range([0, x0.bandwidth()])
-        .padding(0.1);
+        .padding(0.05);
+    
+    const normalizedData = comparisonNodes.map(node => {
+        const nodeData = { node };
+        metrics.forEach(metric => {
+            const influencer = topInfluencers[metric].find(d => d.node === node);
+            nodeData[metric] = influencer ? influencer.score : 0;
+        });
+        return nodeData;
+    });
+    
+    const maxValue = d3.max(normalizedData, d => 
+        Math.max(d.pagerank || 0, d.betweenness || 0, d.indegree || 0)
+    );
     
     const y = d3.scaleLinear()
-        .domain([0, 100])
+        .domain([0, maxValue * 1.1])
         .range([height, 0]);
     
-    // Grid lines
-    svg.append('g')
-        .attr('class', 'grid')
-        .call(d3.axisLeft(y)
-            .tickSize(-width)
-            .tickFormat('')
-        )
-        .style('stroke', '#e2e8f0')
-        .style('stroke-opacity', 0.3);
-    
-    // Ejes
     svg.append('g')
         .attr('class', 'axis')
         .attr('transform', `translate(0,${height})`)
-        .call(d3.axisBottom(x0))
-        .selectAll('text')
-        .style('font-size', '11px')
-        .style('font-weight', '600');
+        .call(d3.axisBottom(x0));
     
     svg.append('g')
         .attr('class', 'axis')
-        .call(d3.axisLeft(y).tickFormat(d => d + '%'));
+        .call(d3.axisLeft(y));
     
-    // Grupos de barras
     const metricGroups = svg.selectAll('.metric-group')
         .data(normalizedData)
         .enter()
@@ -706,162 +668,47 @@ function drawCentralityComparison() {
         .attr('class', 'metric-group')
         .attr('transform', d => `translate(${x0(d.node)},0)`);
     
-    // Dibujar barras con animación
-    metrics.forEach((metric, i) => {
+    metrics.forEach((metric) => {
         metricGroups.append('rect')
             .attr('x', x1(metric))
-            .attr('y', height)
-            .attr('width', x1.bandwidth())
-            .attr('height', 0)
-            .attr('fill', centralityColors[metric])
-            .attr('rx', 3)
-            .attr('opacity', 0.85)
-            .style('cursor', 'pointer')
-            .transition()
-            .duration(800)
-            .delay((d, i) => i * 100)
             .attr('y', d => y(d[metric] || 0))
-            .attr('height', d => height - y(d[metric] || 0));
-        
-        // Eventos después de la transición
-        metricGroups.selectAll('rect')
+            .attr('width', x1.bandwidth())
+            .attr('height', d => height - y(d[metric] || 0))
+            .attr('fill', centralityColors[metric])
+            .attr('opacity', 0.8)
             .on('mouseover', function(event, d) {
-                d3.select(this)
-                    .attr('opacity', 1)
-                    .attr('stroke', '#1e293b')
-                    .attr('stroke-width', 2);
-                
-                const metricName = d3.select(this).datum();
-                const currentMetric = metrics[Math.floor((d3.select(this).attr('x') / x1.bandwidth()))];
-                
+                d3.select(this).attr('opacity', 1);
                 showTooltip(event, `
-                    <div style="min-width: 200px;">
-                        <strong style="font-size: 1.1em;">Member ${d.node}</strong><br/>
-                        <hr style="margin: 8px 0; border: none; border-top: 1px solid #e2e8f0;">
-                        <strong style="color: ${centralityColors[currentMetric]};">${currentMetric.toUpperCase()}</strong><br/>
-                        Normalized: ${d[currentMetric].toFixed(1)}%<br/>
-                        Raw Value: ${d[`${currentMetric}_raw`].toFixed(4)}<br/>
-                        Ranking: #${d[`${currentMetric}_rank`]}
-                    </div>
+                    <strong>Miembro ${d.node}</strong><br/>
+                    Métrica: ${metric}<br/>
+                    Valor: ${(d[metric] || 0).toFixed(4)}
                 `);
             })
             .on('mouseout', function() {
-                d3.select(this)
-                    .attr('opacity', 0.85)
-                    .attr('stroke', 'none');
+                d3.select(this).attr('opacity', 0.8);
                 hideTooltip();
             });
     });
     
-    // Línea promedio para cada miembro
-    metricGroups.append('line')
-        .attr('x1', 0)
-        .attr('x2', x0.bandwidth())
-        .attr('y1', d => {
-            const avg = (d.pagerank + d.betweenness + d.indegree) / 3;
-            return y(avg);
-        })
-        .attr('y2', d => {
-            const avg = (d.pagerank + d.betweenness + d.indegree) / 3;
-            return y(avg);
-        })
-        .attr('stroke', '#64748b')
-        .attr('stroke-width', 2)
-        .attr('stroke-dasharray', '4,2')
-        .style('opacity', 0)
-        .transition()
-        .duration(1000)
-        .delay(1000)
-        .style('opacity', 0.6);
-    
-    // Etiquetas de valor (opcional, solo para valores altos)
-    metricGroups.selectAll('.value-label')
-        .data(d => metrics.map(m => ({node: d.node, metric: m, value: d[m]})))
-        .enter()
-        .filter(d => d.value > 20) // Solo mostrar si es mayor a 20%
-        .append('text')
-        .attr('class', 'value-label')
-        .attr('x', d => x1(d.metric) + x1.bandwidth() / 2)
-        .attr('y', d => y(d.value) - 5)
-        .attr('text-anchor', 'middle')
-        .style('font-size', '9px')
-        .style('font-weight', 'bold')
-        .style('fill', '#1e293b')
-        .style('opacity', 0)
-        .text(d => d.value.toFixed(0) + '%')
-        .transition()
-        .duration(500)
-        .delay(1200)
-        .style('opacity', 1);
-    
-    // Leyenda mejorada
     const legend = svg.append('g')
-        .attr('transform', `translate(${width + 20}, 0)`);
-    
-    legend.append('text')
-        .attr('x', 0)
-        .attr('y', -10)
-        .style('font-size', '12px')
-        .style('font-weight', 'bold')
-        .style('fill', '#1e293b')
-        .text('Metrics');
+        .attr('transform', `translate(0,${height + 40})`);
     
     metrics.forEach((metric, i) => {
-        const legendRow = legend.append('g')
-            .attr('transform', `translate(0, ${i * 25})`);
-        
-        legendRow.append('rect')
-            .attr('x', 0)
+        legend.append('rect')
+            .attr('x', i * 100)
             .attr('y', 0)
-            .attr('width', 18)
-            .attr('height', 18)
-            .attr('rx', 3)
-            .attr('fill', centralityColors[metric])
-            .attr('opacity', 0.85);
+            .attr('width', 15)
+            .attr('height', 15)
+            .attr('fill', centralityColors[metric]);
         
-        legendRow.append('text')
-            .attr('x', 25)
-            .attr('y', 13)
-            .style('font-size', '11px')
-            .style('fill', '#475569')
-            .text(metric.charAt(0).toUpperCase() + metric.slice(1));
+        legend.append('text')
+            .attr('x', i * 100 + 20)
+            .attr('y', 12)
+            .style('font-size', '12px')
+            .text(metric);
     });
     
-    // Nota explicativa
-    legend.append('text')
-        .attr('x', 0)
-        .attr('y', metrics.length * 25 + 20)
-        .style('font-size', '9px')
-        .style('fill', '#94a3b8')
-        .style('font-style', 'italic')
-        .text('Values normalized')
-        .append('tspan')
-        .attr('x', 0)
-        .attr('dy', 12)
-        .text('to 0-100% scale');
-    
-    // Título del eje Y
-    svg.append('text')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', -60)
-        .attr('x', -(height / 2))
-        .style('text-anchor', 'middle')
-        .style('font-size', '12px')
-        .style('font-weight', '600')
-        .attr('fill', '#475569')
-        .text('Normalized Score (%)');
-    
-    // Título del eje X
-    svg.append('text')
-        .attr('x', width / 2)
-        .attr('y', height + 50)
-        .attr('text-anchor', 'middle')
-        .style('font-size', '12px')
-        .style('font-weight', '600')
-        .attr('fill', '#475569')
-        .text('Congress Members');
-    
-    console.log('✅ Comparación de centralidades mejorada dibujada');
+    console.log('✅ Comparación de centralidades dibujada');
 }
 
 // ═══════════════════════════════════════════════════════════════════
