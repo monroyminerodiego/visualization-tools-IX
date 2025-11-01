@@ -3,11 +3,11 @@
  * CONGRESS TWITTER NETWORK ANALYTICS DASHBOARD - JAVASCRIPT
  * ═══════════════════════════════════════════════════════════════════
  * 
- * ANÁLISIS DE REDES SOCIALES DEL CONGRESO DE EE.UU.
+ * SOCIAL NETWORK ANALYSIS OF U.S. CONGRESS
  */
 
 // ═══════════════════════════════════════════════════════════════════
-// 1. CONFIGURACIÓN DE COLORES Y CONSTANTES
+// 1. COLOR CONFIGURATION AND CONSTANTS
 // ═══════════════════════════════════════════════════════════════════
 
 const communityColors = {
@@ -25,8 +25,15 @@ const centralityColors = {
     'outdegree': '#38b2ac'
 };
 
+const centralityDescriptions = {
+    'pagerank': 'Ranking of most influential Congress members by PageRank. This metric identifies members who are connected to other highly connected members, indicating overall network importance.',
+    'betweenness': 'Ranking of most influential Congress members by Betweenness Centrality. This metric identifies members who act as bridges between different groups, controlling information flow.',
+    'indegree': 'Ranking of most influential Congress members by In-Degree. This metric shows members who receive the most attention or connections from others.',
+    'outdegree': 'Ranking of most influential Congress members by Out-Degree. This metric shows members who actively reach out and connect with the most other members.'
+};
+
 // ═══════════════════════════════════════════════════════════════════
-// 2. VARIABLES GLOBALES PARA DATOS
+// 2. GLOBAL VARIABLES FOR DATA
 // ═══════════════════════════════════════════════════════════════════
 
 let communityData = {};
@@ -39,15 +46,14 @@ let networkData = {};
 let statsData = {};
 
 // ═══════════════════════════════════════════════════════════════════
-// 3. CARGAR DATOS DESDE JSON
+// 3. LOAD DATA FROM JSON
 // ═══════════════════════════════════════════════════════════════════
 
 async function loadNetworkData() {
     try {
-        console.log('📥 Cargando datos del JSON...');
-        console.log('🔍 URL actual:', window.location.href);
+        console.log('📥 Loading JSON data...');
+        console.log('🔍 Current URL:', window.location.href);
         
-        // Intentar múltiples rutas en orden
         const possiblePaths = [
             '/portfolio/unit2/checkpoint3/congress_network_data.json',
             '/static/Portfolio/js/checkpoint3/congress_network_data.json',
@@ -59,26 +65,25 @@ async function loadNetworkData() {
         let successfulPath = null;
         
         for (const path of possiblePaths) {
-            console.log(`🔄 Intentando ruta: ${path}`);
+            console.log(`🔄 Trying path: ${path}`);
             try {
                 response = await fetch(path);
                 if (response.ok) {
                     successfulPath = path;
-                    console.log(`✅ Ruta exitosa: ${path}`);
+                    console.log(`✅ Successful path: ${path}`);
                     break;
                 }
             } catch (err) {
-                console.log(`❌ Fallo en ruta: ${path}`);
+                console.log(`❌ Failed path: ${path}`);
             }
         }
         
         if (!response || !response.ok) {
-            throw new Error(`No se pudo cargar el JSON desde ninguna ruta. Último intento: ${possiblePaths[possiblePaths.length - 1]}`);
+            throw new Error(`Could not load JSON from any path`);
         }
         
         const data = await response.json();
         
-        // Asignar datos a variables globales
         communityData = data.communities;
         topInfluencers = data.topInfluencers;
         degreeDistribution = data.degreeDistribution;
@@ -88,24 +93,22 @@ async function loadNetworkData() {
         networkData = data.network;
         statsData = data.stats;
         
-        console.log('✅ Datos cargados exitosamente:');
-        console.log(`   • ${statsData.num_nodes} nodos totales`);
-        console.log(`   • ${statsData.num_edges} aristas totales`);
-        console.log(`   • ${statsData.num_communities} comunidades`);
-        console.log(`   • ${networkData.nodes.length} nodos en visualización`);
-        console.log(`   • ${networkData.links.length} enlaces en visualización`);
+        console.log('✅ Data loaded successfully:');
+        console.log(`   • ${statsData.num_nodes} total nodes`);
+        console.log(`   • ${statsData.num_edges} total edges`);
+        console.log(`   • ${statsData.num_communities} communities`);
         
         return true;
         
     } catch (error) {
-        console.error('❌ Error cargando datos:', error);
-        alert('Error al cargar los datos del análisis. Verifica que el archivo JSON esté en la ubicación correcta.');
+        console.error('❌ Error loading data:', error);
+        alert('Error loading analysis data. Check that the JSON file is in the correct location.');
         return false;
     }
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 4. SISTEMA DE TOOLTIPS
+// 4. TOOLTIP SYSTEM
 // ═══════════════════════════════════════════════════════════════════
 
 function showTooltip(event, html) {
@@ -147,7 +150,7 @@ function hideTooltip() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 5. SISTEMA DE PESTAÑAS
+// 5. TAB SYSTEM
 // ═══════════════════════════════════════════════════════════════════
 
 function changeTab(tabName) {
@@ -182,24 +185,24 @@ function changeTab(tabName) {
             break;
     }
     
-    console.log(`✅ Pestaña cambiada a: ${tabName}`);
+    console.log(`✅ Tab changed to: ${tabName}`);
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 6. FUNCIONES DE INICIALIZACIÓN
+// 6. INITIALIZATION FUNCTIONS
 // ═══════════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', async function() {
-    console.log('🚀 Dashboard de Redes del Congreso inicializando...');
+    console.log('🚀 Congress Network Dashboard initializing...');
     
     const dataLoaded = await loadNetworkData();
     
     if (dataLoaded) {
         updateOverviewCharts();
         setupResponsiveResize();
-        console.log('✅ Dashboard inicializado correctamente');
+        console.log('✅ Dashboard initialized correctly');
     } else {
-        console.error('❌ No se pudo inicializar el dashboard');
+        console.error('❌ Could not initialize dashboard');
     }
 });
 
@@ -218,7 +221,7 @@ function setupResponsiveResize() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 7. FUNCIONES DE ACTUALIZACIÓN POR PESTAÑA
+// 7. UPDATE FUNCTIONS BY TAB
 // ═══════════════════════════════════════════════════════════════════
 
 function updateOverviewCharts() {
@@ -235,7 +238,6 @@ function updateInfluencersCharts() {
 function updateInteractionsCharts() {
     drawInteractionTypes();
     drawTemporalEvolution();
-    drawInteractionHeatmap();
 }
 
 function updateCommunitiesCharts() {
@@ -244,7 +246,7 @@ function updateCommunitiesCharts() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 8. FUNCIONES DE DIBUJO - PESTAÑA OVERVIEW
+// 8. DRAWING FUNCTIONS - OVERVIEW TAB
 // ═══════════════════════════════════════════════════════════════════
 
 function drawNetworkGraph() {
@@ -279,7 +281,6 @@ function drawNetworkGraph() {
         .attr('stroke-opacity', 0.6)
         .attr('stroke-width', d => Math.sqrt(d.value));
     
-    // Nodos con mejor interactividad
     const node = svg.append('g')
         .selectAll('circle')
         .data(nodes)
@@ -294,12 +295,10 @@ function drawNetworkGraph() {
             .on('drag', dragged)
             .on('end', dragended))
         .on('mouseover', function(event, d) {
-            // Resaltar nodo
             d3.select(this)
                 .attr('stroke', '#fbbf24')
                 .attr('stroke-width', 3);
             
-            // Resaltar conexiones
             link.style('stroke-opacity', l => 
                 (l.source.id === d.id || l.target.id === d.id) ? 0.8 : 0.1
             )
@@ -311,19 +310,17 @@ function drawNetworkGraph() {
             );
             
             showTooltip(event, `
-                <strong>Miembro ${d.id}</strong><br/>
-                Comunidad: ${d.group}<br/>
-                Centralidad: ${d.centrality.toFixed(2)}<br/>
-                Grado: ${d.degree || 'N/A'}
+                <strong>Member ${d.id}</strong><br/>
+                Community: ${d.group}<br/>
+                Centrality: ${d.centrality.toFixed(2)}<br/>
+                Degree: ${d.degree || 'N/A'}
             `);
         })
         .on('mouseout', function() {
-            // Restaurar nodo
             d3.select(this)
                 .attr('stroke', '#fff')
                 .attr('stroke-width', 2);
             
-            // Restaurar conexiones
             link.style('stroke-opacity', 0.4)
                 .style('stroke', '#94a3b8')
                 .style('stroke-width', d => Math.max(Math.sqrt(d.value), 2));
@@ -373,7 +370,7 @@ function drawNetworkGraph() {
         d.fy = null;
     }
     
-    console.log('✅ Gráfico de red dibujado con datos reales');
+    console.log('✅ Network graph drawn');
 }
 
 function drawCommunityDistribution() {
@@ -419,8 +416,8 @@ function drawCommunityDistribution() {
             const percentage = ((d.data.size / totalNodes) * 100).toFixed(1);
             showTooltip(event, `
                 <strong>${d.data.label}</strong><br/>
-                Miembros: ${d.data.size}<br/>
-                Porcentaje: ${percentage}%
+                Members: ${d.data.size}<br/>
+                Percentage: ${percentage}%
             `);
         })
         .on('mouseout', function() {
@@ -436,7 +433,7 @@ function drawCommunityDistribution() {
         .attr('fill', 'white')
         .text(d => d.data.label);
     
-    console.log('✅ Distribución de comunidades dibujada');
+    console.log('✅ Community distribution drawn');
 }
 
 function drawDegreeDistribution() {
@@ -488,8 +485,8 @@ function drawDegreeDistribution() {
         .on('mouseover', function(event, d) {
             d3.select(this).attr('opacity', 1);
             showTooltip(event, `
-                <strong>Grado: ${d.degree}</strong><br/>
-                Miembros: ${d.count}
+                <strong>Degree: ${d.degree}</strong><br/>
+                Members: ${d.count}
             `);
         })
         .on('mouseout', function() {
@@ -503,7 +500,7 @@ function drawDegreeDistribution() {
         .attr('text-anchor', 'middle')
         .style('font-size', '12px')
         .attr('fill', '#666')
-        .text('Grado de Conexión');
+        .text('Connection Degree');
     
     svg.append('text')
         .attr('transform', 'rotate(-90)')
@@ -512,13 +509,13 @@ function drawDegreeDistribution() {
         .style('text-anchor', 'middle')
         .style('font-size', '12px')
         .attr('fill', '#666')
-        .text('Número de Miembros');
+        .text('Number of Members');
     
-    console.log('✅ Distribución de grado dibujada');
+    console.log('✅ Degree distribution drawn');
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 9. FUNCIONES DE DIBUJO - PESTAÑA INFLUENCERS
+// 9. DRAWING FUNCTIONS - INFLUENCERS TAB
 // ═══════════════════════════════════════════════════════════════════
 
 function drawTopInfluencers() {
@@ -529,8 +526,13 @@ function drawTopInfluencers() {
     const data = topInfluencers[metric];
     
     if (!data || data.length === 0) {
-        console.error('No hay datos para la métrica:', metric);
+        console.error('No data for metric:', metric);
         return;
+    }
+    
+    const descriptionElement = document.querySelector('#top-influencers').parentElement.querySelector('.description-text');
+    if (descriptionElement) {
+        descriptionElement.textContent = centralityDescriptions[metric];
     }
     
     const containerWidth = container.node().getBoundingClientRect().width;
@@ -579,8 +581,8 @@ function drawTopInfluencers() {
         .on('mouseover', function(event, d) {
             d3.select(this).attr('opacity', 1);
             showTooltip(event, `
-                <strong>Miembro ${d.node}</strong><br/>
-                Comunidad: ${d.community}<br/>
+                <strong>Member ${d.node}</strong><br/>
+                Community: ${d.community}<br/>
                 ${metric.toUpperCase()}: ${d.score.toFixed(4)}
             `);
         })
@@ -601,17 +603,27 @@ function drawTopInfluencers() {
         .attr('fill', '#333')
         .text(d => d.score.toFixed(4));
     
-    console.log(`✅ Top influencers por ${metric} dibujado`);
+    console.log(`✅ Top influencers by ${metric} drawn`);
 }
 
 function drawCentralityComparison() {
     const container = d3.select('#centrality-comparison');
     container.html('');
     
+    const metric = document.getElementById('centrality-metric').value;
+    const data = topInfluencers[metric];
+    
+    if (!data || data.length === 0) {
+        console.error('No data for metric:', metric);
+        return;
+    }
+    
+    const top5Data = data.slice(0, 5);
+    
     const containerWidth = container.node().getBoundingClientRect().width;
     const containerHeight = container.node().getBoundingClientRect().height;
     
-    const margin = { top: 20, right: 30, bottom: 60, left: 60 };
+    const margin = { top: 20, right: 30, bottom: 60, left: 100 };
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
     
@@ -622,97 +634,81 @@ function drawCentralityComparison() {
         .append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
     
-    const comparisonNodes = topInfluencers.pagerank.slice(0, 5).map(d => d.node);
-    const metrics = ['pagerank', 'betweenness', 'indegree'];
-    
-    const x0 = d3.scaleBand()
-        .domain(comparisonNodes)
+    const x = d3.scaleBand()
+        .domain(top5Data.map(d => d.node))
         .range([0, width])
-        .padding(0.1);
-    
-    const x1 = d3.scaleBand()
-        .domain(metrics)
-        .range([0, x0.bandwidth()])
-        .padding(0.05);
-    
-    const normalizedData = comparisonNodes.map(node => {
-        const nodeData = { node };
-        metrics.forEach(metric => {
-            const influencer = topInfluencers[metric].find(d => d.node === node);
-            nodeData[metric] = influencer ? influencer.score : 0;
-        });
-        return nodeData;
-    });
-    
-    const maxValue = d3.max(normalizedData, d => 
-        Math.max(d.pagerank || 0, d.betweenness || 0, d.indegree || 0)
-    );
+        .padding(0.2);
     
     const y = d3.scaleLinear()
-        .domain([0, maxValue * 1.1])
+        .domain([0, d3.max(top5Data, d => d.score) * 1.1])
         .range([height, 0]);
     
     svg.append('g')
         .attr('class', 'axis')
         .attr('transform', `translate(0,${height})`)
-        .call(d3.axisBottom(x0));
+        .call(d3.axisBottom(x));
     
     svg.append('g')
         .attr('class', 'axis')
         .call(d3.axisLeft(y));
     
-    const metricGroups = svg.selectAll('.metric-group')
-        .data(normalizedData)
+    svg.selectAll('rect')
+        .data(top5Data)
         .enter()
-        .append('g')
-        .attr('class', 'metric-group')
-        .attr('transform', d => `translate(${x0(d.node)},0)`);
+        .append('rect')
+        .attr('x', d => x(d.node))
+        .attr('y', d => y(d.score))
+        .attr('width', x.bandwidth())
+        .attr('height', d => height - y(d.score))
+        .attr('fill', centralityColors[metric])
+        .attr('opacity', 0.8)
+        .attr('rx', 4)
+        .on('mouseover', function(event, d) {
+            d3.select(this).attr('opacity', 1);
+            showTooltip(event, `
+                <strong>Member ${d.node}</strong><br/>
+                Community: ${d.community}<br/>
+                ${metric.toUpperCase()}: ${d.score.toFixed(4)}
+            `);
+        })
+        .on('mouseout', function() {
+            d3.select(this).attr('opacity', 0.8);
+            hideTooltip();
+        });
     
-    metrics.forEach((metric) => {
-        metricGroups.append('rect')
-            .attr('x', x1(metric))
-            .attr('y', d => y(d[metric] || 0))
-            .attr('width', x1.bandwidth())
-            .attr('height', d => height - y(d[metric] || 0))
-            .attr('fill', centralityColors[metric])
-            .attr('opacity', 0.8)
-            .on('mouseover', function(event, d) {
-                d3.select(this).attr('opacity', 1);
-                showTooltip(event, `
-                    <strong>Miembro ${d.node}</strong><br/>
-                    Métrica: ${metric}<br/>
-                    Valor: ${(d[metric] || 0).toFixed(4)}
-                `);
-            })
-            .on('mouseout', function() {
-                d3.select(this).attr('opacity', 0.8);
-                hideTooltip();
-            });
-    });
+    svg.selectAll('.label')
+        .data(top5Data)
+        .enter()
+        .append('text')
+        .attr('x', d => x(d.node) + x.bandwidth() / 2)
+        .attr('y', d => y(d.score) - 5)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '11px')
+        .style('font-weight', 'bold')
+        .attr('fill', '#333')
+        .text(d => d.score.toFixed(4));
     
     const legend = svg.append('g')
         .attr('transform', `translate(0,${height + 40})`);
     
-    metrics.forEach((metric, i) => {
-        legend.append('rect')
-            .attr('x', i * 100)
-            .attr('y', 0)
-            .attr('width', 15)
-            .attr('height', 15)
-            .attr('fill', centralityColors[metric]);
-        
-        legend.append('text')
-            .attr('x', i * 100 + 20)
-            .attr('y', 12)
-            .style('font-size', '12px')
-            .text(metric);
-    });
+    legend.append('rect')
+        .attr('x', width / 2 - 60)
+        .attr('y', 0)
+        .attr('width', 15)
+        .attr('height', 15)
+        .attr('fill', centralityColors[metric]);
     
-    console.log('✅ Comparación de centralidades dibujada');
+    legend.append('text')
+        .attr('x', width / 2 - 40)
+        .attr('y', 12)
+        .style('font-size', '12px')
+        .text(metric);
+    
+    console.log(`✅ Centrality comparison for ${metric} drawn`);
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 10. FUNCIONES DE DIBUJO - PESTAÑA INTERACTIONS
+// 10. DRAWING FUNCTIONS - INTERACTIONS TAB
 // ═══════════════════════════════════════════════════════════════════
 
 function drawInteractionTypes() {
@@ -758,8 +754,8 @@ function drawInteractionTypes() {
             d3.select(this).attr('opacity', 1);
             showTooltip(event, `
                 <strong>${d.data.type}</strong><br/>
-                Cantidad: ${d.data.count}<br/>
-                Porcentaje: ${d.data.percentage}%
+                Count: ${d.data.count}<br/>
+                Percentage: ${d.data.percentage}%
             `);
         })
         .on('mouseout', function() {
@@ -775,7 +771,7 @@ function drawInteractionTypes() {
         .attr('fill', 'white')
         .text(d => d.data.type);
     
-    console.log('✅ Tipos de interacción dibujados');
+    console.log('✅ Interaction types drawn');
 }
 
 function drawTemporalEvolution() {
@@ -843,7 +839,7 @@ function drawTemporalEvolution() {
             d3.select(this).attr('r', 6).attr('opacity', 1);
             showTooltip(event, `
                 <strong>${d.date.toLocaleDateString()}</strong><br/>
-                Interacciones: ${d.interactions}
+                Interactions: ${d.interactions}
             `);
         })
         .on('mouseout', function() {
@@ -857,7 +853,7 @@ function drawTemporalEvolution() {
         .attr('text-anchor', 'middle')
         .style('font-size', '12px')
         .attr('fill', '#666')
-        .text('Fecha');
+        .text('Date');
     
     svg.append('text')
         .attr('transform', 'rotate(-90)')
@@ -866,164 +862,13 @@ function drawTemporalEvolution() {
         .style('text-anchor', 'middle')
         .style('font-size', '12px')
         .attr('fill', '#666')
-        .text('Interacciones');
+        .text('Interactions');
     
-    console.log('✅ Evolución temporal dibujada');
-}
-
-function drawInteractionHeatmap() {
-    const container = d3.select('#interaction-heatmap');
-    container.html('');
-    
-    // Verificar si hay datos reales en el heatmap
-    const hasRealData = heatmapData.matrix && 
-                       heatmapData.matrix.some(row => row.some(val => val > 0));
-    
-    if (!hasRealData || !heatmapData.matrix || heatmapData.matrix.length === 0) {
-        // Mostrar mensaje informativo si no hay datos
-        container.append('div')
-            .style('display', 'flex')
-            .style('flex-direction', 'column')
-            .style('align-items', 'center')
-            .style('justify-content', 'center')
-            .style('height', '100%')
-            .style('color', '#64748b')
-            .style('text-align', 'center')
-            .style('padding', '40px')
-            .html(`
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="14" width="7" height="7"></rect>
-                    <rect x="3" y="14" width="7" height="7"></rect>
-                </svg>
-                <h3 style="margin: 20px 0 10px 0; color: #475569;">Interaction Heatmap Not Available</h3>
-                <p style="margin: 0; max-width: 400px; line-height: 1.6;">
-                    This visualization requires detailed interaction data between specific members. 
-                    The dataset focuses on community-level analysis rather than individual interactions.
-                </p>
-                <div style="margin-top: 20px; padding: 12px 20px; background: #f1f5f9; border-radius: 8px;">
-                    <strong>Alternative:</strong> Check the <em>Network Graph</em> and <em>Community Analysis</em> 
-                    for relationship patterns.
-                </div>
-            `);
-        
-        console.log('ℹ️ Heatmap omitido - Sin datos de interacciones detalladas');
-        return;
-    }
-    
-    // Si hay datos reales, dibujar el heatmap normal
-    const containerWidth = container.node().getBoundingClientRect().width;
-    const containerHeight = container.node().getBoundingClientRect().height;
-    
-    const margin = { top: 40, right: 30, bottom: 80, left: 80 };
-    const width = containerWidth - margin.left - margin.right;
-    const height = containerHeight - margin.top - margin.bottom;
-    
-    const svg = container.append('svg')
-        .attr('width', containerWidth)
-        .attr('height', containerHeight)
-        .style('display', 'block')
-        .append('g')
-        .attr('transform', `translate(${margin.left},${margin.top})`);
-    
-    const x = d3.scaleBand()
-        .domain(heatmapData.nodes)
-        .range([0, width])
-        .padding(0.05);
-    
-    const y = d3.scaleBand()
-        .domain(heatmapData.nodes)
-        .range([0, height])
-        .padding(0.05);
-    
-    const maxValue = d3.max(heatmapData.matrix.flat());
-    const color = d3.scaleSequential()
-        .interpolator(d3.interpolateBlues)
-        .domain([0, maxValue]);
-    
-    svg.selectAll()
-        .data(heatmapData.matrix.flatMap((row, i) => 
-            row.map((value, j) => ({ 
-                x: heatmapData.nodes[j], 
-                y: heatmapData.nodes[i], 
-                value 
-            }))
-        ))
-        .enter()
-        .append('rect')
-        .attr('x', d => x(d.x))
-        .attr('y', d => y(d.y))
-        .attr('width', x.bandwidth())
-        .attr('height', y.bandwidth())
-        .attr('fill', d => color(d.value))
-        .attr('stroke', 'white')
-        .attr('stroke-width', 1)
-        .on('mouseover', function(event, d) {
-            d3.select(this).attr('stroke-width', 2).attr('stroke', '#fbbf24');
-            showTooltip(event, `
-                <strong>${d.y} → ${d.x}</strong><br/>
-                Interacciones: ${d.value}
-            `);
-        })
-        .on('mouseout', function() {
-            d3.select(this).attr('stroke-width', 1).attr('stroke', 'white');
-            hideTooltip();
-        });
-    
-    svg.selectAll()
-        .data(heatmapData.matrix.flatMap((row, i) => 
-            row.map((value, j) => ({ 
-                x: heatmapData.nodes[j], 
-                y: heatmapData.nodes[i], 
-                value 
-            }))
-        ))
-        .enter()
-        .append('text')
-        .attr('x', d => x(d.x) + x.bandwidth() / 2)
-        .attr('y', d => y(d.y) + y.bandwidth() / 2)
-        .attr('text-anchor', 'middle')
-        .attr('dominant-baseline', 'middle')
-        .style('font-size', '10px')
-        .style('font-weight', 'bold')
-        .attr('fill', d => d.value > maxValue * 0.6 ? 'white' : 'black')
-        .text(d => d.value);
-    
-    svg.append('g')
-        .attr('class', 'axis')
-        .attr('transform', `translate(0,${height})`)
-        .call(d3.axisBottom(x))
-        .selectAll('text')
-        .attr('transform', 'rotate(-45)')
-        .style('text-anchor', 'end');
-    
-    svg.append('g')
-        .attr('class', 'axis')
-        .call(d3.axisLeft(y));
-    
-    svg.append('text')
-        .attr('x', width / 2)
-        .attr('y', height + 50)
-        .attr('text-anchor', 'middle')
-        .style('font-size', '12px')
-        .attr('fill', '#666')
-        .text('Miembro Destino');
-    
-    svg.append('text')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', -50)
-        .attr('x', -(height / 2))
-        .style('text-anchor', 'middle')
-        .style('font-size', '12px')
-        .attr('fill', '#666')
-        .text('Miembro Origen');
-    
-    console.log('✅ Heatmap de interacciones dibujado');
+    console.log('✅ Temporal evolution drawn');
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 11. FUNCIONES DE DIBUJO - PESTAÑA COMMUNITIES
+// 11. DRAWING FUNCTIONS - COMMUNITIES TAB
 // ═══════════════════════════════════════════════════════════════════
 
 function drawCommunityAnalysis() {
@@ -1080,8 +925,8 @@ function drawCommunityAnalysis() {
             const percentage = ((d.size / totalNodes) * 100).toFixed(1);
             showTooltip(event, `
                 <strong>${d.label}</strong><br/>
-                Miembros: ${d.size}<br/>
-                Porcentaje: ${percentage}%
+                Members: ${d.size}<br/>
+                Percentage: ${percentage}%
             `);
         })
         .on('mouseout', function() {
@@ -1101,7 +946,7 @@ function drawCommunityAnalysis() {
         .attr('fill', '#333')
         .text(d => d.size);
     
-    console.log('✅ Análisis de comunidades dibujado');
+    console.log('✅ Community analysis drawn');
 }
 
 function drawCommunityConnections() {
@@ -1116,11 +961,9 @@ function drawCommunityConnections() {
         .attr('height', containerHeight)
         .style('display', 'block');
     
-    // Crear datos de conexiones basados en las comunidades
     const communities = Object.values(communityData);
     const connections = [];
     
-    // Generar conexiones simuladas entre comunidades
     for (let i = 0; i < communities.length; i++) {
         for (let j = i + 1; j < communities.length; j++) {
             connections.push({
@@ -1166,8 +1009,8 @@ function drawCommunityConnections() {
             const totalNodes = communities.reduce((sum, c) => sum + c.size, 0);
             showTooltip(event, `
                 <strong>${d.id}</strong><br/>
-                Miembros: ${d.size}<br/>
-                Porcentaje: ${((d.size / totalNodes) * 100).toFixed(1)}%
+                Members: ${d.size}<br/>
+                Percentage: ${((d.size / totalNodes) * 100).toFixed(1)}%
             `);
         })
         .on('mouseout', hideTooltip);
@@ -1215,15 +1058,16 @@ function drawCommunityConnections() {
         d.fy = null;
     }
     
-    console.log('✅ Conexiones entre comunidades dibujadas');
+    console.log('✅ Community connections drawn');
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 12. FUNCIONES AUXILIARES
+// 12. AUXILIARY FUNCTIONS
 // ═══════════════════════════════════════════════════════════════════
 
 function updateCentralityMetric() {
     drawTopInfluencers();
+    drawCentralityComparison();
 }
 
 function downloadData(format) {
@@ -1270,12 +1114,12 @@ function downloadData(format) {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
     
-    console.log(`✅ Datos descargados en formato ${format}`);
+    console.log(`✅ Data downloaded in ${format} format`);
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 13. LOG DE INICIALIZACIÓN
+// 13. INITIALIZATION LOG
 // ═══════════════════════════════════════════════════════════════════
 
-console.log('📊 Dashboard de Análisis de Redes del Congreso cargado');
-console.log('🔄 Esperando carga de datos desde JSON...');
+console.log('📊 Congress Network Analysis Dashboard loaded');
+console.log('🔄 Waiting for data load from JSON...');
