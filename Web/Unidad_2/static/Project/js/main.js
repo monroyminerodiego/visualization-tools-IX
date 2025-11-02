@@ -1,133 +1,25 @@
 /**
  * ═══════════════════════════════════════════════════════════════════
- * TECH SALARY ANALYTICS DASHBOARD - COMPLETE JAVASCRIPT
+ * TECH SALARY ANALYTICS DASHBOARD - COMPLETE JAVASCRIPT (CORRECTED)
  * Spatiotemporal + Hierarchical + Network Analysis (Pure D3.js)
+ * Consumes data from tech_salary_analytics.json
  * ═══════════════════════════════════════════════════════════════════
  */
 
 // ═══════════════════════════════════════════════════════════════════
-// 1. DATA - SPATIOTEMPORAL ANALYSIS
+// 1. GLOBAL VARIABLES FOR DATA
 // ═══════════════════════════════════════════════════════════════════
 
-const globalSalaryData = [
-    { year: 2020, salary: 102997 },
-    { year: 2021, salary: 102939 },
-    { year: 2022, salary: 130948 },
-    { year: 2023, salary: 156580 },
-    { year: 2024, salary: 146934 },
-    { year: 2025, salary: 144329 }
-];
-
-const departmentData = {
-    'Cybersecurity': [
-        { year: 2020, salary: 95000 },
-        { year: 2021, salary: 98000 },
-        { year: 2022, salary: 125000 },
-        { year: 2023, salary: 152000 },
-        { year: 2024, salary: 148000 },
-        { year: 2025, salary: 145000 }
-    ],
-    'Executive & Leadership': [
-        { year: 2020, salary: 180000 },
-        { year: 2021, salary: 185000 },
-        { year: 2022, salary: 200000 },
-        { year: 2023, salary: 245000 },
-        { year: 2024, salary: 235000 },
-        { year: 2025, salary: 230000 }
-    ],
-    'Engineering & Development': [
-        { year: 2020, salary: 105000 },
-        { year: 2021, salary: 108000 },
-        { year: 2022, salary: 135000 },
-        { year: 2023, salary: 165000 },
-        { year: 2024, salary: 158000 },
-        { year: 2025, salary: 155000 }
-    ],
-    'Operations': [
-        { year: 2020, salary: 75000 },
-        { year: 2021, salary: 78000 },
-        { year: 2022, salary: 95000 },
-        { year: 2023, salary: 115000 },
-        { year: 2024, salary: 110000 },
-        { year: 2025, salary: 108000 }
-    ],
-    'Data & Analytics': [
-        { year: 2020, salary: 110000 },
-        { year: 2021, salary: 115000 },
-        { year: 2022, salary: 140000 },
-        { year: 2023, salary: 170000 },
-        { year: 2024, salary: 162000 },
-        { year: 2025, salary: 158000 }
-    ],
-    'Sales & Consulting': [
-        { year: 2020, salary: 85000 },
-        { year: 2021, salary: 88000 },
-        { year: 2022, salary: 110000 },
-        { year: 2023, salary: 135000 },
-        { year: 2024, salary: 130000 },
-        { year: 2025, salary: 128000 }
-    ],
-    'Information Technology': [
-        { year: 2020, salary: 90000 },
-        { year: 2021, salary: 92000 },
-        { year: 2022, salary: 118000 },
-        { year: 2023, salary: 145000 },
-        { year: 2024, salary: 138000 },
-        { year: 2025, salary: 135000 }
-    ],
-    'Finance & Accounting': [
-        { year: 2020, salary: 80000 },
-        { year: 2021, salary: 82000 },
-        { year: 2022, salary: 105000 },
-        { year: 2023, salary: 130000 },
-        { year: 2024, salary: 125000 },
-        { year: 2025, salary: 122000 }
-    ],
-    'Legal & Compliance': [
-        { year: 2020, salary: 95000 },
-        { year: 2021, salary: 98000 },
-        { year: 2022, salary: 120000 },
-        { year: 2023, salary: 148000 },
-        { year: 2024, salary: 142000 },
-        { year: 2025, salary: 140000 }
-    ],
-    'Human Resources': [
-        { year: 2020, salary: 70000 },
-        { year: 2021, salary: 72000 },
-        { year: 2022, salary: 90000 },
-        { year: 2023, salary: 110000 },
-        { year: 2024, salary: 105000 },
-        { year: 2025, salary: 103000 }
-    ],
-    'Product Management': [
-        { year: 2020, salary: 115000 },
-        { year: 2021, salary: 120000 },
-        { year: 2022, salary: 145000 },
-        { year: 2023, salary: 175000 },
-        { year: 2024, salary: 168000 },
-        { year: 2025, salary: 165000 }
-    ]
-};
-
-const worldMapData = {
-    countries: [
-        { name: 'United States', code: 'USA', jobs: 15234, avgSalary: 148500 },
-        { name: 'United Kingdom', code: 'GBR', jobs: 8750, avgSalary: 132000 },
-        { name: 'Canada', code: 'CAN', jobs: 6890, avgSalary: 125000 },
-        { name: 'Germany', code: 'DEU', jobs: 5620, avgSalary: 118000 },
-        { name: 'Australia', code: 'AUS', jobs: 4320, avgSalary: 135000 },
-        { name: 'India', code: 'IND', jobs: 3950, avgSalary: 45000 },
-        { name: 'France', code: 'FRA', jobs: 3180, avgSalary: 110000 },
-        { name: 'Netherlands', code: 'NLD', jobs: 2890, avgSalary: 115000 },
-        { name: 'Spain', code: 'ESP', jobs: 2450, avgSalary: 95000 },
-        { name: 'Singapore', code: 'SGP', jobs: 2120, avgSalary: 140000 }
-    ]
-};
-
-const iso3ToId = {
-    'USA': 840, 'GBR': 826, 'CAN': 124, 'DEU': 276, 'AUS': 36,
-    'IND': 356, 'FRA': 250, 'NLD': 528, 'ESP': 724, 'SGP': 702
-};
+let globalSalaryData = [];
+let departmentData = {};
+let worldMapData = {};
+let hierarchicalData = {};
+let topJobsByRegion = {};
+let networkData = {};
+let statsData = {};
+let topInfluencers = [];
+let degreeDistribution = [];
+let communityData = [];
 
 const departmentColors = {
     'Cybersecurity': '#667eea',
@@ -143,189 +35,99 @@ const departmentColors = {
     'Product Management': '#3b82f6'
 };
 
-// ═══════════════════════════════════════════════════════════════════
-// 2. HIERARCHICAL DATA
-// ═══════════════════════════════════════════════════════════════════
-
-const hierarchicalData = {
-    regions: [
-        {
-            name: 'North America',
-            avgSalary: 140000,
-            totalJobs: 22124,
-            countries: [
-                {
-                    name: 'United States',
-                    avgSalary: 148500,
-                    jobs: 15234
-                },
-                {
-                    name: 'Canada',
-                    avgSalary: 125000,
-                    jobs: 6890
-                }
-            ]
-        },
-        {
-            name: 'Europe',
-            avgSalary: 115000,
-            totalJobs: 22890,
-            countries: [
-                {
-                    name: 'United Kingdom',
-                    avgSalary: 132000,
-                    jobs: 8750
-                },
-                {
-                    name: 'Germany',
-                    avgSalary: 118000,
-                    jobs: 5620
-                },
-                {
-                    name: 'France',
-                    avgSalary: 110000,
-                    jobs: 3180
-                },
-                {
-                    name: 'Netherlands',
-                    avgSalary: 115000,
-                    jobs: 2890
-                },
-                {
-                    name: 'Spain',
-                    avgSalary: 95000,
-                    jobs: 2450
-                }
-            ]
-        },
-        {
-            name: 'Asia Pacific',
-            avgSalary: 106667,
-            totalJobs: 10390,
-            countries: [
-                {
-                    name: 'Singapore',
-                    avgSalary: 140000,
-                    jobs: 2120
-                },
-                {
-                    name: 'Australia',
-                    avgSalary: 135000,
-                    jobs: 4320
-                },
-                {
-                    name: 'India',
-                    avgSalary: 45000,
-                    jobs: 3950
-                }
-            ]
-        }
-    ]
-};
-
 const hierarchicalColors = {
     'North America': '#667eea',
     'Europe': '#f59e0b',
-    'Asia Pacific': '#10b981'
+    'Asia Pacific': '#10b981',
+    'South America': '#ec4899'
 };
 
-const topJobsByRegion = {
-    'North America': [
-        { role: 'AI/ML Engineer', avgSalary: 175000, jobs: 3200 },
-        { role: 'Solutions Architect', avgSalary: 168000, jobs: 2800 },
-        { role: 'DevOps Engineer', avgSalary: 155000, jobs: 3500 },
-        { role: 'Data Scientist', avgSalary: 152000, jobs: 2900 },
-        { role: 'Cloud Engineer', avgSalary: 148000, jobs: 3100 },
-        { role: 'Security Engineer', avgSalary: 145000, jobs: 2400 },
-        { role: 'Full Stack Developer', avgSalary: 138000, jobs: 4200 },
-        { role: 'Product Manager', avgSalary: 142000, jobs: 1800 },
-        { role: 'Backend Engineer', avgSalary: 135000, jobs: 3600 },
-        { role: 'Frontend Developer', avgSalary: 128000, jobs: 2950 }
-    ],
-    'Europe': [
-        { role: 'AI/ML Engineer', avgSalary: 142000, jobs: 2100 },
-        { role: 'Solutions Architect', avgSalary: 135000, jobs: 1850 },
-        { role: 'DevOps Engineer', avgSalary: 125000, jobs: 2400 },
-        { role: 'Data Scientist', avgSalary: 122000, jobs: 1950 },
-        { role: 'Cloud Engineer', avgSalary: 118000, jobs: 2200 },
-        { role: 'Security Engineer', avgSalary: 115000, jobs: 1600 },
-        { role: 'Full Stack Developer', avgSalary: 108000, jobs: 2800 },
-        { role: 'Product Manager', avgSalary: 112000, jobs: 1200 },
-        { role: 'Backend Engineer', avgSalary: 105000, jobs: 2500 },
-        { role: 'Frontend Developer', avgSalary: 98000, jobs: 1900 }
-    ],
-    'Asia Pacific': [
-        { role: 'AI/ML Engineer', avgSalary: 98000, jobs: 1450 },
-        { role: 'Solutions Architect', avgSalary: 92000, jobs: 1200 },
-        { role: 'DevOps Engineer', avgSalary: 85000, jobs: 1600 },
-        { role: 'Data Scientist', avgSalary: 82000, jobs: 1350 },
-        { role: 'Cloud Engineer', avgSalary: 78000, jobs: 1500 },
-        { role: 'Security Engineer', avgSalary: 75000, jobs: 1100 },
-        { role: 'Full Stack Developer', avgSalary: 68000, jobs: 1900 },
-        { role: 'Product Manager', avgSalary: 72000, jobs: 850 },
-        { role: 'Backend Engineer', avgSalary: 65000, jobs: 1700 },
-        { role: 'Frontend Developer', avgSalary: 58000, jobs: 1300 }
-    ]
+const iso3ToId = {
+    'USA': 840, 'GBR': 826, 'CAN': 124, 'DEU': 276, 'AUS': 36,
+    'IND': 356, 'FRA': 250, 'NLD': 528, 'ESP': 724, 'SGP': 702,
+    'BRA': 76, 'JPN': 392, 'CHE': 756, 'SWE': 752, 'POL': 616,
+    'NOR': 578, 'DNK': 208, 'BEL': 56, 'AUT': 40, 'IRL': 372,
+    'PRT': 620, 'GRC': 300, 'FIN': 246, 'CZE': 203, 'ROU': 642,
+    'HUN': 348, 'KOR': 410, 'NZL': 554, 'MYS': 458, 'THA': 764,
+    'IDN': 360, 'PHL': 608, 'ARG': 32, 'CHL': 152, 'COL': 170,
+    'PER': 604, 'CHN': 156, 'MEX': 484, 'ITA': 380
 };
 
 // ═══════════════════════════════════════════════════════════════════
-// 3. NETWORK DATA (Based on notebook analysis)
+// 2. DATA LOADING FUNCTION
 // ═══════════════════════════════════════════════════════════════════
 
-const networkData = {
-    nodes: [
-        { id: 'US', name: 'United States', jobs: 15234, degree: 45, group: 1 },
-        { id: 'GB', name: 'United Kingdom', jobs: 8750, degree: 38, group: 1 },
-        { id: 'CA', name: 'Canada', jobs: 6890, degree: 32, group: 1 },
-        { id: 'DE', name: 'Germany', jobs: 5620, degree: 35, group: 2 },
-        { id: 'AU', name: 'Australia', jobs: 4320, degree: 28, group: 3 },
-        { id: 'IN', name: 'India', jobs: 3950, degree: 25, group: 3 },
-        { id: 'FR', name: 'France', jobs: 3180, degree: 30, group: 2 },
-        { id: 'NL', name: 'Netherlands', jobs: 2890, degree: 27, group: 2 },
-        { id: 'ES', name: 'Spain', jobs: 2450, degree: 22, group: 2 },
-        { id: 'SG', name: 'Singapore', jobs: 2120, degree: 24, group: 3 },
-        { id: 'BR', name: 'Brazil', jobs: 1850, degree: 18, group: 4 },
-        { id: 'JP', name: 'Japan', jobs: 1680, degree: 20, group: 3 },
-        { id: 'CH', name: 'Switzerland', jobs: 1520, degree: 26, group: 2 },
-        { id: 'SE', name: 'Sweden', jobs: 1340, degree: 23, group: 2 },
-        { id: 'PL', name: 'Poland', jobs: 1180, degree: 19, group: 2 }
-    ],
-    links: [
-        { source: 'US', target: 'GB', value: 850, salary: 145000 },
-        { source: 'US', target: 'CA', value: 1200, salary: 138000 },
-        { source: 'US', target: 'DE', value: 450, salary: 132000 },
-        { source: 'US', target: 'IN', value: 680, salary: 48000 },
-        { source: 'GB', target: 'US', value: 520, salary: 155000 },
-        { source: 'GB', target: 'DE', value: 380, salary: 125000 },
-        { source: 'GB', target: 'FR', value: 290, salary: 118000 },
-        { source: 'GB', target: 'NL', value: 340, salary: 122000 },
-        { source: 'CA', target: 'US', value: 980, salary: 142000 },
-        { source: 'CA', target: 'GB', value: 180, salary: 135000 },
-        { source: 'DE', target: 'GB', value: 220, salary: 130000 },
-        { source: 'DE', target: 'FR', value: 420, salary: 115000 },
-        { source: 'DE', target: 'NL', value: 380, salary: 118000 },
-        { source: 'DE', target: 'CH', value: 280, salary: 128000 },
-        { source: 'AU', target: 'US', value: 320, salary: 148000 },
-        { source: 'AU', target: 'SG', value: 280, salary: 138000 },
-        { source: 'IN', target: 'US', value: 520, salary: 85000 },
-        { source: 'IN', target: 'GB', value: 280, salary: 78000 },
-        { source: 'FR', target: 'DE', value: 350, salary: 112000 },
-        { source: 'FR', target: 'ES', value: 240, salary: 105000 },
-        { source: 'NL', target: 'DE', value: 320, salary: 120000 },
-        { source: 'NL', target: 'GB', value: 280, salary: 125000 },
-        { source: 'ES', target: 'FR', value: 180, salary: 98000 },
-        { source: 'SG', target: 'AU', value: 220, salary: 142000 },
-        { source: 'SG', target: 'IN', value: 180, salary: 95000 },
-        { source: 'BR', target: 'US', value: 280, salary: 72000 },
-        { source: 'JP', target: 'US', value: 240, salary: 125000 },
-        { source: 'CH', target: 'DE', value: 220, salary: 135000 },
-        { source: 'SE', target: 'DE', value: 180, salary: 128000 },
-        { source: 'PL', target: 'DE', value: 280, salary: 88000 }
-    ]
-};
+async function loadTechSalaryData() {
+    try {
+        console.log('📥 Loading Tech Salary Analytics data...');
+        console.log('🔍 Current URL:', window.location.href);
+        
+        const possiblePaths = [
+            '/project/tech_salary_analytics.json',  // Nueva ruta Flask
+            '/static/Project/js/tech_salary_analytics.json',
+            './tech_salary_analytics.json',
+            'tech_salary_analytics.json',
+            '../tech_salary_analytics.json'
+        ];
+        
+        let response = null;
+        let successfulPath = null;
+        
+        for (const path of possiblePaths) {
+            console.log(`🔄 Trying path: ${path}`);
+            try {
+                response = await fetch(path);
+                if (response.ok) {
+                    successfulPath = path;
+                    console.log(`✅ Successful path: ${path}`);
+                    break;
+                }
+            } catch (err) {
+                console.log(`❌ Failed path: ${path}`);
+            }
+        }
+        
+        if (!response || !response.ok) {
+            throw new Error('Could not load JSON from any path');
+        }
+        
+        const data = await response.json();
+        
+        // Cargar datos espaciotemporales
+        globalSalaryData = data.spatiotemporal.globalSalaryData;
+        departmentData = data.spatiotemporal.departmentData;
+        worldMapData = data.spatiotemporal.worldMapData;
+        
+        // Cargar datos jerárquicos
+        hierarchicalData = {
+            regions: data.hierarchical.regions
+        };
+        topJobsByRegion = data.hierarchical.topJobsByRegion;
+        
+        // Cargar datos de red
+        networkData = data.network.network;
+        statsData = data.network.stats;
+        topInfluencers = data.network.topInfluencers;
+        degreeDistribution = data.network.degreeDistribution;
+        communityData = data.network.communities;
+        
+        console.log('✅ Data loaded successfully:');
+        console.log(`   • Spatiotemporal: ${globalSalaryData.length} years, ${Object.keys(departmentData).length} departments`);
+        console.log(`   • Hierarchical: ${hierarchicalData.regions.length} regions`);
+        console.log(`   • Network: ${statsData.num_nodes} nodes, ${statsData.num_edges} edges`);
+        console.log(`   • Metadata: ${data.metadata.total_records} total records`);
+        
+        return true;
+        
+    } catch (error) {
+        console.error('❌ Error loading data:', error);
+        alert('Error loading tech salary data. Check that tech_salary_analytics.json is in the correct location.');
+        return false;
+    }
+}
 
 // ═══════════════════════════════════════════════════════════════════
-// 4. TOOLTIP SYSTEM
+// 3. TOOLTIP SYSTEM
 // ═══════════════════════════════════════════════════════════════════
 
 function showTooltip(event, html) {
@@ -361,7 +163,7 @@ function hideTooltip() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 5. TAB SYSTEM
+// 4. TAB SYSTEM
 // ═══════════════════════════════════════════════════════════════════
 
 function changeTab(tabName) {
@@ -384,14 +186,21 @@ function changeTab(tabName) {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 6. INITIALIZATION
+// 5. INITIALIZATION
 // ═══════════════════════════════════════════════════════════════════
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     console.log('🚀 Dashboard initializing...');
-    updateSpatiotemporalCharts();
-    setupResponsiveResize();
-    console.log('✅ Dashboard initialized successfully');
+    
+    const dataLoaded = await loadTechSalaryData();
+    
+    if (dataLoaded) {
+        updateSpatiotemporalCharts();
+        setupResponsiveResize();
+        console.log('✅ Dashboard initialized successfully');
+    } else {
+        console.error('❌ Failed to initialize dashboard');
+    }
 });
 
 function setupResponsiveResize() {
@@ -414,7 +223,7 @@ function setupResponsiveResize() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 7. SPATIOTEMPORAL ANALYSIS - 4 CHARTS
+// 6. SPATIOTEMPORAL ANALYSIS - 4 CHARTS
 // ═══════════════════════════════════════════════════════════════════
 
 function updateSpatiotemporalCharts() {
@@ -425,7 +234,7 @@ function updateSpatiotemporalCharts() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 8. CHART 1: WORLD MAP
+// 7. CHART 1: WORLD MAP
 // ═══════════════════════════════════════════════════════════════════
 
 function drawWorldMap() {
@@ -517,7 +326,7 @@ function drawWorldMap() {
                             <strong>${countryData.name}</strong><br/>
                             Code: ${countryData.code}<br/>
                             Tech Jobs: <span style="color: #34C759; font-weight: bold;">${countryData.jobs.toLocaleString()}</span><br/>
-                            Avg Salary: <span style="color: #007AFF; font-weight: bold;">${countryData.avgSalary.toLocaleString()}</span>
+                            Avg Salary: <span style="color: #007AFF; font-weight: bold;">$${countryData.avgSalary.toLocaleString()}</span>
                         `);
                     }
                 })
@@ -617,7 +426,7 @@ function addLegend(svg, colorScale, containerWidth, containerHeight, maxValue) {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 9. CHART 2: TOP COUNTRIES
+// 8. CHART 2: TOP COUNTRIES
 // ═══════════════════════════════════════════════════════════════════
 
 function drawTopCountriesChart() {
@@ -675,14 +484,14 @@ function drawTopCountriesChart() {
             showTooltip(event, `
                 <strong>${d.name}</strong><br/>
                 Jobs: ${d.jobs.toLocaleString()}<br/>
-                Avg Salary: ${d.avgSalary.toLocaleString()}
+                Avg Salary: $${d.avgSalary.toLocaleString()}
             `);
         })
         .on('mousemove', function(event, d) {
             showTooltip(event, `
                 <strong>${d.name}</strong><br/>
                 Jobs: ${d.jobs.toLocaleString()}<br/>
-                Avg Salary: ${d.avgSalary.toLocaleString()}
+                Avg Salary: $${d.avgSalary.toLocaleString()}
             `);
         })
         .on('mouseout', function() {
@@ -706,7 +515,7 @@ function drawTopCountriesChart() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 10. CHART 3: DEPARTMENT EVOLUTION
+// 9. CHART 3: DEPARTMENT EVOLUTION
 // ═══════════════════════════════════════════════════════════════════
 
 function drawDepartmentEvolution() {
@@ -726,13 +535,17 @@ function drawDepartmentEvolution() {
         .append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
 
+    const allYears = Array.from(new Set(
+        Object.values(departmentData).flat().map(d => d.year)
+    )).sort();
+
     const x = d3.scaleLinear()
-        .domain([2020, 2025])
+        .domain([d3.min(allYears), d3.max(allYears)])
         .range([0, width]);
 
     const allSalaries = Object.values(departmentData).flat().map(d => d.salary);
     const y = d3.scaleLinear()
-        .domain([60000, d3.max(allSalaries)])
+        .domain([d3.min(allSalaries) * 0.9, d3.max(allSalaries) * 1.1])
         .range([height, 0]);
 
     svg.append('g')
@@ -746,7 +559,7 @@ function drawDepartmentEvolution() {
 
     svg.append('g')
         .attr('class', 'axis')
-        .call(d3.axisLeft(y).tickFormat(d => `${(d / 1000).toFixed(0)}K`));
+        .call(d3.axisLeft(y).tickFormat(d => `$${(d / 1000).toFixed(0)}K`));
 
     svg.append('text')
         .attr('x', width / 2)
@@ -765,6 +578,27 @@ function drawDepartmentEvolution() {
         .attr('fill', '#666')
         .text('Average Salary (USD)');
 
+    // Línea de adopción de IA (si existe año 2023)
+    if (allYears.includes(2023)) {
+        svg.append('line')
+            .attr('x1', x(2023))
+            .attr('x2', x(2023))
+            .attr('y1', 0)
+            .attr('y2', height)
+            .attr('stroke', '#dc3545')
+            .attr('stroke-width', 2)
+            .attr('stroke-dasharray', '5,5');
+
+        svg.append('text')
+            .attr('x', x(2023))
+            .attr('y', -10)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '11px')
+            .style('font-weight', 'bold')
+            .attr('fill', '#dc3545')
+            .text('AI Mass Adoption');
+    }
+
     const line = d3.line()
         .x(d => x(d.year))
         .y(d => y(d.salary))
@@ -773,6 +607,8 @@ function drawDepartmentEvolution() {
     const activeDepartments = new Set(Object.keys(departmentData));
 
     Object.entries(departmentData).forEach(([dept, data]) => {
+        const deptColor = departmentColors[dept] || '#666';
+        
         const lineGroup = svg.append('g')
             .attr('class', `dept-group dept-group-${dept.replace(/\s+/g, '-')}`);
 
@@ -780,7 +616,7 @@ function drawDepartmentEvolution() {
             .datum(data)
             .attr('class', `line-${dept.replace(/\s+/g, '-')}`)
             .attr('fill', 'none')
-            .attr('stroke', departmentColors[dept])
+            .attr('stroke', deptColor)
             .attr('stroke-width', 2.5)
             .attr('d', line)
             .style('opacity', 0.8);
@@ -792,7 +628,7 @@ function drawDepartmentEvolution() {
             .attr('cx', d => x(d.year))
             .attr('cy', d => y(d.salary))
             .attr('r', 4)
-            .attr('fill', departmentColors[dept])
+            .attr('fill', deptColor)
             .attr('stroke', 'white')
             .attr('stroke-width', 2)
             .style('cursor', 'pointer')
@@ -801,14 +637,14 @@ function drawDepartmentEvolution() {
                 showTooltip(event, `
                     <strong>${dept}</strong><br/>
                     Year: ${d.year}<br/>
-                    Salary: <span style="color: ${departmentColors[dept]}">${d.salary.toLocaleString()}</span>
+                    Salary: <span style="color: ${deptColor}">$${d.salary.toLocaleString()}</span>
                 `);
             })
             .on('mousemove', function(event, d) {
                 showTooltip(event, `
                     <strong>${dept}</strong><br/>
                     Year: ${d.year}<br/>
-                    Salary: <span style="color: ${departmentColors[dept]}">${d.salary.toLocaleString()}</span>
+                    Salary: <span style="color: ${deptColor}">$${d.salary.toLocaleString()}</span>
                 `);
             })
             .on('mouseout', function() {
@@ -826,6 +662,8 @@ function drawDepartmentEvolution() {
         .attr('transform', `translate(${legendX},${legendY})`);
 
     Object.keys(departmentData).forEach((dept, i) => {
+        const deptColor = departmentColors[dept] || '#666';
+        
         const legendItem = legend.append('g')
             .attr('class', `legend-item legend-item-${dept.replace(/\s+/g, '-')}`)
             .attr('transform', `translate(0,${i * lineHeight})`)
@@ -848,7 +686,7 @@ function drawDepartmentEvolution() {
             .attr('x2', 18)
             .attr('y1', 0)
             .attr('y2', 0)
-            .attr('stroke', departmentColors[dept])
+            .attr('stroke', deptColor)
             .attr('stroke-width', 3);
 
         const shortLabel = dept.length > 18 ? dept.substring(0, 16) + '...' : dept;
@@ -871,17 +709,11 @@ function drawDepartmentEvolution() {
         });
     });
 
-    const legendContainer = container.node().parentElement;
-    const externalLegend = legendContainer.querySelector('.department-legend');
-    if (externalLegend) {
-        externalLegend.remove();
-    }
-
-    console.log('✅ Department evolution chart with compact legend drawn');
+    console.log('✅ Department evolution chart drawn');
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 11. CHART 4: TEMPORAL EVOLUTION
+// 10. CHART 4: TEMPORAL EVOLUTION
 // ═══════════════════════════════════════════════════════════════════
 
 function drawTemporalEvolution() {
@@ -902,11 +734,11 @@ function drawTemporalEvolution() {
         .attr('transform', `translate(${margin.left},${margin.top})`);
 
     const x = d3.scaleLinear()
-        .domain([2020, 2025])
+        .domain([d3.min(globalSalaryData, d => d.year), d3.max(globalSalaryData, d => d.year)])
         .range([0, width]);
 
     const y = d3.scaleLinear()
-        .domain([90000, 170000])
+        .domain([d3.min(globalSalaryData, d => d.salary) * 0.9, d3.max(globalSalaryData, d => d.salary) * 1.1])
         .range([height, 0]);
 
     svg.append('g')
@@ -920,7 +752,7 @@ function drawTemporalEvolution() {
 
     svg.append('g')
         .attr('class', 'axis')
-        .call(d3.axisLeft(y).tickFormat(d => `${(d / 1000).toFixed(0)}K`));
+        .call(d3.axisLeft(y).tickFormat(d => `$${(d / 1000).toFixed(0)}K`));
 
     svg.append('text')
         .attr('x', width / 2)
@@ -939,23 +771,26 @@ function drawTemporalEvolution() {
         .attr('fill', '#666')
         .text('Average Salary (USD)');
 
-    svg.append('line')
-        .attr('x1', x(2023))
-        .attr('x2', x(2023))
-        .attr('y1', 0)
-        .attr('y2', height)
-        .attr('stroke', '#dc3545')
-        .attr('stroke-width', 2)
-        .attr('stroke-dasharray', '5,5');
+    // Línea de adopción de IA (si existe año 2023)
+    if (globalSalaryData.some(d => d.year === 2023)) {
+        svg.append('line')
+            .attr('x1', x(2023))
+            .attr('x2', x(2023))
+            .attr('y1', 0)
+            .attr('y2', height)
+            .attr('stroke', '#dc3545')
+            .attr('stroke-width', 2)
+            .attr('stroke-dasharray', '5,5');
 
-    svg.append('text')
-        .attr('x', x(2023))
-        .attr('y', -10)
-        .attr('text-anchor', 'middle')
-        .style('font-size', '11px')
-        .style('font-weight', 'bold')
-        .attr('fill', '#dc3545')
-        .text('AI Mass Adoption');
+        svg.append('text')
+            .attr('x', x(2023))
+            .attr('y', -10)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '11px')
+            .style('font-weight', 'bold')
+            .attr('fill', '#dc3545')
+            .text('AI Mass Adoption');
+    }
 
     const area = d3.area()
         .x(d => x(d.year))
@@ -1019,21 +854,21 @@ function drawTemporalEvolution() {
         .style('cursor', 'pointer')
         .on('mouseover', function(event, d) {
             d3.select(this).attr('r', 9);
-            const growth = d.year > 2020 ?
+            const growth = d.year > globalSalaryData[0].year ?
                 ((d.salary - globalSalaryData[0].salary) / globalSalaryData[0].salary * 100).toFixed(1) : 0;
             showTooltip(event, `
                 <strong>${d.year}</strong><br/>
-                Salary: <span style="color: #34C759">${d.salary.toLocaleString()}</span><br/>
-                ${d.year > 2020 ? `Growth: +${growth}%` : 'Base Year'}
+                Salary: <span style="color: #34C759">$${d.salary.toLocaleString()}</span><br/>
+                ${d.year > globalSalaryData[0].year ? `Growth: +${growth}%` : 'Base Year'}
             `);
         })
         .on('mousemove', function(event, d) {
-            const growth = d.year > 2020 ?
+            const growth = d.year > globalSalaryData[0].year ?
                 ((d.salary - globalSalaryData[0].salary) / globalSalaryData[0].salary * 100).toFixed(1) : 0;
             showTooltip(event, `
                 <strong>${d.year}</strong><br/>
-                Salary: <span style="color: #34C759">${d.salary.toLocaleString()}</span><br/>
-                ${d.year > 2020 ? `Growth: +${growth}%` : 'Base Year'}
+                Salary: <span style="color: #34C759">$${d.salary.toLocaleString()}</span><br/>
+                ${d.year > globalSalaryData[0].year ? `Growth: +${growth}%` : 'Base Year'}
             `);
         })
         .on('mouseout', function() {
@@ -1051,9 +886,9 @@ function drawTemporalEvolution() {
         .style('font-size', '10px')
         .style('font-weight', 'bold')
         .attr('fill', '#333')
-        .text(d => `${(d.salary / 1000).toFixed(0)}K`);
+        .text(d => `$${(d.salary / 1000).toFixed(0)}K`);
 
-    const totalGrowth = ((globalSalaryData[5].salary - globalSalaryData[0].salary) / globalSalaryData[0].salary * 100).toFixed(1);
+    const totalGrowth = ((globalSalaryData[globalSalaryData.length - 1].salary - globalSalaryData[0].salary) / globalSalaryData[0].salary * 100).toFixed(1);
     svg.append('text')
         .attr('x', width - 10)
         .attr('y', 15)
@@ -1061,13 +896,13 @@ function drawTemporalEvolution() {
         .style('font-size', '12px')
         .style('font-weight', 'bold')
         .attr('fill', '#34C759')
-        .text(`Total Growth 2020-2025: +${totalGrowth}%`);
+        .text(`Total Growth: +${totalGrowth}%`);
 
     console.log('✅ Temporal evolution chart drawn');
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 12. HIERARCHICAL ANALYSIS - UPDATE ALL CHARTS
+// 11. HIERARCHICAL ANALYSIS - UPDATE ALL CHARTS
 // ═══════════════════════════════════════════════════════════════════
 
 function updateHierarchicalCharts() {
@@ -1079,8 +914,9 @@ function updateHierarchicalCharts() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 13. HIERARCHICAL TREEMAP (D3 Pure)
+// 12. HIERARCHICAL TREEMAP (D3 Pure)
 // ═══════════════════════════════════════════════════════════════════
+
 function drawHierarchicalTreemap() {
     const container = d3.select('#hierarchical-treemap-chart');
     
@@ -1237,13 +1073,13 @@ function drawHierarchicalTreemap() {
                 
                 if (d.data.type === 'region') {
                     tooltip += `Total Jobs: ${d.data.totalJobs.toLocaleString()}<br/>`;
-                    tooltip += `Avg Salary: ${d.data.avgSalary.toLocaleString()}<br/>`;
-                    tooltip += `Total Payroll: ${(d.value / 1000000).toFixed(1)}M<br/>`;
+                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}<br/>`;
+                    tooltip += `Total Payroll: $${(d.value / 1000000).toFixed(1)}M<br/>`;
                     tooltip += `<em>Click to explore countries</em>`;
                 } else {
                     tooltip += `Jobs: ${d.data.jobs.toLocaleString()}<br/>`;
-                    tooltip += `Avg Salary: ${d.data.avgSalary.toLocaleString()}<br/>`;
-                    tooltip += `Total Payroll: ${(d.value / 1000000).toFixed(1)}M`;
+                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}<br/>`;
+                    tooltip += `Total Payroll: $${(d.value / 1000000).toFixed(1)}M`;
                 }
                 
                 showTooltip(event, tooltip);
@@ -1258,7 +1094,7 @@ function drawHierarchicalTreemap() {
             .attr('height', d => d.y1 - d.y0)
             .attr('fill', d => {
                 if (d.data.type === 'region') {
-                    return hierarchicalColors[d.data.name];
+                    return hierarchicalColors[d.data.name] || '#ccc';
                 } else {
                     const region = window.treemapState.region;
                     return d3.color(hierarchicalColors[region]).brighter(0.3);
@@ -1304,7 +1140,7 @@ function drawHierarchicalTreemap() {
                 if (d.data.type === 'region') {
                     return `${d.data.totalJobs.toLocaleString()} jobs`;
                 } else {
-                    return `${(d.data.avgSalary / 1000).toFixed(0)}K avg`;
+                    return `$${(d.data.avgSalary / 1000).toFixed(0)}K avg`;
                 }
             });
 
@@ -1371,7 +1207,7 @@ function drawHierarchicalTreemap() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 14. HIERARCHICAL BUBBLE CHART
+// 13. HIERARCHICAL BUBBLE CHART
 // ═══════════════════════════════════════════════════════════════════
 
 function drawHierarchicalBubble() {
@@ -1409,7 +1245,7 @@ function drawHierarchicalBubble() {
         .range([0, width]);
 
     const y = d3.scaleLinear()
-        .domain([30000, d3.max(bubbleData, d => d.avgSalary) * 1.1])
+        .domain([d3.min(bubbleData, d => d.avgSalary) * 0.9, d3.max(bubbleData, d => d.avgSalary) * 1.1])
         .range([height, 0]);
 
     const size = d3.scaleSqrt()
@@ -1432,7 +1268,7 @@ function drawHierarchicalBubble() {
 
     svg.append('g')
         .attr('class', 'axis')
-        .call(d3.axisLeft(y).tickFormat(d => `${(d / 1000).toFixed(0)}K`));
+        .call(d3.axisLeft(y).tickFormat(d => `$${(d / 1000).toFixed(0)}K`));
 
     svg.append('text')
         .attr('x', width / 2)
@@ -1458,7 +1294,7 @@ function drawHierarchicalBubble() {
         .attr('cx', d => x(d.jobs))
         .attr('cy', d => y(d.avgSalary))
         .attr('r', d => size(d.totalPayroll))
-        .attr('fill', d => hierarchicalColors[d.region])
+        .attr('fill', d => hierarchicalColors[d.region] || '#ccc')
         .attr('opacity', 0.6)
         .attr('stroke', 'white')
         .attr('stroke-width', 2)
@@ -1471,8 +1307,8 @@ function drawHierarchicalBubble() {
                 <strong>${d.name}</strong><br/>
                 Region: ${d.region}<br/>
                 Jobs: ${d.jobs.toLocaleString()}<br/>
-                Avg Salary: ${d.avgSalary.toLocaleString()}<br/>
-                Total Payroll: ${(d.totalPayroll / 1000000).toFixed(1)}M
+                Avg Salary: $${d.avgSalary.toLocaleString()}<br/>
+                Total Payroll: $${(d.totalPayroll / 1000000).toFixed(1)}M
             `);
         })
         .on('mousemove', function(event, d) {
@@ -1480,8 +1316,8 @@ function drawHierarchicalBubble() {
                 <strong>${d.name}</strong><br/>
                 Region: ${d.region}<br/>
                 Jobs: ${d.jobs.toLocaleString()}<br/>
-                Avg Salary: ${d.avgSalary.toLocaleString()}<br/>
-                Total Payroll: ${(d.totalPayroll / 1000000).toFixed(1)}M
+                Avg Salary: $${d.avgSalary.toLocaleString()}<br/>
+                Total Payroll: $${(d.totalPayroll / 1000000).toFixed(1)}M
             `);
         })
         .on('mouseout', function() {
@@ -1512,7 +1348,7 @@ function drawHierarchicalBubble() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 15. HIERARCHICAL SUNBURST
+// 14. HIERARCHICAL SUNBURST
 // ═══════════════════════════════════════════════════════════════════
 
 function drawHierarchicalSunburst() {
@@ -1656,11 +1492,11 @@ function drawHierarchicalSunburst() {
                 
                 if (viewType === 'regions' && d.depth === 1) {
                     tooltip += `Total Jobs: ${d.data.totalJobs.toLocaleString()}<br/>`;
-                    tooltip += `Avg Salary: ${d.data.avgSalary.toLocaleString()}<br/>`;
+                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}<br/>`;
                     tooltip += `<em>Click to see top 10 roles</em>`;
                 } else if (viewType === 'roles' && d.depth === 1) {
                     tooltip += `Jobs: ${d.data.jobs.toLocaleString()}<br/>`;
-                    tooltip += `Avg Salary: ${d.data.avgSalary.toLocaleString()}`;
+                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}`;
                     if (d.data.type === 'grouped') {
                         const count = parseInt(d.data.name.match(/\((\d+)\)/)[1]);
                         tooltip += `<br/><em>${count} roles combined</em>`;
@@ -1746,7 +1582,7 @@ function drawHierarchicalSunburst() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 16. HIERARCHICAL MATRIX (4 BAR CHARTS)
+// 15. HIERARCHICAL MATRIX (4 BAR CHARTS)
 // ═══════════════════════════════════════════════════════════════════
 
 function drawHierarchicalMatrix() {
@@ -1764,7 +1600,7 @@ function drawHierarchicalMatrix() {
         {
             title: 'Average Salary (USD)',
             data: hierarchicalData.regions.map(r => ({ name: r.name, value: r.avgSalary })),
-            format: d => `${(d / 1000).toFixed(0)}K`,
+            format: d => `$${(d / 1000).toFixed(0)}K`,
             color: '#667eea'
         },
         {
@@ -1786,7 +1622,7 @@ function drawHierarchicalMatrix() {
                 const range = salaries.length > 1 ? Math.max(...salaries) - Math.min(...salaries) : 0;
                 return { name: r.name, value: range };
             }),
-            format: d => `${(d / 1000).toFixed(0)}K`,
+            format: d => `$${(d / 1000).toFixed(0)}K`,
             color: '#ec4899'
         }
     ];
@@ -1875,7 +1711,7 @@ function drawHierarchicalMatrix() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 17. NETWORK ANALYSIS - UPDATE ALL CHARTS
+// 16. NETWORK ANALYSIS - UPDATE ALL CHARTS
 // ═══════════════════════════════════════════════════════════════════
 
 function updateNetworkCharts() {
@@ -1886,7 +1722,7 @@ function updateNetworkCharts() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 18. NETWORK CHART 1: FORCE-DIRECTED GRAPH
+// 17. NETWORK CHART 1: FORCE-DIRECTED GRAPH
 // ═══════════════════════════════════════════════════════════════════
 
 function drawNetworkForceDirected() {
@@ -2043,7 +1879,7 @@ function drawNetworkForceDirected() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 19. NETWORK CHART 2: CENTRALITY ANALYSIS
+// 18. NETWORK CHART 2: CENTRALITY ANALYSIS
 // ═══════════════════════════════════════════════════════════════════
 
 function drawNetworkCentrality() {
@@ -2154,7 +1990,7 @@ function drawNetworkCentrality() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 20. NETWORK CHART 3: COMMUNITY DETECTION
+// 19. NETWORK CHART 3: COMMUNITY DETECTION
 // ═══════════════════════════════════════════════════════════════════
 
 function drawNetworkCommunity() {

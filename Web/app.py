@@ -119,6 +119,18 @@ def project_unit2():
         app.logger.error(f"Error cargando proyecto unidad 2: {e}")
         return f"Ocurrió un error al cargar el proyecto de la unidad 2: <pre>{error}</pre>", 500
 
+@app.route('/project/tech_salary_analytics.json')
+def tech_salary_analytics_json():
+    """Servir JSON de Tech Salary Analytics directamente"""
+    static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Project', 'js')
+    json_file = 'tech_salary_analytics.json'
+    print(f"📊 Sirviendo JSON de Tech Salary Analytics: {json_file}")
+    print(f"📂 Directorio: {static_dir}")
+    full_path = os.path.join(static_dir, json_file)
+    print(f"📍 Ruta completa: {full_path}")
+    print(f"✅ Existe: {os.path.exists(full_path)}")
+    return send_from_directory(static_dir, json_file)
+
 # ===== Portafolios =====
 @app.route('/portfolio/unit1')
 def portfolio_unit1():
