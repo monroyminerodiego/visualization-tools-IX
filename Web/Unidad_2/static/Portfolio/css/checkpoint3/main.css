@@ -1,6 +1,6 @@
 /**
  * ═══════════════════════════════════════════════════════════════════
- * CRYPTOCURRENCY ANALYTICS DASHBOARD - APPLE STYLE
+ * CONGRESS TWITTER NETWORK ANALYTICS DASHBOARD - CSS
  * ═══════════════════════════════════════════════════════════════════
  */
 
@@ -26,10 +26,16 @@
     --apple-text: #1D1D1F;
     --apple-text-secondary: #6E6E73;
     
-    /* Status Colors */
-    --regime-low: #34C759;
-    --regime-medium: #FF9500;
-    --regime-high: #FF3B30;
+    /* Community Colors */
+    --community-0: #667eea;
+    --community-1: #f56565;
+    --community-2: #48bb78;
+    
+    /* Centrality Colors */
+    --pagerank: #9f7aea;
+    --betweenness: #ed8936;
+    --indegree: #4299e1;
+    --outdegree: #38b2ac;
     
     /* Shadows - Apple Style */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
@@ -107,12 +113,13 @@ body {
 .back-button i {
     font-size: 18px;
 }
+
 /* ═══════════════════════════════════════════════════════════════════
    HEADER
    ═══════════════════════════════════════════════════════════════════ */
 
 .header {
-    background: linear-gradient(135deg, var(--apple-blue) 0%, #0051D5 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 48px 30px;
     text-align: center;
@@ -168,14 +175,14 @@ body {
 }
 
 .tab-button:hover {
-    background: rgba(0, 122, 255, 0.05);
-    color: var(--apple-blue);
+    background: rgba(102, 126, 234, 0.05);
+    color: var(--community-0);
 }
 
 .tab-button.active {
-    color: var(--apple-blue);
+    color: var(--community-0);
     background: var(--apple-white);
-    border-bottom-color: var(--apple-blue);
+    border-bottom-color: var(--community-0);
 }
 
 .tab-button.active::after {
@@ -185,7 +192,7 @@ body {
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--apple-blue);
+    background: var(--community-0);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -245,7 +252,7 @@ body {
 
 .chart-title i {
     font-size: 22px;
-    color: var(--apple-blue);
+    color: var(--community-0);
 }
 
 .chart-description {
@@ -255,7 +262,7 @@ body {
     margin-bottom: 20px;
     padding: 14px;
     background: var(--apple-gray-light);
-    border-left: 3px solid var(--apple-blue);
+    border-left: 3px solid var(--community-0);
     border-radius: var(--radius-sm);
 }
 
@@ -275,32 +282,6 @@ body {
     .chart-grid {
         grid-template-columns: 1fr;
     }
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   CHART DIMENSIONS
-   ═══════════════════════════════════════════════════════════════════ */
-
-#world-map-chart {
-    width: 100%;
-    height: 500px;
-    overflow: hidden;
-    position: relative;
-}
-
-#top-countries-chart,
-#regional-distribution-chart,
-#volatility-comparison-chart,
-#correlation-chart,
-#scatter-chart,
-#regime-chart,
-#acf-chart,
-#returns-vol-chart,
-#scatter-vol-chart {
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
-    position: relative;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -330,7 +311,7 @@ body {
 
 .selector-container label i {
     font-size: 18px;
-    color: var(--apple-blue);
+    color: var(--community-0);
 }
 
 .selector-container select {
@@ -347,14 +328,14 @@ body {
 }
 
 .selector-container select:hover {
-    border-color: var(--apple-blue);
-    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+    border-color: var(--community-0);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .selector-container select:focus {
     outline: none;
-    border-color: var(--apple-blue);
-    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+    border-color: var(--community-0);
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -362,18 +343,18 @@ body {
    ═══════════════════════════════════════════════════════════════════ */
 
 .tooltip {
-    position: fixed;  /* ← Debe ser fixed, NO absolute */
+    position: fixed;
     background: rgba(0, 0, 0, 0.92);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     color: white;
     padding: 12px 16px;
     border-radius: var(--radius-sm);
-    pointer-events: none;  /* ← Importante para que no interfiera */
+    pointer-events: none;
     opacity: 0;
     transition: opacity var(--transition);
     font-size: 14px;
-    z-index: 10000;  /* ← Debe estar muy arriba */
+    z-index: 10000;
     box-shadow: var(--shadow-lg);
     max-width: 300px;
     line-height: 1.5;
@@ -418,18 +399,6 @@ svg {
     stroke-width: 0;
 }
 
-.country {
-    stroke: var(--apple-white);
-    stroke-width: 0.5;
-    transition: all var(--transition);
-}
-
-.country:hover {
-    stroke: var(--apple-blue);
-    stroke-width: 2;
-    filter: brightness(1.1);
-}
-
 /* ═══════════════════════════════════════════════════════════════════
    UTILITIES
    ═══════════════════════════════════════════════════════════════════ */
@@ -460,8 +429,6 @@ svg {
     }
     
     .back-button {
-        top: 10px;
-        left: 10px;
         padding: 8px 14px;
         font-size: 14px;
     }
@@ -515,22 +482,6 @@ svg {
     .selector-container select {
         width: 100%;
     }
-    
-    #world-map-chart {
-        height: 400px;
-    }
-    
-    #top-countries-chart,
-    #regional-distribution-chart,
-    #volatility-comparison-chart,
-    #correlation-chart,
-    #scatter-chart,
-    #regime-chart,
-    #acf-chart,
-    #returns-vol-chart,
-    #scatter-vol-chart {
-        height: 350px;
-    }
 }
 
 @media (max-width: 480px) {
@@ -547,22 +498,6 @@ svg {
         flex-direction: row;
         justify-content: flex-start;
         padding: 14px 20px;
-    }
-    
-    #world-map-chart {
-        height: 350px;
-    }
-    
-    #top-countries-chart,
-    #regional-distribution-chart,
-    #volatility-comparison-chart,
-    #correlation-chart,
-    #scatter-chart,
-    #regime-chart,
-    #acf-chart,
-    #returns-vol-chart,
-    #scatter-vol-chart {
-        height: 300px;
     }
 }
 
