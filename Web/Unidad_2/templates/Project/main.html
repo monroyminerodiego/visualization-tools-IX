@@ -45,8 +45,8 @@
                 <span>Hierarchical Analysis</span>
             </button>
             <button class="tab-button" data-tab="detalle" onclick="changeTab('detalle')">
-                <i class="ti ti-chart-bar"></i>
-                <span>Details</span>
+                <i class="ti ti-network"></i>
+                <span>Network Analysis</span>
             </button>
         </div>
 
@@ -168,19 +168,51 @@
             </div>
         </div>
 
-        <!-- Tab 3: Details -->
+        <!-- Tab 3: Network Analysis -->
         <div id="detalle" class="tab-content">
+            
+            <!-- Force-Directed Graph - PRINCIPAL -->
             <div class="chart-container">
                 <div class="chart-title">
-                    <i class="ti ti-info-circle"></i>
-                    Additional Analytics
+                    <i class="ti ti-network"></i>
+                    Global IT Employment Network: Employee-Company Flow (Force-Directed Graph)
                 </div>
                 <div class="chart-description">
-                    This section is reserved for additional detailed analytics and insights.
+                    Interactive <strong>force-directed network graph</strong> showing relationships between countries based on 
+                    tech employment flows (employee residence → company location). Node size represents <strong>total tech jobs</strong>, 
+                    colors indicate <strong>community clusters</strong>. <strong>Drag nodes</strong> to explore, 
+                    <strong>zoom/pan</strong> to navigate. Edge thickness shows connection strength (salary flow).
                 </div>
-                <div style="padding: 40px; text-align: center; color: #999;">   
-                    <i class="ti ti-chart-dots" style="font-size: 64px; margin-bottom: 20px;"></i>
-                    <p style="font-size: 18px;">Additional visualizations coming soon...</p>
+                <div id="network-force-chart"></div>
+            </div>
+
+            <!-- Two Medium Charts Grid -->
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <div class="chart-title">
+                        <i class="ti ti-chart-bar"></i>
+                        Network Centrality Analysis: Top 10 Connected Countries
+                    </div>
+                    <div class="chart-description">
+                        <strong>Degree centrality ranking</strong> showing the most connected countries in the global tech employment network. 
+                        Higher centrality = more connections = <strong>strategic hubs</strong> in the IT labor market. 
+                        Based on in-degree and out-degree analysis from the notebook's NetworkX graph.
+                    </div>
+                    <div id="network-centrality-chart"></div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">
+                        <i class="ti ti-circles"></i>
+                        Community Detection: Regional Clusters (Louvain Method)
+                    </div>
+                    <div class="chart-description">
+                        <strong>Community detection visualization</strong> using hierarchical clustering algorithms. 
+                        Countries are grouped into <strong>communities</strong> based on employment patterns and salary flows. 
+                        Circle size = total jobs in community. Inner dots = individual countries. 
+                        Reflects the community structure found in the notebook analysis.
+                    </div>
+                    <div id="network-community-chart"></div>
                 </div>
             </div>
         </div>

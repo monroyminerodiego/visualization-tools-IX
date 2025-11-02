@@ -1,7 +1,7 @@
 /**
  * ═══════════════════════════════════════════════════════════════════
  * TECH SALARY ANALYTICS DASHBOARD - COMPLETE JAVASCRIPT
- * Spatiotemporal + Hierarchical Analysis (Pure D3.js)
+ * Spatiotemporal + Hierarchical + Network Analysis (Pure D3.js)
  * ═══════════════════════════════════════════════════════════════════
  */
 
@@ -229,7 +229,6 @@ const hierarchicalColors = {
     'Asia Pacific': '#10b981'
 };
 
-// Top 10 job roles con salarios (simulados por región)
 const topJobsByRegion = {
     'North America': [
         { role: 'AI/ML Engineer', avgSalary: 175000, jobs: 3200 },
@@ -270,7 +269,63 @@ const topJobsByRegion = {
 };
 
 // ═══════════════════════════════════════════════════════════════════
-// 3. TOOLTIP SYSTEM
+// 3. NETWORK DATA (Based on notebook analysis)
+// ═══════════════════════════════════════════════════════════════════
+
+const networkData = {
+    nodes: [
+        { id: 'US', name: 'United States', jobs: 15234, degree: 45, group: 1 },
+        { id: 'GB', name: 'United Kingdom', jobs: 8750, degree: 38, group: 1 },
+        { id: 'CA', name: 'Canada', jobs: 6890, degree: 32, group: 1 },
+        { id: 'DE', name: 'Germany', jobs: 5620, degree: 35, group: 2 },
+        { id: 'AU', name: 'Australia', jobs: 4320, degree: 28, group: 3 },
+        { id: 'IN', name: 'India', jobs: 3950, degree: 25, group: 3 },
+        { id: 'FR', name: 'France', jobs: 3180, degree: 30, group: 2 },
+        { id: 'NL', name: 'Netherlands', jobs: 2890, degree: 27, group: 2 },
+        { id: 'ES', name: 'Spain', jobs: 2450, degree: 22, group: 2 },
+        { id: 'SG', name: 'Singapore', jobs: 2120, degree: 24, group: 3 },
+        { id: 'BR', name: 'Brazil', jobs: 1850, degree: 18, group: 4 },
+        { id: 'JP', name: 'Japan', jobs: 1680, degree: 20, group: 3 },
+        { id: 'CH', name: 'Switzerland', jobs: 1520, degree: 26, group: 2 },
+        { id: 'SE', name: 'Sweden', jobs: 1340, degree: 23, group: 2 },
+        { id: 'PL', name: 'Poland', jobs: 1180, degree: 19, group: 2 }
+    ],
+    links: [
+        { source: 'US', target: 'GB', value: 850, salary: 145000 },
+        { source: 'US', target: 'CA', value: 1200, salary: 138000 },
+        { source: 'US', target: 'DE', value: 450, salary: 132000 },
+        { source: 'US', target: 'IN', value: 680, salary: 48000 },
+        { source: 'GB', target: 'US', value: 520, salary: 155000 },
+        { source: 'GB', target: 'DE', value: 380, salary: 125000 },
+        { source: 'GB', target: 'FR', value: 290, salary: 118000 },
+        { source: 'GB', target: 'NL', value: 340, salary: 122000 },
+        { source: 'CA', target: 'US', value: 980, salary: 142000 },
+        { source: 'CA', target: 'GB', value: 180, salary: 135000 },
+        { source: 'DE', target: 'GB', value: 220, salary: 130000 },
+        { source: 'DE', target: 'FR', value: 420, salary: 115000 },
+        { source: 'DE', target: 'NL', value: 380, salary: 118000 },
+        { source: 'DE', target: 'CH', value: 280, salary: 128000 },
+        { source: 'AU', target: 'US', value: 320, salary: 148000 },
+        { source: 'AU', target: 'SG', value: 280, salary: 138000 },
+        { source: 'IN', target: 'US', value: 520, salary: 85000 },
+        { source: 'IN', target: 'GB', value: 280, salary: 78000 },
+        { source: 'FR', target: 'DE', value: 350, salary: 112000 },
+        { source: 'FR', target: 'ES', value: 240, salary: 105000 },
+        { source: 'NL', target: 'DE', value: 320, salary: 120000 },
+        { source: 'NL', target: 'GB', value: 280, salary: 125000 },
+        { source: 'ES', target: 'FR', value: 180, salary: 98000 },
+        { source: 'SG', target: 'AU', value: 220, salary: 142000 },
+        { source: 'SG', target: 'IN', value: 180, salary: 95000 },
+        { source: 'BR', target: 'US', value: 280, salary: 72000 },
+        { source: 'JP', target: 'US', value: 240, salary: 125000 },
+        { source: 'CH', target: 'DE', value: 220, salary: 135000 },
+        { source: 'SE', target: 'DE', value: 180, salary: 128000 },
+        { source: 'PL', target: 'DE', value: 280, salary: 88000 }
+    ]
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// 4. TOOLTIP SYSTEM
 // ═══════════════════════════════════════════════════════════════════
 
 function showTooltip(event, html) {
@@ -306,7 +361,7 @@ function hideTooltip() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 4. TAB SYSTEM
+// 5. TAB SYSTEM
 // ═══════════════════════════════════════════════════════════════════
 
 function changeTab(tabName) {
@@ -323,11 +378,13 @@ function changeTab(tabName) {
         setTimeout(() => updateSpatiotemporalCharts(), 100);
     } else if (tabName === 'hierarchical') {
         setTimeout(() => updateHierarchicalCharts(), 100);
+    } else if (tabName === 'detalle') {
+        setTimeout(() => updateNetworkCharts(), 100);
     }
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 5. INITIALIZATION
+// 6. INITIALIZATION
 // ═══════════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -348,6 +405,8 @@ function setupResponsiveResize() {
                     updateSpatiotemporalCharts();
                 } else if (activeTab.id === 'hierarchical') {
                     updateHierarchicalCharts();
+                } else if (activeTab.id === 'detalle') {
+                    updateNetworkCharts();
                 }
             }
         }, 250);
@@ -355,7 +414,7 @@ function setupResponsiveResize() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 6. SPATIOTEMPORAL ANALYSIS - 4 CHARTS
+// 7. SPATIOTEMPORAL ANALYSIS - 4 CHARTS
 // ═══════════════════════════════════════════════════════════════════
 
 function updateSpatiotemporalCharts() {
@@ -366,7 +425,7 @@ function updateSpatiotemporalCharts() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 7. CHART 1: WORLD MAP
+// 8. CHART 1: WORLD MAP
 // ═══════════════════════════════════════════════════════════════════
 
 function drawWorldMap() {
@@ -470,7 +529,6 @@ function drawWorldMap() {
                     hideTooltip();
                 });
 
-            // Add country labels
             worldMapData.countries.forEach(country => {
                 const numericId = iso3ToId[country.code];
                 const feature = countries.features.find(f => parseInt(f.id) === numericId);
@@ -559,7 +617,7 @@ function addLegend(svg, colorScale, containerWidth, containerHeight, maxValue) {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 8. CHART 2: TOP COUNTRIES
+// 9. CHART 2: TOP COUNTRIES
 // ═══════════════════════════════════════════════════════════════════
 
 function drawTopCountriesChart() {
@@ -648,7 +706,7 @@ function drawTopCountriesChart() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 9. CHART 3: DEPARTMENT EVOLUTION
+// 10. CHART 3: DEPARTMENT EVOLUTION
 // ═══════════════════════════════════════════════════════════════════
 
 function drawDepartmentEvolution() {
@@ -677,12 +735,10 @@ function drawDepartmentEvolution() {
         .domain([60000, d3.max(allSalaries)])
         .range([height, 0]);
 
-    // Grid
     svg.append('g')
         .attr('class', 'grid')
         .call(d3.axisLeft(y).tickSize(-width).tickFormat(''));
 
-    // Axes
     svg.append('g')
         .attr('class', 'axis')
         .attr('transform', `translate(0,${height})`)
@@ -692,7 +748,6 @@ function drawDepartmentEvolution() {
         .attr('class', 'axis')
         .call(d3.axisLeft(y).tickFormat(d => `${(d / 1000).toFixed(0)}K`));
 
-    // Labels
     svg.append('text')
         .attr('x', width / 2)
         .attr('y', height + 50)
@@ -717,7 +772,6 @@ function drawDepartmentEvolution() {
 
     const activeDepartments = new Set(Object.keys(departmentData));
 
-    // Draw lines and points
     Object.entries(departmentData).forEach(([dept, data]) => {
         const lineGroup = svg.append('g')
             .attr('class', `dept-group dept-group-${dept.replace(/\s+/g, '-')}`);
@@ -763,7 +817,6 @@ function drawDepartmentEvolution() {
             });
     });
 
-    // Create COMPACT legend on the right side
     const legendX = width + 15;
     const legendY = 0;
     const lineHeight = 20;
@@ -790,7 +843,6 @@ function drawDepartmentEvolution() {
                 }
             });
 
-        // Color line
         legendItem.append('line')
             .attr('x1', 0)
             .attr('x2', 18)
@@ -799,7 +851,6 @@ function drawDepartmentEvolution() {
             .attr('stroke', departmentColors[dept])
             .attr('stroke-width', 3);
 
-        // Text label (shortened for space)
         const shortLabel = dept.length > 18 ? dept.substring(0, 16) + '...' : dept;
         legendItem.append('text')
             .attr('x', 22)
@@ -820,7 +871,6 @@ function drawDepartmentEvolution() {
         });
     });
 
-    // Remove external legend if exists
     const legendContainer = container.node().parentElement;
     const externalLegend = legendContainer.querySelector('.department-legend');
     if (externalLegend) {
@@ -831,7 +881,7 @@ function drawDepartmentEvolution() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 10. CHART 4: TEMPORAL EVOLUTION
+// 11. CHART 4: TEMPORAL EVOLUTION
 // ═══════════════════════════════════════════════════════════════════
 
 function drawTemporalEvolution() {
@@ -889,7 +939,6 @@ function drawTemporalEvolution() {
         .attr('fill', '#666')
         .text('Average Salary (USD)');
 
-    // AI adoption line
     svg.append('line')
         .attr('x1', x(2023))
         .attr('x2', x(2023))
@@ -1018,7 +1067,7 @@ function drawTemporalEvolution() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 11. HIERARCHICAL ANALYSIS - UPDATE ALL CHARTS
+// 12. HIERARCHICAL ANALYSIS - UPDATE ALL CHARTS
 // ═══════════════════════════════════════════════════════════════════
 
 function updateHierarchicalCharts() {
@@ -1030,7 +1079,7 @@ function updateHierarchicalCharts() {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 12. HIERARCHICAL TREEMAP (D3 Pure)
+// 13. HIERARCHICAL TREEMAP (D3 Pure)
 // ═══════════════════════════════════════════════════════════════════
 function drawHierarchicalTreemap() {
     const container = d3.select('#hierarchical-treemap-chart');
@@ -1060,12 +1109,10 @@ function drawHierarchicalTreemap() {
             .attr('transform', `translate(${margin.left},${margin.top})`);
     }
 
-    // Estado global
     if (!window.treemapState) {
         window.treemapState = { view: 'global', region: null };
     }
 
-    // Calcular total global
     const globalTotal = hierarchicalData.regions.reduce((sum, r) => 
         sum + r.countries.reduce((s, c) => s + (c.avgSalary * c.jobs), 0), 0);
 
@@ -1073,7 +1120,6 @@ function drawHierarchicalTreemap() {
         let rootData, total, titleText;
 
         if (viewType === 'global') {
-            // Vista Global: Mostrar regiones con porcentajes
             total = globalTotal;
             const children = hierarchicalData.regions.map(region => {
                 const regionTotal = region.countries.reduce((s, c) => s + (c.avgSalary * c.jobs), 0);
@@ -1097,7 +1143,6 @@ function drawHierarchicalTreemap() {
             titleText = 'Global View - Click region to drill down';
 
         } else {
-            // Vista Regional: Mostrar países con porcentajes relativos a la región
             const regionData = hierarchicalData.regions.find(r => r.name === selectedRegion);
             total = regionData.countries.reduce((s, c) => s + (c.avgSalary * c.jobs), 0);
 
@@ -1133,18 +1178,15 @@ function drawHierarchicalTreemap() {
             .paddingInner(3)
             (root);
 
-        // Actualizar celdas con transición
         const cells = g.selectAll('.treemap-cell')
             .data(root.leaves(), d => d.data.name);
 
-        // Exit
         cells.exit()
             .transition()
             .duration(600)
             .style('opacity', 0)
             .remove();
 
-        // Enter
         const cellsEnter = cells.enter()
             .append('g')
             .attr('class', 'treemap-cell')
@@ -1162,7 +1204,6 @@ function drawHierarchicalTreemap() {
         cellsEnter.append('text')
             .attr('class', 'treemap-info');
 
-        // Merge
         const cellsMerge = cellsEnter.merge(cells);
 
         cellsMerge
@@ -1196,13 +1237,13 @@ function drawHierarchicalTreemap() {
                 
                 if (d.data.type === 'region') {
                     tooltip += `Total Jobs: ${d.data.totalJobs.toLocaleString()}<br/>`;
-                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}<br/>`;
-                    tooltip += `Total Payroll: $${(d.value / 1000000).toFixed(1)}M<br/>`;
+                    tooltip += `Avg Salary: ${d.data.avgSalary.toLocaleString()}<br/>`;
+                    tooltip += `Total Payroll: ${(d.value / 1000000).toFixed(1)}M<br/>`;
                     tooltip += `<em>Click to explore countries</em>`;
                 } else {
                     tooltip += `Jobs: ${d.data.jobs.toLocaleString()}<br/>`;
-                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}<br/>`;
-                    tooltip += `Total Payroll: $${(d.value / 1000000).toFixed(1)}M`;
+                    tooltip += `Avg Salary: ${d.data.avgSalary.toLocaleString()}<br/>`;
+                    tooltip += `Total Payroll: ${(d.value / 1000000).toFixed(1)}M`;
                 }
                 
                 showTooltip(event, tooltip);
@@ -1228,7 +1269,6 @@ function drawHierarchicalTreemap() {
             .attr('stroke-width', 2)
             .attr('rx', 4);
 
-        // Nombre
         cellsMerge.select('.treemap-name')
             .transition()
             .duration(600)
@@ -1240,7 +1280,6 @@ function drawHierarchicalTreemap() {
             .style('pointer-events', 'none')
             .text(d => (d.x1 - d.x0) > 70 ? d.data.name : '');
 
-        // Porcentaje (grande y destacado)
         cellsMerge.select('.treemap-percent')
             .transition()
             .duration(600)
@@ -1252,7 +1291,6 @@ function drawHierarchicalTreemap() {
             .style('pointer-events', 'none')
             .text(d => (d.x1 - d.x0) > 70 ? `${d.data.percentage}%` : '');
 
-        // Info adicional
         cellsMerge.select('.treemap-info')
             .transition()
             .duration(600)
@@ -1266,11 +1304,10 @@ function drawHierarchicalTreemap() {
                 if (d.data.type === 'region') {
                     return `${d.data.totalJobs.toLocaleString()} jobs`;
                 } else {
-                    return `$${(d.data.avgSalary / 1000).toFixed(0)}K avg`;
+                    return `${(d.data.avgSalary / 1000).toFixed(0)}K avg`;
                 }
             });
 
-        // Actualizar título
         svg.selectAll('.treemap-title').remove();
         
         svg.append('text')
@@ -1332,8 +1369,9 @@ function drawHierarchicalTreemap() {
     updateTreemap(window.treemapState.view, window.treemapState.region);
     console.log('✅ Interactive Treemap with percentages drawn');
 }
+
 // ═══════════════════════════════════════════════════════════════════
-// 13. HIERARCHICAL BUBBLE CHART
+// 14. HIERARCHICAL BUBBLE CHART
 // ═══════════════════════════════════════════════════════════════════
 
 function drawHierarchicalBubble() {
@@ -1353,7 +1391,6 @@ function drawHierarchicalBubble() {
         .append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    // Prepare data
     const bubbleData = [];
     hierarchicalData.regions.forEach(region => {
         region.countries.forEach(country => {
@@ -1379,7 +1416,6 @@ function drawHierarchicalBubble() {
         .domain([0, d3.max(bubbleData, d => d.totalPayroll)])
         .range([5, 50]);
 
-    // Grid
     svg.append('g')
         .attr('class', 'grid')
         .call(d3.axisLeft(y).tickSize(-width).tickFormat(''));
@@ -1389,7 +1425,6 @@ function drawHierarchicalBubble() {
         .attr('transform', `translate(0,${height})`)
         .call(d3.axisBottom(x).tickSize(-height).tickFormat(''));
 
-    // Axes
     svg.append('g')
         .attr('class', 'axis')
         .attr('transform', `translate(0,${height})`)
@@ -1399,7 +1434,6 @@ function drawHierarchicalBubble() {
         .attr('class', 'axis')
         .call(d3.axisLeft(y).tickFormat(d => `${(d / 1000).toFixed(0)}K`));
 
-    // Labels
     svg.append('text')
         .attr('x', width / 2)
         .attr('y', height + 50)
@@ -1417,7 +1451,6 @@ function drawHierarchicalBubble() {
         .attr('fill', '#666')
         .text('Average Salary (USD)');
 
-    // Bubbles
     svg.selectAll('circle')
         .data(bubbleData)
         .enter()
@@ -1458,29 +1491,30 @@ function drawHierarchicalBubble() {
             hideTooltip();
         });
 
-    // Country labels for larger bubbles
-    // Country labels for ALL bubbles
-svg.selectAll('.country-label')
-    .data(bubbleData)
-    .enter()
-    .append('text')
-    .attr('x', d => x(d.jobs))
-    .attr('y', d => y(d.avgSalary))
-    .attr('text-anchor', 'middle')
-    .attr('dominant-baseline', 'middle')
-    .style('font-size', d => d.jobs > 5000 ? '11px' : '9px')
-    .style('font-weight', 'bold')
-    .style('fill', 'white')
-    .style('pointer-events', 'none')
-    .text(d => {
-        if (d.jobs > 5000) return d.name.substring(0, 3).toUpperCase();
-        return d.name.substring(0, 2).toUpperCase();
-    });
+    svg.selectAll('.country-label')
+        .data(bubbleData)
+        .enter()
+        .append('text')
+        .attr('x', d => x(d.jobs))
+        .attr('y', d => y(d.avgSalary))
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .style('font-size', d => d.jobs > 5000 ? '11px' : '9px')
+        .style('font-weight', 'bold')
+        .style('fill', 'white')
+        .style('pointer-events', 'none')
+        .text(d => {
+            if (d.jobs > 5000) return d.name.substring(0, 3).toUpperCase();
+            return d.name.substring(0, 2).toUpperCase();
+        });
+
+    console.log('✅ Hierarchical bubble chart drawn');
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 14. HIERARCHICAL SUNBURST
+// 15. HIERARCHICAL SUNBURST
 // ═══════════════════════════════════════════════════════════════════
+
 function drawHierarchicalSunburst() {
     const container = d3.select('#hierarchical-sunburst-chart');
     
@@ -1508,7 +1542,6 @@ function drawHierarchicalSunburst() {
             .attr('transform', `translate(${containerWidth / 2},${containerHeight / 2})`);
     }
 
-    // Estado global
     if (!window.sunburstState) {
         window.sunburstState = { view: 'regions', region: null };
     }
@@ -1517,7 +1550,6 @@ function drawHierarchicalSunburst() {
         let rootData, centerText;
 
         if (viewType === 'regions') {
-            // Vista de regiones
             const children = hierarchicalData.regions.map(region => ({
                 name: region.name,
                 value: region.totalJobs,
@@ -1533,10 +1565,8 @@ function drawHierarchicalSunburst() {
             centerText = 'Click Region';
 
         } else {
-            // Vista de roles (top 10 + agrupados)
             const regionJobs = topJobsByRegion[selectedRegion] || [];
             
-            // Ordenar por salario y tomar top 10
             const sortedJobs = [...regionJobs].sort((a, b) => b.avgSalary - a.avgSalary);
             const top10 = sortedJobs.slice(0, 10);
             const rest = sortedJobs.slice(10);
@@ -1549,7 +1579,6 @@ function drawHierarchicalSunburst() {
                 type: 'role'
             }));
 
-            // Agrupar el resto
             if (rest.length > 0) {
                 const restJobs = rest.reduce((sum, r) => sum + r.jobs, 0);
                 const restValue = rest.reduce((sum, r) => sum + (r.avgSalary * r.jobs), 0);
@@ -1587,23 +1616,19 @@ function drawHierarchicalSunburst() {
             .innerRadius(d => d.y0)
             .outerRadius(d => d.y1);
 
-        // Actualizar paths
         const paths = g.selectAll('path')
             .data(root.descendants(), d => d.data.name);
 
-        // Exit
         paths.exit()
             .transition()
             .duration(500)
             .style('opacity', 0)
             .remove();
 
-        // Enter
         const pathsEnter = paths.enter()
             .append('path')
             .style('opacity', 0);
 
-        // Merge
         const pathsMerge = pathsEnter.merge(paths);
 
         pathsMerge
@@ -1631,11 +1656,11 @@ function drawHierarchicalSunburst() {
                 
                 if (viewType === 'regions' && d.depth === 1) {
                     tooltip += `Total Jobs: ${d.data.totalJobs.toLocaleString()}<br/>`;
-                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}<br/>`;
+                    tooltip += `Avg Salary: ${d.data.avgSalary.toLocaleString()}<br/>`;
                     tooltip += `<em>Click to see top 10 roles</em>`;
                 } else if (viewType === 'roles' && d.depth === 1) {
                     tooltip += `Jobs: ${d.data.jobs.toLocaleString()}<br/>`;
-                    tooltip += `Avg Salary: $${d.data.avgSalary.toLocaleString()}`;
+                    tooltip += `Avg Salary: ${d.data.avgSalary.toLocaleString()}`;
                     if (d.data.type === 'grouped') {
                         const count = parseInt(d.data.name.match(/\((\d+)\)/)[1]);
                         tooltip += `<br/><em>${count} roles combined</em>`;
@@ -1667,7 +1692,6 @@ function drawHierarchicalSunburst() {
             .attr('stroke', 'white')
             .attr('stroke-width', 1.5);
 
-        // Labels
         g.selectAll('.sunburst-label').remove();
         
         g.selectAll('.sunburst-label')
@@ -1698,7 +1722,6 @@ function drawHierarchicalSunburst() {
             .duration(500)
             .style('opacity', 1);
 
-        // Texto central
         g.selectAll('.sunburst-center').remove();
         
         const centerLines = centerText.split('\n');
@@ -1721,8 +1744,9 @@ function drawHierarchicalSunburst() {
     updateSunburst(window.sunburstState.view, window.sunburstState.region);
     console.log('✅ Interactive Sunburst with top 10 roles drawn');
 }
+
 // ═══════════════════════════════════════════════════════════════════
-// 15. HIERARCHICAL MATRIX (4 BAR CHARTS)
+// 16. HIERARCHICAL MATRIX (4 BAR CHARTS)
 // ═══════════════════════════════════════════════════════════════════
 
 function drawHierarchicalMatrix() {
@@ -1736,7 +1760,6 @@ function drawHierarchicalMatrix() {
     const margin = { top: 20, right: 40, bottom: 30, left: 150 };
     const width = containerWidth - margin.left - margin.right;
 
-    // Prepare data for 4 metrics
     const metrics = [
         {
             title: 'Average Salary (USD)',
@@ -1787,7 +1810,6 @@ function drawHierarchicalMatrix() {
             .range([0, chartHeight - margin.bottom - margin.top])
             .padding(0.2);
 
-        // Bars
         g.selectAll('rect')
             .data(sortedData)
             .enter()
@@ -1818,7 +1840,6 @@ function drawHierarchicalMatrix() {
                 hideTooltip();
             });
 
-        // Value labels
         g.selectAll('.value-label')
             .data(sortedData)
             .enter()
@@ -1831,18 +1852,15 @@ function drawHierarchicalMatrix() {
             .attr('fill', '#333')
             .text(d => metric.format(d.value));
 
-        // Y-axis (region names)
         g.append('g')
             .attr('class', 'axis')
             .call(d3.axisLeft(y));
 
-        // X-axis
         g.append('g')
             .attr('class', 'axis')
             .attr('transform', `translate(0,${chartHeight - margin.bottom - margin.top})`)
             .call(d3.axisBottom(x).ticks(5).tickFormat(metric.format));
 
-        // Chart title
         g.append('text')
             .attr('x', -10)
             .attr('y', -10)
@@ -1854,4 +1872,438 @@ function drawHierarchicalMatrix() {
     });
 
     console.log('✅ Hierarchical Matrix drawn');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// 17. NETWORK ANALYSIS - UPDATE ALL CHARTS
+// ═══════════════════════════════════════════════════════════════════
+
+function updateNetworkCharts() {
+    console.log('🔄 Updating network charts...');
+    drawNetworkForceDirected();
+    drawNetworkCentrality();
+    drawNetworkCommunity();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// 18. NETWORK CHART 1: FORCE-DIRECTED GRAPH
+// ═══════════════════════════════════════════════════════════════════
+
+function drawNetworkForceDirected() {
+    const container = d3.select('#network-force-chart');
+    container.html('');
+
+    const containerWidth = container.node().getBoundingClientRect().width;
+    const containerHeight = container.node().getBoundingClientRect().height;
+
+    const width = containerWidth;
+    const height = containerHeight;
+
+    const svg = container.append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+    const g = svg.append('g');
+
+    const zoom = d3.zoom()
+        .scaleExtent([0.5, 3])
+        .on('zoom', (event) => {
+            g.attr('transform', event.transform);
+        });
+
+    svg.call(zoom);
+
+    const colorScale = d3.scaleOrdinal()
+        .domain([1, 2, 3, 4])
+        .range(['#667eea', '#f59e0b', '#10b981', '#ec4899']);
+
+    const sizeScale = d3.scaleSqrt()
+        .domain([0, d3.max(networkData.nodes, d => d.jobs)])
+        .range([5, 30]);
+
+    const simulation = d3.forceSimulation(networkData.nodes)
+        .force('link', d3.forceLink(networkData.links).id(d => d.id).distance(100))
+        .force('charge', d3.forceManyBody().strength(-300))
+        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('collision', d3.forceCollide().radius(d => sizeScale(d.jobs) + 5));
+
+    const link = g.append('g')
+        .selectAll('line')
+        .data(networkData.links)
+        .enter()
+        .append('line')
+        .attr('class', 'network-link')
+        .attr('stroke-width', d => Math.sqrt(d.value / 50));
+
+    const node = g.append('g')
+        .selectAll('circle')
+        .data(networkData.nodes)
+        .enter()
+        .append('circle')
+        .attr('class', 'network-node')
+        .attr('r', d => sizeScale(d.jobs))
+        .attr('fill', d => colorScale(d.group))
+        .call(d3.drag()
+            .on('start', dragstarted)
+            .on('drag', dragged)
+            .on('end', dragended))
+        .on('mouseover', function(event, d) {
+            d3.select(this).classed('highlighted', true);
+            
+            link.classed('highlighted', l => l.source.id === d.id || l.target.id === d.id);
+            
+            showTooltip(event, `
+                <strong>${d.name}</strong><br/>
+                Country Code: ${d.id}<br/>
+                Tech Jobs: ${d.jobs.toLocaleString()}<br/>
+                Network Degree: ${d.degree}<br/>
+                Community: ${d.group}
+            `);
+        })
+        .on('mouseout', function() {
+            d3.select(this).classed('highlighted', false);
+            link.classed('highlighted', false);
+            hideTooltip();
+        });
+
+    const label = g.append('g')
+        .selectAll('text')
+        .data(networkData.nodes)
+        .enter()
+        .append('text')
+        .attr('class', d => d.jobs > 5000 ? 'network-label large' : 'network-label')
+        .text(d => d.id);
+
+    simulation.on('tick', () => {
+        link
+            .attr('x1', d => d.source.x)
+            .attr('y1', d => d.source.y)
+            .attr('x2', d => d.target.x)
+            .attr('y2', d => d.target.y);
+
+        node
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y);
+
+        label
+            .attr('x', d => d.x)
+            .attr('y', d => d.y + 4);
+    });
+
+    function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+
+    function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+    }
+
+    function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+
+    const totalNodes = networkData.nodes.length;
+    const totalLinks = networkData.links.length;
+    const avgDegree = d3.mean(networkData.nodes, d => d.degree).toFixed(1);
+    const density = (2 * totalLinks / (totalNodes * (totalNodes - 1))).toFixed(3);
+
+    const statsContainer = container.node().parentElement;
+    let statsDiv = statsContainer.querySelector('.network-stats');
+    if (!statsDiv) {
+        statsDiv = document.createElement('div');
+        statsDiv.className = 'network-stats';
+        statsContainer.appendChild(statsDiv);
+    }
+
+    statsDiv.innerHTML = `
+        <div class="network-stat">
+            <span class="network-stat-value">${totalNodes}</span>
+            <span class="network-stat-label">Countries</span>
+        </div>
+        <div class="network-stat">
+            <span class="network-stat-value">${totalLinks}</span>
+            <span class="network-stat-label">Connections</span>
+        </div>
+        <div class="network-stat">
+            <span class="network-stat-value">${avgDegree}</span>
+            <span class="network-stat-label">Avg Degree</span>
+        </div>
+        <div class="network-stat">
+            <span class="network-stat-value">${density}</span>
+            <span class="network-stat-label">Density</span>
+        </div>
+    `;
+
+    console.log('✅ Network force-directed graph drawn');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// 19. NETWORK CHART 2: CENTRALITY ANALYSIS
+// ═══════════════════════════════════════════════════════════════════
+
+function drawNetworkCentrality() {
+    const container = d3.select('#network-centrality-chart');
+    container.html('');
+
+    const containerWidth = container.node().getBoundingClientRect().width;
+    const containerHeight = container.node().getBoundingClientRect().height;
+
+    const margin = { top: 20, right: 40, bottom: 100, left: 80 };
+    const width = containerWidth - margin.left - margin.right;
+    const height = containerHeight - margin.top - margin.bottom;
+
+    const svg = container.append('svg')
+        .attr('width', containerWidth)
+        .attr('height', containerHeight)
+        .append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    const sortedNodes = [...networkData.nodes].sort((a, b) => b.degree - a.degree).slice(0, 10);
+
+    const x = d3.scaleBand()
+        .domain(sortedNodes.map(d => d.id))
+        .range([0, width])
+        .padding(0.2);
+
+    const y = d3.scaleLinear()
+        .domain([0, d3.max(sortedNodes, d => d.degree)])
+        .range([height, 0]);
+
+    svg.append('g')
+        .attr('class', 'grid')
+        .call(d3.axisLeft(y).tickSize(-width).tickFormat(''));
+
+    svg.append('g')
+        .attr('class', 'axis')
+        .attr('transform', `translate(0,${height})`)
+        .call(d3.axisBottom(x))
+        .selectAll('text')
+        .style('text-anchor', 'end')
+        .attr('dx', '-.8em')
+        .attr('dy', '.15em')
+        .attr('transform', 'rotate(-45)');
+
+    svg.append('g')
+        .attr('class', 'axis')
+        .call(d3.axisLeft(y));
+
+    svg.append('text')
+        .attr('x', width / 2)
+        .attr('y', height + 90)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '12px')
+        .attr('fill', '#666')
+        .text('Country');
+
+    svg.append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', -60)
+        .attr('x', -(height / 2))
+        .style('text-anchor', 'middle')
+        .style('font-size', '12px')
+        .attr('fill', '#666')
+        .text('Network Degree (Centrality)');
+
+    const colorScale = d3.scaleSequential()
+        .domain([d3.min(sortedNodes, d => d.degree), d3.max(sortedNodes, d => d.degree)])
+        .interpolator(d3.interpolateBlues);
+
+    svg.selectAll('rect')
+        .data(sortedNodes)
+        .enter()
+        .append('rect')
+        .attr('x', d => x(d.id))
+        .attr('y', d => y(d.degree))
+        .attr('width', x.bandwidth())
+        .attr('height', d => height - y(d.degree))
+        .attr('fill', d => colorScale(d.degree))
+        .attr('rx', 4)
+        .style('cursor', 'pointer')
+        .on('mouseover', function(event, d) {
+            d3.select(this).attr('opacity', 0.7);
+            showTooltip(event, `
+                <strong>${d.name}</strong><br/>
+                Network Degree: ${d.degree}<br/>
+                Total Jobs: ${d.jobs.toLocaleString()}<br/>
+                <em>Higher degree = more connections</em>
+            `);
+        })
+        .on('mouseout', function() {
+            d3.select(this).attr('opacity', 1);
+            hideTooltip();
+        });
+
+    svg.selectAll('.value-label')
+        .data(sortedNodes)
+        .enter()
+        .append('text')
+        .attr('x', d => x(d.id) + x.bandwidth() / 2)
+        .attr('y', d => y(d.degree) - 5)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '11px')
+        .style('font-weight', 'bold')
+        .attr('fill', '#333')
+        .text(d => d.degree);
+
+    console.log('✅ Network centrality chart drawn');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// 20. NETWORK CHART 3: COMMUNITY DETECTION
+// ═══════════════════════════════════════════════════════════════════
+
+function drawNetworkCommunity() {
+    const container = d3.select('#network-community-chart');
+    container.html('');
+
+    const containerWidth = container.node().getBoundingClientRect().width;
+    const containerHeight = container.node().getBoundingClientRect().height;
+
+    const width = containerWidth;
+    const height = containerHeight - 80;
+
+    const svg = container.append('svg')
+        .attr('width', width)
+        .attr('height', height + 80);
+
+    const communities = d3.group(networkData.nodes, d => d.group);
+    const communityData = Array.from(communities, ([group, nodes]) => ({
+        group: group,
+        nodes: nodes,
+        totalJobs: d3.sum(nodes, n => n.jobs),
+        avgDegree: d3.mean(nodes, n => n.degree)
+    }));
+
+    const pack = d3.pack()
+        .size([width - 40, height - 40])
+        .padding(20);
+
+    const root = d3.hierarchy({ children: communityData })
+        .sum(d => d.totalJobs)
+        .sort((a, b) => b.value - a.value);
+
+    pack(root);
+
+    const colorScale = d3.scaleOrdinal()
+        .domain([1, 2, 3, 4])
+        .range(['#667eea', '#f59e0b', '#10b981', '#ec4899']);
+
+    const g = svg.append('g')
+        .attr('transform', 'translate(20,20)');
+
+    const communities_g = g.selectAll('g')
+        .data(root.leaves())
+        .enter()
+        .append('g')
+        .attr('transform', d => `translate(${d.x},${d.y})`);
+
+    communities_g.append('circle')
+        .attr('r', d => d.r)
+        .attr('fill', d => colorScale(d.data.group))
+        .attr('opacity', 0.6)
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 3)
+        .style('cursor', 'pointer')
+        .on('mouseover', function(event, d) {
+            d3.select(this).attr('opacity', 0.9);
+            showTooltip(event, `
+                <strong>Community ${d.data.group}</strong><br/>
+                Countries: ${d.data.nodes.length}<br/>
+                Total Jobs: ${d.data.totalJobs.toLocaleString()}<br/>
+                Avg Degree: ${d.data.avgDegree.toFixed(1)}<br/>
+                <em>Members: ${d.data.nodes.map(n => n.id).join(', ')}</em>
+            `);
+        })
+        .on('mouseout', function() {
+            d3.select(this).attr('opacity', 0.6);
+            hideTooltip();
+        });
+
+    communities_g.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '-0.5em')
+        .style('font-size', '16px')
+        .style('font-weight', 'bold')
+        .style('fill', 'white')
+        .text(d => `C${d.data.group}`);
+
+    communities_g.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '1em')
+        .style('font-size', '11px')
+        .style('fill', 'white')
+        .text(d => `${d.data.nodes.length} countries`);
+
+    communities_g.each(function(communityData) {
+        const communityG = d3.select(this);
+        const nodes = communityData.data.nodes;
+        
+        const angleStep = (2 * Math.PI) / nodes.length;
+        const radius = communityData.r * 0.6;
+
+        nodes.forEach((node, i) => {
+            const angle = i * angleStep;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+
+            communityG.append('circle')
+                .attr('cx', x)
+                .attr('cy', y)
+                .attr('r', 6)
+                .attr('fill', '#fff')
+                .attr('stroke', colorScale(communityData.data.group))
+                .attr('stroke-width', 2)
+                .style('cursor', 'pointer')
+                .on('mouseover', function(event) {
+                    d3.select(this).attr('r', 9);
+                    showTooltip(event, `
+                        <strong>${node.name}</strong><br/>
+                        Code: ${node.id}<br/>
+                        Jobs: ${node.jobs.toLocaleString()}<br/>
+                        Degree: ${node.degree}
+                    `);
+                })
+                .on('mouseout', function() {
+                    d3.select(this).attr('r', 6);
+                    hideTooltip();
+                });
+
+            communityG.append('text')
+                .attr('x', x)
+                .attr('y', y + 3)
+                .attr('text-anchor', 'middle')
+                .style('font-size', '8px')
+                .style('font-weight', 'bold')
+                .style('fill', colorScale(communityData.data.group))
+                .style('pointer-events', 'none')
+                .text(node.id);
+        });
+    });
+
+    const legend = svg.append('g')
+        .attr('transform', `translate(20,${height + 30})`);
+
+    communityData.forEach((comm, i) => {
+        const legendItem = legend.append('g')
+            .attr('transform', `translate(${i * 150},0)`);
+
+        legendItem.append('circle')
+            .attr('cx', 0)
+            .attr('cy', 0)
+            .attr('r', 8)
+            .attr('fill', colorScale(comm.group));
+
+        legendItem.append('text')
+            .attr('x', 15)
+            .attr('y', 4)
+            .style('font-size', '12px')
+            .text(`Community ${comm.group} (${comm.nodes.length})`);
+    });
+
+    console.log('✅ Network community detection chart drawn');
 }
