@@ -123,21 +123,21 @@
     "worldMapData": {
       "countries": [
         {
-          "name": "Estados Unidos",
+          "name": "United States",
           "code": "USA",
           "jobs": 4850,
           "avgSalary": 149797.63,
           "region": "North America"
         },
         {
-          "name": "CanadÃ¡",
+          "name": "Canada",
           "code": "CAN",
           "jobs": 1180,
           "avgSalary": 127999.06,
           "region": "North America"
         },
         {
-          "name": "MÃ©xico",
+          "name": "Mexico",
           "code": "MEX",
           "jobs": 125,
           "avgSalary": 138078.9,
@@ -151,21 +151,21 @@
           "region": "North America"
         },
         {
-          "name": "Reino Unido",
+          "name": "United Kingdom",
           "code": "GBR",
           "jobs": 1353,
           "avgSalary": 85852.6,
           "region": "Europe"
         },
         {
-          "name": "Alemania",
+          "name": "Germany",
           "code": "DEU",
           "jobs": 479,
           "avgSalary": 103321.28,
           "region": "Europe"
         },
         {
-          "name": "PaÃ­ses Bajos",
+          "name": "Netherlands",
           "code": "NLD",
           "jobs": 303,
           "avgSalary": 77677.21,
@@ -179,21 +179,21 @@
           "region": "Europe"
         },
         {
-          "name": "Eslovaquia",
+          "name": "Slovakia",
           "code": "SVK",
           "jobs": 147,
           "avgSalary": 36984.8,
           "region": "Europe"
         },
         {
-          "name": "Francia",
+          "name": "France",
           "code": "FRA",
           "jobs": 121,
           "avgSalary": 73073.86,
           "region": "Europe"
         },
         {
-          "name": "EspaÃ±a",
+          "name": "España",
           "code": "ESP",
           "jobs": 96,
           "avgSalary": 72378.12,
@@ -256,7 +256,7 @@
           "region": "Europe"
         },
         {
-          "name": "BÃ©lgica",
+          "name": "Belgica",
           "code": "BEL",
           "jobs": 24,
           "avgSalary": 115604.12,
@@ -270,7 +270,7 @@
           "region": "Europe"
         },
         {
-          "name": "TurquÃ­a",
+          "name": "Turquia",
           "code": "TUR",
           "jobs": 14,
           "avgSalary": 115529.43,
@@ -312,28 +312,28 @@
           "region": "Europe"
         },
         {
-          "name": "Suecia",
+          "name": "Sweden",
           "code": "SWE",
           "jobs": 9,
           "avgSalary": 64886.0,
           "region": "Europe"
         },
         {
-          "name": "RepÃºblica Checa",
+          "name": "Czech Republic",
           "code": "CZE",
           "jobs": 8,
           "avgSalary": 52411.0,
           "region": "Europe"
         },
         {
-          "name": "Eslovenia",
+          "name": "Slovenia",
           "code": "SVN",
           "jobs": 8,
           "avgSalary": 61609.62,
           "region": "Europe"
         },
         {
-          "name": "HungrÃ­a",
+          "name": "Hungary",
           "code": "HUN",
           "jobs": 6,
           "avgSalary": 41093.33,
@@ -354,14 +354,14 @@
           "region": "Europe"
         },
         {
-          "name": "Rusia",
+          "name": "Russia",
           "code": "RUS",
           "jobs": 5,
           "avgSalary": 100600.0,
           "region": "Europe"
         },
         {
-          "name": "Chipre",
+          "name": "Cyprus",
           "code": "CYP",
           "jobs": 5,
           "avgSalary": 65071.6,
@@ -389,21 +389,21 @@
           "region": "Asia Pacific"
         },
         {
-          "name": "Nueva Zelanda",
+          "name": "New Zealand",
           "code": "NZL",
           "jobs": 51,
           "avgSalary": 107865.14,
           "region": "Asia Pacific"
         },
         {
-          "name": "Corea del Sur",
+          "name": "South Korea",
           "code": "KOR",
           "jobs": 34,
           "avgSalary": 91388.41,
           "region": "Asia Pacific"
         },
         {
-          "name": "JapÃ³n",
+          "name": "Japan",
           "code": "JPN",
           "jobs": 32,
           "avgSalary": 122354.53,
@@ -417,14 +417,14 @@
           "region": "Asia Pacific"
         },
         {
-          "name": "Filipinas",
+          "name": "Philippines",
           "code": "PHL",
           "jobs": 20,
           "avgSalary": 35781.15,
           "region": "Asia Pacific"
         },
         {
-          "name": "PakistÃ¡n",
+          "name": "Pakistan",
           "code": "PAK",
           "jobs": 13,
           "avgSalary": 43982.85,
@@ -501,21 +501,21 @@
           "region": "South America"
         },
         {
-          "name": "Egipto",
+          "name": "Egypt",
           "code": "EGY",
           "jobs": 33,
           "avgSalary": 130281.82,
           "region": "Africa & Middle East"
         },
         {
-          "name": "SudÃ¡frica",
+          "name": "South Africa",
           "code": "ZAF",
           "jobs": 10,
           "avgSalary": 67306.5,
           "region": "Africa & Middle East"
         },
         {
-          "name": "Emiratos Ãrabes Unidos",
+          "name": "United Arab Emirates",
           "code": "ARE",
           "jobs": 9,
           "avgSalary": 173925.11,

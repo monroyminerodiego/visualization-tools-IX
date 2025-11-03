@@ -604,6 +604,14 @@ function drawDepartmentEvolution() {
         top5Departments[d.name] = addRealisticVariation(d.data);
     });
 
+    // ✅ NUEVO: Verificar que los datos tengan variación
+    console.log('📊 Department data sample:', 
+        Object.entries(top5Departments).slice(0, 1).map(([name, data]) => ({
+            name,
+            salaries: data.map(d => d.salary)
+        }))
+    );
+
     // ✅ Set para controlar departamentos activos
     const activeDepartments = new Set(Object.keys(top5Departments));
 
@@ -627,9 +635,11 @@ function drawDepartmentEvolution() {
 
     // Ejes
     svg.append('g')
-        .attr('class', 'axis')
-        .attr('transform', `translate(0,${height})`)
-        .call(d3.axisBottom(x).tickFormat(d3.format('d')));
+    .attr('class', 'axis')
+    .attr('transform', `translate(0,${height})`)
+    .call(d3.axisBottom(x)
+        .ticks(6)  // ✅ Limitar a 6 ticks (uno por año: 2020-2025)
+        .tickFormat(d3.format('d')));  // ✅ Formato sin decimales
 
     svg.append('g')
         .attr('class', 'axis')
@@ -653,11 +663,13 @@ function drawDepartmentEvolution() {
         .attr('fill', '#666')
         .text('Average Salary (USD)');
 
-    // Línea vertical de AI Mass Adoption
-    if (allYears.includes(2023)) {
+    // ✅ Línea vertical de AI Mass Adoption (entre 2022 y 2023)
+    if (allYears.includes(2022) && allYears.includes(2023)) {
+        const aiAdoptionYear = 2022.75; // ✅ Entre octubre-noviembre 2022
+        
         svg.append('line')
-            .attr('x1', x(2023))
-            .attr('x2', x(2023))
+            .attr('x1', x(aiAdoptionYear))
+            .attr('x2', x(aiAdoptionYear))
             .attr('y1', 0)
             .attr('y2', height)
             .attr('stroke', '#dc3545')
@@ -665,13 +677,13 @@ function drawDepartmentEvolution() {
             .attr('stroke-dasharray', '5,5');
 
         svg.append('text')
-            .attr('x', x(2023))
+            .attr('x', x(aiAdoptionYear))
             .attr('y', -10)
             .attr('text-anchor', 'middle')
             .style('font-size', '11px')
             .style('font-weight', 'bold')
             .attr('fill', '#dc3545')
-            .text('AI Mass Adoption');
+            .text('AI Mass Adoption (Q4 2022)');
     }
 
     // Crear líneas
@@ -850,13 +862,11 @@ function drawTemporalEvolution() {
         .range([height, 0]);
 
     svg.append('g')
-        .attr('class', 'grid')
-        .call(d3.axisLeft(y).tickSize(-width).tickFormat(''));
-
-    svg.append('g')
-        .attr('class', 'axis')
-        .attr('transform', `translate(0,${height})`)
-        .call(d3.axisBottom(x).tickFormat(d3.format('d')));
+    .attr('class', 'axis')
+    .attr('transform', `translate(0,${height})`)
+    .call(d3.axisBottom(x)
+        .ticks(6)
+        .tickFormat(d3.format('d')));
 
     svg.append('g')
         .attr('class', 'axis')
@@ -879,11 +889,13 @@ function drawTemporalEvolution() {
         .attr('fill', '#666')
         .text('Average Salary (USD)');
 
-    // Línea de adopción de IA (si existe año 2023)
-    if (globalSalaryData.some(d => d.year === 2023)) {
+    // ✅ Línea de adopción de IA (entre 2022 y 2023)
+    if (globalSalaryData.some(d => d.year === 2022) && globalSalaryData.some(d => d.year === 2023)) {
+        const aiAdoptionYear = 2022.75; // ✅ Entre octubre-noviembre 2022
+        
         svg.append('line')
-            .attr('x1', x(2023))
-            .attr('x2', x(2023))
+            .attr('x1', x(aiAdoptionYear))
+            .attr('x2', x(aiAdoptionYear))
             .attr('y1', 0)
             .attr('y2', height)
             .attr('stroke', '#dc3545')
@@ -891,15 +903,14 @@ function drawTemporalEvolution() {
             .attr('stroke-dasharray', '5,5');
 
         svg.append('text')
-            .attr('x', x(2023))
+            .attr('x', x(aiAdoptionYear))
             .attr('y', -10)
             .attr('text-anchor', 'middle')
             .style('font-size', '11px')
             .style('font-weight', 'bold')
             .attr('fill', '#dc3545')
-            .text('AI Mass Adoption');
+            .text('AI Mass Adoption (Q4 2022)');
     }
-
     const area = d3.area()
         .x(d => x(d.year))
         .y0(height)
