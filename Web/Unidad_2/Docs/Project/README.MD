@@ -878,8 +878,8 @@ tooltip.html(sanitizedHTML);
 
 ## 👥 Contributors
 
-- **Alan Valbuena** - Lead Developer & Data Analyst
-- **Sergio Barrera** - Frontend Engineer & UX Designer
+- **Alan Valbuena** 
+- **Sergio Barrera** 
 
 ## 📄 License
 

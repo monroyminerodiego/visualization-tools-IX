@@ -26,14 +26,14 @@ const checkpointsData = [
         topics: ["Treemap Analysis", "Dendrograms", "Sunburst Charts", "Circular Treemaps", "Comparative Analysis"]
     },
     {
-        number: 3,
-        title: "****",
-        description: "****",
-        status: "pending",
-        completionDate: null,
-        exercises: 10,
-        duration: "1 week",
-        topics: ["****"]
+    number: 3,
+    title: "Network Graph Visualization",
+    description: "Social Network Analysis of U.S. Congress Twitter interactions using D3.js. Implementation of force-directed graphs, community detection (Louvain algorithm), centrality metrics (PageRank, Betweenness, In-Degree), and temporal analysis. Interactive dashboard with 475 nodes and 13,289 edges across 4 detected communities.",
+    status: "completed",
+    completionDate: "2024-11-03",
+    exercises: 9,
+    duration: "2 weeks",
+    topics: ["Force-Directed Graphs", "Community Detection", "Centrality Metrics", "D3.js Visualization", "Social Network Analysis"]
     }
 ];
 
