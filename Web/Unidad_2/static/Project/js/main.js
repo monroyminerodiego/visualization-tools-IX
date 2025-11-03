@@ -185,21 +185,137 @@ function hideTooltip() {
 // ═══════════════════════════════════════════════════════════════════
 
 function changeTab(tabName) {
+    console.log(`🔄 Changing to tab: ${tabName}`);
+    
+    // Remover clases active
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
 
+    // Activar tab y botón
     const selectedTab = document.getElementById(tabName);
     if (selectedTab) selectedTab.classList.add('active');
 
     const selectedButton = document.querySelector(`[data-tab="${tabName}"]`);
     if (selectedButton) selectedButton.classList.add('active');
 
+    // ✅ SOLUCIÓN MEJORADA: Diferentes estrategias según el tab
     if (tabName === 'spatiotemporal') {
-        setTimeout(() => updateSpatiotemporalCharts(), 100);
-    } else if (tabName === 'hierarchical') {
-        setTimeout(() => updateHierarchicalCharts(), 100);
-    } else if (tabName === 'detalle') {
-        setTimeout(() => updateNetworkCharts(), 100);
+        requestAnimationFrame(() => {
+            setTimeout(() => updateSpatiotemporalCharts(), 50);
+        });
+    } 
+    else if (tabName === 'hierarchical') {
+        requestAnimationFrame(() => {
+            setTimeout(() => updateHierarchicalCharts(), 50);
+        });
+    } 
+    else if (tabName === 'detalle') {
+        // ✅ ESTRATEGIA ESPECIAL PARA NETWORK TAB
+        handleNetworkTabActivation();
+    }
+}
+
+// ✅ NUEVA FUNCIÓN: Manejo robusto de activación del tab Network
+function handleNetworkTabActivation() {
+    console.log('🎯 Activating Network Analysis tab...');
+    
+    // 1. Forzar visibilidad del tab
+    const tabContent = document.getElementById('detalle');
+    if (!tabContent) {
+        console.error('❌ Tab #detalle not found');
+        return;
+    }
+    
+    // 2. Aplicar estilos inline para forzar renderizado
+    tabContent.style.display = 'block';
+    tabContent.style.opacity = '1';
+    tabContent.style.minHeight = '1400px';
+    
+    // 3. Forzar todos los contenedores de gráficos
+    const containers = [
+        'network-communities-detail-chart',
+        'network-centrality-chart',
+        'network-community-chart'
+    ];
+    
+    containers.forEach(id => {
+        const container = document.getElementById(id);
+        if (container) {
+            container.style.minHeight = id === 'network-communities-detail-chart' ? '650px' : '500px';
+            container.style.height = id === 'network-communities-detail-chart' ? '650px' : '500px';
+            container.style.width = '100%';
+            container.style.display = 'block';
+        }
+    });
+    
+    // 4. Forzar reflow del navegador
+    tabContent.offsetHeight;
+    
+    // 5. Usar múltiples intentos de renderizado
+    attemptNetworkRender(0);
+}
+
+// ✅ NUEVA FUNCIÓN: Intentos múltiples de renderizado
+function attemptNetworkRender(attemptNumber) {
+    const maxAttempts = 5;
+    const delays = [0, 100, 300, 600, 1000]; // Delays progresivos
+    
+    if (attemptNumber >= maxAttempts) {
+        console.error('❌ Failed to render network charts after maximum attempts');
+        showNetworkError();
+        return;
+    }
+    
+    setTimeout(() => {
+        console.log(`🔄 Network render attempt ${attemptNumber + 1}/${maxAttempts}...`);
+        
+        const container = document.getElementById('network-communities-detail-chart');
+        
+        if (!container) {
+            console.error('❌ Container not found');
+            attemptNetworkRender(attemptNumber + 1);
+            return;
+        }
+        
+        // Forzar reflow
+        container.offsetHeight;
+        
+        const rect = container.getBoundingClientRect();
+        console.log(`📐 Attempt ${attemptNumber + 1} dimensions:`, rect.width, 'x', rect.height);
+        
+        if (rect.width > 0 && rect.height > 0) {
+            console.log('✅ Valid dimensions detected, rendering charts...');
+            try {
+                updateNetworkCharts();
+                console.log('✅ Network charts rendered successfully');
+            } catch (error) {
+                console.error('❌ Error rendering charts:', error);
+                attemptNetworkRender(attemptNumber + 1);
+            }
+        } else {
+            console.warn(`⚠️ Attempt ${attemptNumber + 1} failed, retrying...`);
+            attemptNetworkRender(attemptNumber + 1);
+        }
+    }, delays[attemptNumber]);
+}
+
+// ✅ NUEVA FUNCIÓN: Mostrar mensaje de error elegante
+function showNetworkError() {
+    const container = document.getElementById('network-communities-detail-chart');
+    if (container) {
+        container.innerHTML = `
+            <div class="network-error">
+                <i class="ti ti-alert-triangle"></i>
+                <div class="network-error-title">Unable to Load Network Analysis</div>
+                <div class="network-error-message">
+                    The network visualization could not be rendered.<br>
+                    This may be due to browser rendering issues.
+                </div>
+                <button class="network-error-button" onclick="location.reload()">
+                    <i class="ti ti-refresh"></i> Refresh Page
+                </button>
+            </div>
+        `;
     }
 }
 
@@ -216,6 +332,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         updateSpatiotemporalCharts();
         setupResponsiveResize();
         console.log('✅ Dashboard initialized successfully');
+        console.log('📊 Data loaded - ready for all tabs');
     } else {
         console.error('❌ Failed to initialize dashboard');
     }
@@ -1434,7 +1551,7 @@ function drawHierarchicalBubble() {
     // ✅ CAMBIO: Burbujas más pequeñas
     const size = d3.scaleSqrt()
         .domain([0, d3.max(bubbleData, d => d.totalPayroll)])
-        .range([25, 55]);
+        .range([15, 55]);
 
     svg.append('g')
         .attr('class', 'grid')
@@ -1960,21 +2077,84 @@ function drawHierarchicalMatrix() {
 
 function updateNetworkCharts() {
     console.log('🔄 Updating network charts...');
-    drawNetworkForceDirected();
-    drawNetworkCentrality();
-    drawNetworkCommunity();
+    console.log('📊 Data verification:');
+    console.log('   - communityData:', communityData ? communityData.length : 'NOT LOADED');
+    console.log('   - networkData:', networkData ? 'LOADED' : 'NOT LOADED');
+    console.log('   - topInfluencers:', topInfluencers ? topInfluencers.length : 'NOT LOADED');
+    
+    // ✅ Verificar que los datos estén cargados
+    if (!communityData || !networkData || !topInfluencers) {
+        console.error('❌ Network data not loaded yet');
+        setTimeout(() => {
+            console.log('🔄 Retrying network charts in 500ms...');
+            updateNetworkCharts();
+        }, 500);
+        return;
+    }
+    
+    try {
+        console.log('🎨 Drawing Communities Detail...');
+        drawNetworkCommunitiesDetail();
+        console.log('✅ Communities detail drawn');
+    } catch (error) {
+        console.error('❌ Error in drawNetworkCommunitiesDetail:', error);
+    }
+    
+    try {
+        console.log('🎨 Drawing Centrality...');
+        drawNetworkCentrality();
+        console.log('✅ Centrality drawn');
+    } catch (error) {
+        console.error('❌ Error in drawNetworkCentrality:', error);
+    }
+    
+    try {
+        console.log('🎨 Drawing Community...');
+        drawNetworkCommunity();
+        console.log('✅ Community drawn');
+    } catch (error) {
+        console.error('❌ Error in drawNetworkCommunity:', error);
+    }
+    
+    console.log('✅ All network charts update completed');
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// 17. NETWORK CHART 1: FORCE-DIRECTED GRAPH
+// 17. NETWORK CHART 1: COMMUNITIES DETAIL (FORCE-DIRECTED BY COMMUNITY)
 // ═══════════════════════════════════════════════════════════════════
 
-function drawNetworkForceDirected() {
-    const container = d3.select('#network-force-chart');
+function drawNetworkCommunitiesDetail() {
+    console.log('🎨 Drawing communities detail...');
+    
+    const container = d3.select('#network-communities-detail-chart');
+    
+    // ✅ VERIFICACIÓN 1: Contenedor existe
+    if (container.empty()) {
+        console.error('❌ Container #network-communities-detail-chart not found');
+        console.log('Available containers:', document.querySelectorAll('[id*="network"]'));
+        return;
+    }
+    
+    const containerNode = container.node();
+    if (!containerNode) {
+        console.error('❌ Container node is null');
+        return;
+    }
+    
     container.html('');
 
-    const containerWidth = container.node().getBoundingClientRect().width;
-    const containerHeight = container.node().getBoundingClientRect().height;
+    // ✅ VERIFICACIÓN 2: Dimensiones válidas
+    const containerRect = containerNode.getBoundingClientRect();
+    const containerWidth = containerRect.width;
+    const containerHeight = containerRect.height;
+
+    console.log('📐 Container dimensions:', { width: containerWidth, height: containerHeight });
+
+    if (containerWidth === 0 || containerHeight === 0) {
+        console.error('❌ Container has zero dimensions');
+        container.html('<div style="padding: 50px; text-align: center; color: #999; font-size: 16px;">⚠️ Switch to Network Analysis tab to view this chart</div>');
+        return;
+    }
 
     const width = containerWidth;
     const height = containerHeight;
@@ -1985,151 +2165,378 @@ function drawNetworkForceDirected() {
 
     const g = svg.append('g');
 
+    // ✅ Zoom SOLO con scroll, sin drag/pan
     const zoom = d3.zoom()
-        .scaleExtent([0.5, 3])
+        .scaleExtent([0.8, 2])  // ✅ Límites más conservadores
+        .filter(function(event) {
+            // ✅ CRÍTICO: Solo permitir zoom con rueda del mouse
+            // Bloquear drag/pan (event.type === 'mousedown')
+            return event.type === 'wheel';
+        })
         .on('zoom', (event) => {
             g.attr('transform', event.transform);
         });
 
     svg.call(zoom);
 
+    // ✅ VERIFICACIÓN 3: Datos existen
+    if (!communityData || communityData.length === 0) {
+        console.error('❌ communityData not found or empty');
+        svg.append('text')
+            .attr('x', width / 2)
+            .attr('y', height / 2)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '16px')
+            .attr('fill', '#999')
+            .text('⚠️ Community data not available');
+        return;
+    }
+
+    // ✅ Ordenar comunidades por tamaño (descendente) y tomar solo las 3 más grandes
+    const topCommunities = [...communityData]
+        .sort((a, b) => b.size - a.size)
+        .slice(0, 3);
+
+    console.log('✅ Top 3 communities:', topCommunities);
+
     const colorScale = d3.scaleOrdinal()
-        .domain([1, 2, 3, 4])
-        .range(['#667eea', '#f59e0b', '#10b981', '#ec4899']);
+        .domain([0, 1, 2, 3, 4])
+        .range(['#667eea', '#f59e0b', '#10b981', '#ec4899', '#06b6d4']);
 
-    const sizeScale = d3.scaleSqrt()
-        .domain([0, d3.max(networkData.nodes, d => d.jobs)])
-        .range([5, 30]);
-
-    // ✅ CAMBIO: Mejor distribución visual
-    const simulation = d3.forceSimulation(networkData.nodes)
-        .force('link', d3.forceLink(networkData.links).id(d => d.id).distance(150).strength(0.5))
-        .force('charge', d3.forceManyBody().strength(-800))
-        .force('center', d3.forceCenter(width / 2, height / 2))
-        .force('collision', d3.forceCollide().radius(d => sizeScale(d.jobs) + 15))
-        .force('x', d3.forceX(width / 2).strength(0.05))
-        .force('y', d3.forceY(height / 2).strength(0.05));
-
-    const link = g.append('g')
-        .selectAll('line')
-        .data(networkData.links)
-        .enter()
-        .append('line')
-        .attr('class', 'network-link')
-        .attr('stroke-width', d => Math.sqrt(d.value / 50));
-
-    const node = g.append('g')
-        .selectAll('circle')
-        .data(networkData.nodes)
-        .enter()
-        .append('circle')
-        .attr('class', 'network-node')
-        .attr('r', d => sizeScale(d.jobs))
-        .attr('fill', d => colorScale(d.group))
-        .call(d3.drag()
-            .on('start', dragstarted)
-            .on('drag', dragged)
-            .on('end', dragended))
-        .on('mouseover', function(event, d) {
-            d3.select(this).classed('highlighted', true);
+    // ✅ Crear nodos por comunidad
+    const nodesByCommunity = topCommunities.map(comm => {
+        return comm.members.map(code => {
+            const nodeData = networkData.nodes.find(n => n.id === code);
+            const country = worldMapData.countries.find(c => c.code === code);
             
-            link.classed('highlighted', l => l.source.id === d.id || l.target.id === d.id);
-            
-            // ✅ CAMBIO: Mostrar nombre completo del país
-            const countryName = worldMapData.countries.find(c => c.code === d.id)?.name || d.name;
-            
-            showTooltip(event, `
-                <strong>${countryName}</strong><br/>
-                Code: ${d.id}<br/>
-                Region: ${d.region}<br/>
-                <hr style="margin: 6px 0; border: none; border-top: 1px solid rgba(255,255,255,0.3);">
-                Tech Jobs: <strong style="color: #34C759">${d.jobs.toLocaleString()}</strong><br/>
-                Avg Salary: <strong style="color: #007AFF">$${d.avg_salary.toLocaleString()}</strong><br/>
-                Network Degree: <strong>${d.degree}</strong><br/>
-                In-Degree: ${d.in_degree} | Out-Degree: ${d.out_degree}<br/>
-                Community: ${d.group}
-            `);
-        })
-        .on('mouseout', function() {
-            d3.select(this).classed('highlighted', false);
-            link.classed('highlighted', false);
-            hideTooltip();
+            return {
+                id: code,
+                name: country ? country.name : code,
+                group: comm.group,
+                jobs: nodeData ? nodeData.jobs : 0,
+                avg_salary: nodeData ? nodeData.avg_salary : 0,
+                degree: nodeData ? nodeData.degree : 0
+            };
         });
-
-    const label = g.append('g')
-        .selectAll('text')
-        .data(networkData.nodes)
-        .enter()
-        .append('text')
-        .attr('class', d => d.jobs > 5000 ? 'network-label large' : 'network-label')
-        .text(d => d.id);
-
-    simulation.on('tick', () => {
-        link
-            .attr('x1', d => d.source.x)
-            .attr('y1', d => d.source.y)
-            .attr('x2', d => d.target.x)
-            .attr('y2', d => d.target.y);
-
-        node
-            .attr('cx', d => d.x)
-            .attr('cy', d => d.y);
-
-        label
-            .attr('x', d => d.x)
-            .attr('y', d => d.y + 4);
     });
 
-    function dragstarted(event, d) {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-    }
+    // ✅ Crear enlaces dentro de cada comunidad
+    const linksByCommunity = topCommunities.map(comm => {
+        const communityMembers = comm.members;
+        
+        return networkData.links.filter(link => {
+            const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+            const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+            
+            return communityMembers.includes(sourceId) && communityMembers.includes(targetId);
+        }).map(link => ({
+            source: typeof link.source === 'object' ? link.source.id : link.source,
+            target: typeof link.target === 'object' ? link.target.id : link.target,
+            value: link.value,
+            group: comm.group
+        }));
+    });
 
-    function dragged(event, d) {
-        d.fx = event.x;
-        d.fy = event.y;
-    }
+    // ✅ Layout horizontal: 3 columnas
+    const numCommunities = topCommunities.length;
+    const colWidth = width / numCommunities;
+    const centerY = height / 2;
 
-    function dragended(event, d) {
-        if (!event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-    }
+    // ✅ Título principal
+    svg.append('text')
+        .attr('x', width / 2)
+        .attr('y', 25)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '18px')
+        .style('font-weight', 'bold')
+        .attr('fill', '#333')
+        .text('Largest Communities (Detailed View)');
 
-    const totalNodes = networkData.nodes.length;
-    const totalLinks = networkData.links.length;
-    const avgDegree = d3.mean(networkData.nodes, d => d.degree).toFixed(1);
-    const density = (2 * totalLinks / (totalNodes * (totalNodes - 1))).toFixed(3);
+    // ✅ Crear una simulación por comunidad
+    topCommunities.forEach((comm, idx) => {
+        const nodes = nodesByCommunity[idx];
+        const links = linksByCommunity[idx];
 
-    const statsContainer = container.node().parentElement;
-    let statsDiv = statsContainer.querySelector('.network-stats');
-    if (!statsDiv) {
-        statsDiv = document.createElement('div');
-        statsDiv.className = 'network-stats';
-        statsContainer.appendChild(statsDiv);
-    }
+        const centerX = (idx + 0.5) * colWidth;
+        const simulationWidth = colWidth * 0.85;
+        const simulationHeight = height * 0.75;
 
-    statsDiv.innerHTML = `
-        <div class="network-stat">
-            <span class="network-stat-value">${totalNodes}</span>
-            <span class="network-stat-label">Countries</span>
-        </div>
-        <div class="network-stat">
-            <span class="network-stat-value">${totalLinks}</span>
-            <span class="network-stat-label">Connections</span>
-        </div>
-        <div class="network-stat">
-            <span class="network-stat-value">${avgDegree}</span>
-            <span class="network-stat-label">Avg Degree</span>
-        </div>
-        <div class="network-stat">
-            <span class="network-stat-value">${density}</span>
-            <span class="network-stat-label">Density</span>
-        </div>
-    `;
+        // ✅ Grupo para esta comunidad
+        const commGroup = g.append('g')
+            .attr('class', `community-group community-${comm.group}`);
 
-    console.log('✅ Network force-directed graph drawn');
+        // ✅ Fondo de comunidad
+        commGroup.append('rect')
+            .attr('x', centerX - simulationWidth / 2)
+            .attr('y', centerY - simulationHeight / 2)
+            .attr('width', simulationWidth)
+            .attr('height', simulationHeight)
+            .attr('fill', colorScale(comm.group))
+            .attr('opacity', 0.05)
+            .attr('rx', 10)
+            .attr('stroke', colorScale(comm.group))
+            .attr('stroke-width', 2)
+            .attr('stroke-dasharray', '5,5');
+
+        // ✅ Título de comunidad
+        commGroup.append('text')
+            .attr('x', centerX)
+            .attr('y', centerY - simulationHeight / 2 - 10)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '15px')
+            .style('font-weight', 'bold')
+            .attr('fill', colorScale(comm.group))
+            .text(`Community ${comm.group}`);
+
+        // ✅ Subtítulo con nodos Y aristas
+        commGroup.append('text')
+            .attr('x', centerX)
+            .attr('y', centerY - simulationHeight / 2 + 10)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '12px')
+            .attr('fill', '#666')
+            .text(`(${nodes.length} nodes • ${links.length} links)`);  // ✅ Información completa
+
+        // ✅ Escala de tamaño para nodos
+        const sizeScale = d3.scaleSqrt()
+            .domain([0, d3.max(nodes, d => d.jobs)])
+            .range([6, 25]);
+
+        // ✅ Simulación de fuerza para esta comunidad
+        // ✅ Simulación de fuerza OPTIMIZADA
+        const simulation = d3.forceSimulation(nodes)
+            .force('link', d3.forceLink(links).id(d => d.id)
+                .distance(50)  // ✅ Distancia aumentada para mejor visibilidad
+                .strength(0.5))  // ✅ Enlaces más fuertes
+            .force('charge', d3.forceManyBody()
+                .strength(-200)  // ✅ Más repulsión entre nodos
+                .distanceMax(simulationWidth / 2))  // ✅ Límite de distancia
+            .force('center', d3.forceCenter(centerX, centerY))
+            .force('collision', d3.forceCollide()
+                .radius(d => sizeScale(d.jobs) + 10)  // ✅ Más espacio entre nodos
+                .strength(0.9))  // ✅ Colisión fuerte
+            .force('x', d3.forceX(centerX).strength(0.2))  // ✅ Menos fuerza horizontal
+            .force('y', d3.forceY(centerY).strength(0.2))  // ✅ Menos fuerza vertical
+            .alphaDecay(0.02);  // ✅ Simulación más lenta y suave
+
+        // ✅ Enlaces
+        // ✅ Enlaces MÁS VISIBLES
+        const link = commGroup.append('g')
+            .attr('class', 'links-group')
+            .selectAll('line')
+            .data(links)
+            .enter()
+            .append('line')
+            .attr('stroke', colorScale(comm.group))
+            .attr('stroke-opacity', 0.6)  // ✅ Aumentado de 0.3 a 0.6
+            .attr('stroke-width', d => Math.max(Math.sqrt(d.value / 10), 3))  // ✅ Ancho mínimo 2px
+            .style('pointer-events', 'none');  // ✅ Los links no interfieren con el drag
+
+        // ✅ Nodos
+        const node = commGroup.append('g')
+            .selectAll('circle')
+            .data(nodes)
+            .enter()
+            .append('circle')
+            .attr('r', d => sizeScale(d.jobs))
+            .attr('fill', colorScale(comm.group))
+            .attr('stroke', 'white')
+            .attr('stroke-width', 2)
+            .attr('opacity', 0.8)
+            .style('cursor', 'pointer')
+            .call(d3.drag()
+                .on('start', function(event, d) {
+                    if (!event.active) simulation.alphaTarget(0.3).restart();
+                    d.fx = d.x;
+                    d.fy = d.y;
+                })
+                .on('drag', function(event, d) {
+                    d.fx = event.x;
+                    d.fy = event.y;
+                })
+                .on('end', function(event, d) {
+                    if (!event.active) simulation.alphaTarget(0);
+                    d.fx = null;
+                    d.fy = null;
+                }))
+            .on('mouseover', function(event, d) {
+                d3.select(this)
+                    .attr('opacity', 1)
+                    .attr('stroke-width', 4);  // ✅ Más grueso
+                
+                // ✅ Resaltar aristas conectadas
+                link
+                    .attr('stroke-opacity', l => 
+                        (l.source.id === d.id || l.target.id === d.id) ? 1 : 0.3
+                    )
+                    .attr('stroke-width', l => 
+                        (l.source.id === d.id || l.target.id === d.id) ? 4 : 2
+                    );
+                
+                // ✅ Tooltip mejorado con más información
+                const connections = links.filter(l => 
+                    (typeof l.source === 'object' ? l.source.id : l.source) === d.id || 
+                    (typeof l.target === 'object' ? l.target.id : l.target) === d.id
+                ).length;
+                
+                showTooltip(event, `
+                    <div style="min-width: 220px;">
+                        <strong style="font-size: 16px; color: #fff;">${d.name}</strong><br/>
+                        <span style="opacity: 0.8;">Code: ${d.id}</span>
+                        <hr style="margin: 8px 0; border: none; border-top: 1px solid rgba(255,255,255,0.3);">
+                        
+                        <div style="display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: 13px;">
+                            <span style="opacity: 0.8;">Community:</span>
+                            <strong>${d.group}</strong>
+                            
+                            <span style="opacity: 0.8;">Tech Jobs:</span>
+                            <strong style="color: #34C759">${d.jobs.toLocaleString()}</strong>
+                            
+                            <span style="opacity: 0.8;">Avg Salary:</span>
+                            <strong style="color: #007AFF">$${d.avg_salary.toLocaleString()}</strong>
+                            
+                            <span style="opacity: 0.8;">Network Degree:</span>
+                            <strong>${d.degree}</strong>
+                            
+                            <span style="opacity: 0.8;">Connections:</span>
+                            <strong style="color: #f59e0b">${connections} links</strong>
+                        </div>
+                        
+                        <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 11px; opacity: 0.8; font-style: italic;">
+                            💡 Drag this node to reposition
+                        </div>
+                    </div>
+                `);
+            })
+            .on('mouseout', function() {
+                d3.select(this)
+                    .attr('opacity', 0.8)
+                    .attr('stroke-width', 2);
+                
+                // ✅ Restaurar aristas
+                link
+                    .attr('stroke-opacity', 0.6)
+                    .attr('stroke-width', d => Math.max(Math.sqrt(d.value / 30), 2));
+                
+                hideTooltip();
+            });
+
+        // ✅ Etiquetas (solo para nodos grandes)
+        const label = commGroup.append('g')
+            .selectAll('text')
+            .data(nodes)
+            .enter()
+            .append('text')
+            .attr('text-anchor', 'middle')
+            .attr('dy', 4)
+            .style('font-size', d => d.jobs > 3000 ? '11px' : '9px')
+            .style('font-weight', 'bold')
+            .style('fill', 'white')
+            .style('pointer-events', 'none')
+            .style('text-shadow', '1px 1px 3px rgba(0,0,0,0.9)')
+            .text(d => d.id);
+
+        // ✅ Actualizar posiciones en cada tick
+        simulation.on('tick', () => {
+            link
+                .attr('x1', d => d.source.x)
+                .attr('y1', d => d.source.y)
+                .attr('x2', d => d.target.x)
+                .attr('y2', d => d.target.y);
+
+            node
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y);
+
+            label
+                .attr('x', d => d.x)
+                .attr('y', d => d.y);
+        });
+    });
+
+        // ✅ NUEVO: Lista de conexiones debajo de cada comunidad
+        const connectionsList = commGroup.append('foreignObject')
+            .attr('x', -simulationWidth / 2)
+            .attr('y', centerY - simulationHeight / 2 + simulationHeight + 15)
+            .attr('width', simulationWidth)
+            .attr('height', 150);
+
+        const connectionsDiv = connectionsList.append('xhtml:div')
+            .style('background', 'rgba(255, 255, 255, 0.95)')
+            .style('border', `2px solid ${colorScale(comm.group)}`)
+            .style('border-radius', '8px')
+            .style('padding', '10px')
+            .style('font-size', '11px')
+            .style('line-height', '1.4')
+            .style('max-height', '140px')
+            .style('overflow-y', 'auto');
+
+        // Título de la sección
+        connectionsDiv.append('div')
+            .style('font-weight', 'bold')
+            .style('font-size', '12px')
+            .style('margin-bottom', '6px')
+            .style('color', colorScale(comm.group))
+            .html(`🔗 Network Connections (${links.length} links)`);
+
+        // Crear mapa de conexiones por país
+        const connectionsByCountry = {};
+        links.forEach(link => {
+            const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+            const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+            
+            if (!connectionsByCountry[sourceId]) connectionsByCountry[sourceId] = [];
+            if (!connectionsByCountry[targetId]) connectionsByCountry[targetId] = [];
+            
+            connectionsByCountry[sourceId].push(targetId);
+            connectionsByCountry[targetId].push(sourceId);
+        });
+
+        // Ordenar países por número de conexiones (descendente)
+        const sortedCountries = Object.entries(connectionsByCountry)
+            .map(([code, connections]) => {
+                const uniqueConnections = [...new Set(connections)];
+                const country = nodes.find(n => n.id === code);
+                return {
+                    code,
+                    name: country ? country.name : code,
+                    connections: uniqueConnections,
+                    count: uniqueConnections.length
+                };
+            })
+            .sort((a, b) => b.count - a.count);
+
+        // Mostrar conexiones en formato compacto
+        sortedCountries.forEach(country => {
+            const connectedNames = country.connections
+                .map(code => {
+                    const connectedNode = nodes.find(n => n.id === code);
+                    return connectedNode ? connectedNode.name : code;
+                })
+                .join(', ');
+
+            connectionsDiv.append('div')
+                .style('margin-bottom', '4px')
+                .style('padding-left', '8px')
+                .style('border-left', `3px solid ${colorScale(comm.group)}`)
+                .html(`
+                    <strong style="color: #333;">${country.name}</strong> 
+                    <span style="color: #666;">(${country.count})</span>: 
+                    <span style="color: #666; font-size: 10px;">${connectedNames}</span>
+                `);
+        });
+    // ✅ Instrucciones de uso
+    svg.append('text')
+        .attr('x', width / 2)
+        .attr('y', height - 10)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '11px')
+        .style('font-style', 'italic')
+        .attr('fill', '#999')
+        .text('💡 Drag nodes to explore • Scroll to zoom • Each community shows internal connections');
+
+    console.log('✅ Communities detail chart drawn');
+    console.log(`   Top 3 communities: ${topCommunities.map(c => `Community ${c.group} (${c.size} nodes)`).join(', ')}`);
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -2138,6 +2545,13 @@ function drawNetworkForceDirected() {
 
 function drawNetworkCentrality() {
     const container = d3.select('#network-centrality-chart');
+    
+    // ✅ VERIFICACIÓN DE SEGURIDAD
+    if (container.empty() || !container.node()) {
+        console.error('❌ Container #network-communities-detail-chart not found in DOM');
+        return;
+    }
+    
     container.html('');
 
     const containerWidth = container.node().getBoundingClientRect().width;

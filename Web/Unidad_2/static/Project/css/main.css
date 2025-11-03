@@ -736,13 +736,22 @@ svg {
         height: 550px;
     }
     
-    #network-force-chart {
-        height: 450px;
+    /* ✅ Network charts con altura mínima en tablets */
+    #network-communities-detail-chart {
+        width: 100%;
+        height: 800px;  /* ✅ Aumentar altura para acomodar listas */
+        overflow: visible;  /* ✅ Cambiar a visible para mostrar las listas */
+        position: relative;
     }
-    
+
     #network-centrality-chart,
     #network-community-chart {
         height: 400px;
+        min-height: 400px !important;
+    }
+
+    #detalle.tab-content {
+        min-height: 1200px;
     }
     
     .department-legend {
@@ -807,13 +816,20 @@ svg {
         height: 500px;
     }
     
-    #network-force-chart {
-        height: 400px;
+    /* ✅ Network charts con altura mínima en móviles */
+    #network-communities-detail-chart {
+        height: 450px;
+        min-height: 450px !important;
     }
-    
+
     #network-centrality-chart,
     #network-community-chart {
         height: 350px;
+        min-height: 350px !important;
+    }
+
+    #detalle.tab-content {
+        min-height: 1000px;
     }
     
     .network-stats {
@@ -874,4 +890,70 @@ svg {
     .network-controls {
         display: none;
     }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   NETWORK COMMUNITIES - MEJORAS VISUALES
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Cursor personalizado para el contenedor */
+#network-communities-detail-chart {
+    cursor: default !important;
+}
+
+#network-communities-detail-chart svg {
+    cursor: default !important;
+}
+
+/* Nodos con cursor grab */
+#network-communities-detail-chart circle {
+    cursor: grab !important;
+}
+
+#network-communities-detail-chart circle:active {
+    cursor: grabbing !important;
+}
+
+/* Enlaces con transición suave */
+.links-group line {
+    transition: stroke-opacity 0.2s ease, stroke-width 0.2s ease;
+}
+/* Ocultar tabs inactivos */
+.tab-content:not(.active) {
+    display: none !important;
+}
+/* ═══════════════════════════════════════════════════════════════════
+   FORZAR OCULTAMIENTO DE TABS INACTIVOS
+   ═══════════════════════════════════════════════════════════════════ */
+
+.tab-content {
+    display: none !important;
+}
+
+.tab-content.active {
+    display: block !important;
+}
+/* ═══════════════════════════════════════════════════════════════════
+   NETWORK COMMUNITIES - MEJORAS DE VISIBILIDAD
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Enlaces más visibles */
+#network-communities-detail-chart .links-group line {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Nodos con sombra */
+#network-communities-detail-chart circle {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+#network-communities-detail-chart circle:hover {
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)) !important;
+}
+
+/* Etiquetas más legibles */
+#network-communities-detail-chart text {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
