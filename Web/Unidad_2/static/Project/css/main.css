@@ -736,20 +736,13 @@ svg {
         height: 550px;
     }
     
-    /* ✅ Network charts con altura mínima en tablets */
-    #network-communities-detail-chart {
-        height: 500px;
-        min-height: 500px !important;
+    #network-force-chart {
+        height: 450px;
     }
-
+    
     #network-centrality-chart,
     #network-community-chart {
         height: 400px;
-        min-height: 400px !important;
-    }
-
-    #detalle.tab-content {
-        min-height: 1200px;
     }
     
     .department-legend {
@@ -814,20 +807,13 @@ svg {
         height: 500px;
     }
     
-    /* ✅ Network charts con altura mínima en móviles */
-    #network-communities-detail-chart {
-        height: 450px;
-        min-height: 450px !important;
+    #network-force-chart {
+        height: 400px;
     }
-
+    
     #network-centrality-chart,
     #network-community-chart {
         height: 350px;
-        min-height: 350px !important;
-    }
-
-    #detalle.tab-content {
-        min-height: 1000px;
     }
     
     .network-stats {
@@ -888,31 +874,4 @@ svg {
     .network-controls {
         display: none;
     }
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   NETWORK COMMUNITIES - MEJORAS VISUALES
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* Cursor personalizado para el contenedor */
-#network-communities-detail-chart {
-    cursor: default !important;
-}
-
-#network-communities-detail-chart svg {
-    cursor: default !important;
-}
-
-/* Nodos con cursor grab */
-#network-communities-detail-chart circle {
-    cursor: grab !important;
-}
-
-#network-communities-detail-chart circle:active {
-    cursor: grabbing !important;
-}
-
-/* Enlaces con transición suave */
-.links-group line {
-    transition: stroke-opacity 0.2s ease, stroke-width 0.2s ease;
 }
