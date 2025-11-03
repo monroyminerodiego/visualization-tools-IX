@@ -488,16 +488,23 @@ function drawTopCountriesChart() {
         .call(d3.axisLeft(y));
 
     svg.selectAll('rect')
-        .data(sortedCountries)
-        .enter()
-        .append('rect')
-        .attr('x', 0)
-        .attr('y', d => y(d.name))
-        .attr('width', d => x(d.jobs))
-        .attr('height', y.bandwidth())
-        .attr('fill', '#667eea')
-        .attr('opacity', 0.8)
-        .attr('rx', 4)
+    .data(sortedCountries)
+    .enter()
+    .append('rect')
+    .attr('x', 0)
+    .attr('y', d => y(d.name))
+    .attr('width', d => x(d.jobs))
+    .attr('height', y.bandwidth())
+    .attr('fill', (d, i) => {
+        // 🥇 Top 3: ROJO (Saturados)
+        if (i < 3) return '#dc3545';
+        // 🥈 Posiciones 4-6: NARANJA (Balanceados)
+        if (i < 6) return '#fd7e14';
+        // 🥉 Resto: VERDE (Emergentes)
+        return '#28a745';
+    })
+    .attr('opacity', 0.8)
+    .attr('rx', 4)
         .style('cursor', 'pointer')
         .on('mouseover', function(event, d) {
             d3.select(this).attr('opacity', 1);
