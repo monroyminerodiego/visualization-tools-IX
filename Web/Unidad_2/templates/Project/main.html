@@ -85,11 +85,11 @@
                 <div class="chart-container">
                     <div class="chart-title">
                         <i class="ti ti-users"></i>
-                        Salary Evolution by Department (2020-2025)
+                        Top 5 Highest-Paying Departments Evolution (2020-2025)
                     </div>
                     <div class="chart-description">
-                        Multi-line chart showing <strong>salary trends</strong> across 11 departments. 
-                        Interactive legend to show/hide specific departments.
+                        Multi-line chart showing <strong>salary trends</strong> for the <strong>5 highest-paying departments</strong>. 
+                        Interactive legend to toggle visibility. Click any legend item to show/hide that department.
                     </div>
                     <div id="department-evolution-chart"></div>
                 </div>
@@ -121,9 +121,9 @@
                     Tech Salary Hierarchy: Region → Country → Department (Treemap)
                 </div>
                 <div class="chart-description">
-                    Hierarchical <strong>treemap visualization</strong> showing salary structure from global regions down to individual departments. 
-                    Size represents <strong>total compensation (salary × jobs)</strong>. 
-                    <strong>Hover to see details</strong> and explore the hierarchy.
+                    Hierarchical <strong>treemap visualization</strong> showing <strong>5 global regions</strong>. 
+                    Size represents <strong>total jobs</strong> (not salary-weighted). Regions with <strong>&lt;9% are grouped</strong>. 
+                    <strong>Click regions to drill down</strong> to countries. <strong>Right-click to go back</strong>.
                 </div>
                 <div id="hierarchical-treemap-chart"></div>
             </div>
@@ -133,11 +133,12 @@
                 <div class="chart-container">
                     <div class="chart-title">
                         <i class="ti ti-chart-bubble"></i>
-                        Salary vs Employment Matrix (Bubble Chart)
+                        Regional Salary vs Employment Matrix (Bubble Chart)
                     </div>
                     <div class="chart-description">
-                        <strong>Bubble scatter plot</strong> analyzing top countries. X-axis = number of jobs (market size), 
-                        Y-axis = average salary (compensation level), bubble size = total payroll investment.
+                        <strong>Bubble scatter plot</strong> comparing <strong>4 global regions</strong>. 
+                        X-axis = total tech jobs (market size), Y-axis = average salary (compensation level), 
+                        bubble size = total regional payroll investment. Enables direct <strong>regional comparison</strong>.
                     </div>
                     <div id="hierarchical-bubble-chart"></div>
                 </div>
@@ -148,8 +149,9 @@
                         Proportional Workforce Structure (Sunburst)
                     </div>
                     <div class="chart-description">
-                        Interactive <strong>sunburst chart</strong> displaying the hierarchical relationship between regions and countries. 
-                        Center represents total workforce, outer rings show regional distribution.
+                        Interactive <strong>sunburst chart</strong> displaying regions and their <strong>EXACTLY top 5 highest-paying roles</strong>. 
+                        Center ring = regions, outer ring = top 5 roles (no grouping). 
+                        <strong>Click region to explore</strong>. <strong>Right-click to return</strong>.
                     </div>
                     <div id="hierarchical-sunburst-chart"></div>
                 </div>
@@ -162,9 +164,9 @@
                     Multi-Dimensional Regional Comparison (4 Metrics)
                 </div>
                 <div class="chart-description">
-                    Comprehensive <strong>4-metric comparison matrix</strong> evaluating regions across: 
-                    Average Salary (compensation level), Total Jobs (market size), Number of Countries (diversification), 
-                    and Salary Range (variance). Enables side-by-side strategic assessment.
+                    Comprehensive <strong>4-metric comparison matrix</strong> evaluating <strong>4 global regions</strong> across: 
+                    Average Salary (compensation level), Total Jobs (market size), Number of Countries (geographic diversification), 
+                    and Salary Range (compensation variance). Enables side-by-side <strong>strategic regional assessment</strong>.
                 </div>
                 <div id="hierarchical-matrix-chart"></div>
             </div>
