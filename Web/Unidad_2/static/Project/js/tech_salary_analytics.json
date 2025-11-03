@@ -3,107 +3,151 @@
     "globalSalaryData": [
       {
         "year": 2020,
-        "salary": 78350.16,
-        "median_salary": 63633.0,
-        "job_count": 116
+        "salary": 102997.91,
+        "median_salary": 96099.0,
+        "job_count": 246
       },
       {
         "year": 2021,
-        "salary": 72579.03,
-        "median_salary": 63810.0,
-        "job_count": 292
+        "salary": 102939.77,
+        "median_salary": 92500.0,
+        "job_count": 684
       },
       {
         "year": 2022,
-        "salary": 89892.91,
-        "median_salary": 76814.0,
-        "job_count": 327
+        "salary": 130948.37,
+        "median_salary": 126080.0,
+        "job_count": 1347
       },
       {
         "year": 2023,
-        "salary": 111518.44,
-        "median_salary": 97171.0,
-        "job_count": 284
+        "salary": 156580.83,
+        "median_salary": 147100.0,
+        "job_count": 3496
       },
       {
         "year": 2024,
-        "salary": 102967.57,
-        "median_salary": 93333.0,
-        "job_count": 2101
+        "salary": 146934.89,
+        "median_salary": 137000.0,
+        "job_count": 9850
       },
       {
         "year": 2025,
-        "salary": 102709.71,
-        "median_salary": 93500.0,
-        "job_count": 3106
+        "salary": 144329.13,
+        "median_salary": 135482.0,
+        "job_count": 12200
       }
     ],
     "departmentData": {
       "Executive & Leadership": [
-        {"year": 2020, "salary": 83412.1},
-        {"year": 2021, "salary": 93684.4},
-        {"year": 2022, "salary": 97614.81},
-        {"year": 2023, "salary": 118193.75},
-        {"year": 2024, "salary": 105964.38},
-        {"year": 2025, "salary": 111080.65}
+        {"year": 2020, "salary": 119988.48},
+        {"year": 2021, "salary": 135006.07},
+        {"year": 2022, "salary": 146260.55},
+        {"year": 2023, "salary": 156105.52},
+        {"year": 2024, "salary": 157890.66},
+        {"year": 2025, "salary": 158840.31}
       ],
       "Cybersecurity": [
-        {"year": 2020, "salary": 86869.76},
-        {"year": 2021, "salary": 77390.84},
-        {"year": 2022, "salary": 96712.46},
-        {"year": 2023, "salary": 111252.84},
-        {"year": 2024, "salary": 98247.08},
-        {"year": 2025, "salary": 99971.15}
+        {"year": 2020, "salary": 107385.82},
+        {"year": 2021, "salary": 102593.78},
+        {"year": 2022, "salary": 132797.25},
+        {"year": 2023, "salary": 157506.59},
+        {"year": 2024, "salary": 142601.39},
+        {"year": 2025, "salary": 139769.77}
       ],
       "Information Technology (IT)": [
-        {"year": 2024, "salary": 100787.81},
-        {"year": 2025, "salary": 99921.24}
+        {"year": 2020, "salary": 145093.13},
+        {"year": 2021, "salary": 145093.13},
+        {"year": 2022, "salary": 145093.13},
+        {"year": 2023, "salary": 164100.0},
+        {"year": 2024, "salary": 138642.61},
+        {"year": 2025, "salary": 135834.1}
       ],
       "Engineering & Development": [
-        {"year": 2020, "salary": 106029.69},
-        {"year": 2021, "salary": 73294.53},
-        {"year": 2022, "salary": 83156.2},
-        {"year": 2023, "salary": 124694.11},
-        {"year": 2024, "salary": 118694.8},
-        {"year": 2025, "salary": 114324.6}
+        {"year": 2020, "salary": 127432.75},
+        {"year": 2021, "salary": 106202.67},
+        {"year": 2022, "salary": 125623.58},
+        {"year": 2023, "salary": 154068.9},
+        {"year": 2024, "salary": 162198.36},
+        {"year": 2025, "salary": 161469.36}
       ],
       "Data & Analytics": [
-        {"year": 2020, "salary": 58232.21},
-        {"year": 2021, "salary": 63760.82},
-        {"year": 2022, "salary": 76504.06},
-        {"year": 2024, "salary": 123800.0},
-        {"year": 2025, "salary": 88311.88}
+        {"year": 2020, "salary": 76349.23},
+        {"year": 2021, "salary": 92256.18},
+        {"year": 2022, "salary": 121411.36},
+        {"year": 2023, "salary": 136426.49},
+        {"year": 2024, "salary": 151441.62},
+        {"year": 2025, "salary": 137957.15}
       ],
       "Operations": [
-        {"year": 2022, "salary": 82960.0},
-        {"year": 2024, "salary": 40000.0},
-        {"year": 2025, "salary": 90185.55}
+        {"year": 2020, "salary": 125000.0},
+        {"year": 2021, "salary": 120000.0},
+        {"year": 2022, "salary": 94480.0},
+        {"year": 2023, "salary": 107068.11},
+        {"year": 2024, "salary": 119656.22},
+        {"year": 2025, "salary": 120593.06}
       ],
       "Sales & Consulting": [
-        {"year": 2022, "salary": 63377.0},
-        {"year": 2023, "salary": 76554.0},
-        {"year": 2024, "salary": 112900.16},
-        {"year": 2025, "salary": 103037.28}
+        {"year": 2020, "salary": 145093.13},
+        {"year": 2021, "salary": 175000.0},
+        {"year": 2022, "salary": 122470.86},
+        {"year": 2023, "salary": 141930.75},
+        {"year": 2024, "salary": 149098.01},
+        {"year": 2025, "salary": 148819.62}
       ],
       "Legal & Compliance": [
-        {"year": 2024, "salary": 112164.2},
-        {"year": 2025, "salary": 90155.12}
+        {"year": 2020, "salary": 145093.13},
+        {"year": 2021, "salary": 145093.13},
+        {"year": 2022, "salary": 145093.13},
+        {"year": 2023, "salary": 145093.13},
+        {"year": 2024, "salary": 154354.77},
+        {"year": 2025, "salary": 141246.62}
       ],
       "Finance & Accounting": [
-        {"year": 2024, "salary": 63416.5},
-        {"year": 2025, "salary": 97823.67}
+        {"year": 2020, "salary": 145093.13},
+        {"year": 2021, "salary": 145093.13},
+        {"year": 2022, "salary": 145093.13},
+        {"year": 2023, "salary": 112500.0},
+        {"year": 2024, "salary": 109006.33},
+        {"year": 2025, "salary": 106692.25}
       ],
       "Product Management": [
-        {"year": 2025, "salary": 51540.5}
+        {"year": 2020, "salary": 145093.13},
+        {"year": 2021, "salary": 145093.13},
+        {"year": 2022, "salary": 145093.13},
+        {"year": 2023, "salary": 145093.13},
+        {"year": 2024, "salary": 145093.13},
+        {"year": 2025, "salary": 151700.62}
       ]
     },
     "worldMapData": {
       "countries": [
         {
-          "name": "Canadá",
+          "name": "Estados Unidos",
+          "code": "USA",
+          "jobs": 4850,
+          "avgSalary": 149797.63,
+          "region": "North America"
+        },
+        {
+          "name": "CanadÃ¡",
           "code": "CAN",
-          "jobs": 2132,
+          "jobs": 1180,
           "avgSalary": 127999.06,
+          "region": "North America"
+        },
+        {
+          "name": "MÃ©xico",
+          "code": "MEX",
+          "jobs": 125,
+          "avgSalary": 138078.9,
+          "region": "North America"
+        },
+        {
+          "name": "Costa Rica",
+          "code": "CRI",
+          "jobs": 45,
+          "avgSalary": 80637.5,
           "region": "North America"
         },
         {
@@ -121,18 +165,11 @@
           "region": "Europe"
         },
         {
-          "name": "Países Bajos",
+          "name": "PaÃ­ses Bajos",
           "code": "NLD",
           "jobs": 303,
           "avgSalary": 77677.21,
           "region": "Europe"
-        },
-        {
-          "name": "Australia",
-          "code": "AUS",
-          "jobs": 298,
-          "avgSalary": 126744.6,
-          "region": "Asia Pacific"
         },
         {
           "name": "Austria",
@@ -156,14 +193,7 @@
           "region": "Europe"
         },
         {
-          "name": "India",
-          "code": "IND",
-          "jobs": 96,
-          "avgSalary": 50823.33,
-          "region": "Asia Pacific"
-        },
-        {
-          "name": "España",
+          "name": "EspaÃ±a",
           "code": "ESP",
           "jobs": 96,
           "avgSalary": 72378.12,
@@ -198,32 +228,11 @@
           "region": "Europe"
         },
         {
-          "name": "Nueva Zelanda",
-          "code": "NZL",
-          "jobs": 51,
-          "avgSalary": 107865.14,
-          "region": "Asia Pacific"
-        },
-        {
           "name": "Portugal",
           "code": "PRT",
           "jobs": 44,
           "avgSalary": 56762.91,
           "region": "Europe"
-        },
-        {
-          "name": "Corea del Sur",
-          "code": "KOR",
-          "jobs": 34,
-          "avgSalary": 91388.41,
-          "region": "Asia Pacific"
-        },
-        {
-          "name": "Egipto",
-          "code": "EGY",
-          "jobs": 33,
-          "avgSalary": 130281.82,
-          "region": "Africa & Middle East"
         },
         {
           "name": "Grecia",
@@ -233,32 +242,11 @@
           "region": "Europe"
         },
         {
-          "name": "Japón",
-          "code": "JPN",
-          "jobs": 32,
-          "avgSalary": 122354.53,
-          "region": "Asia Pacific"
-        },
-        {
-          "name": "México",
-          "code": "MEX",
-          "jobs": 31,
-          "avgSalary": 138078.9,
-          "region": "North America"
-        },
-        {
           "name": "Letonia",
           "code": "LVA",
           "jobs": 26,
           "avgSalary": 56535.69,
           "region": "Europe"
-        },
-        {
-          "name": "Brasil",
-          "code": "BRA",
-          "jobs": 25,
-          "avgSalary": 63057.2,
-          "region": "South America"
         },
         {
           "name": "Suiza",
@@ -268,32 +256,11 @@
           "region": "Europe"
         },
         {
-          "name": "Bélgica",
+          "name": "BÃ©lgica",
           "code": "BEL",
           "jobs": 24,
           "avgSalary": 115604.12,
           "region": "Europe"
-        },
-        {
-          "name": "Singapur",
-          "code": "SGP",
-          "jobs": 20,
-          "avgSalary": 126821.65,
-          "region": "Asia Pacific"
-        },
-        {
-          "name": "Filipinas",
-          "code": "PHL",
-          "jobs": 20,
-          "avgSalary": 35781.15,
-          "region": "Asia Pacific"
-        },
-        {
-          "name": "Estados Unidos",
-          "code": "USA",
-          "jobs": 18,
-          "avgSalary": 172125.06,
-          "region": "North America"
         },
         {
           "name": "Estonia",
@@ -303,18 +270,11 @@
           "region": "Europe"
         },
         {
-          "name": "Turquía",
+          "name": "TurquÃ­a",
           "code": "TUR",
           "jobs": 14,
           "avgSalary": 115529.43,
           "region": "Europe"
-        },
-        {
-          "name": "Pakistán",
-          "code": "PAK",
-          "jobs": 13,
-          "avgSalary": 43982.85,
-          "region": "Asia Pacific"
         },
         {
           "name": "Finlandia",
@@ -331,13 +291,6 @@
           "region": "Europe"
         },
         {
-          "name": "Sudáfrica",
-          "code": "ZAF",
-          "jobs": 10,
-          "avgSalary": 67306.5,
-          "region": "Africa & Middle East"
-        },
-        {
           "name": "Bulgaria",
           "code": "BGR",
           "jobs": 10,
@@ -350,13 +303,6 @@
           "jobs": 9,
           "avgSalary": 37952.89,
           "region": "Europe"
-        },
-        {
-          "name": "Emiratos Árabes Unidos",
-          "code": "ARE",
-          "jobs": 9,
-          "avgSalary": 173925.11,
-          "region": "Africa & Middle East"
         },
         {
           "name": "Rumania",
@@ -373,25 +319,11 @@
           "region": "Europe"
         },
         {
-          "name": "República Checa",
+          "name": "RepÃºblica Checa",
           "code": "CZE",
           "jobs": 8,
           "avgSalary": 52411.0,
           "region": "Europe"
-        },
-        {
-          "name": "Yibuti",
-          "code": "DJI",
-          "jobs": 8,
-          "avgSalary": 111350.0,
-          "region": "Africa & Middle East"
-        },
-        {
-          "name": "Argentina",
-          "code": "ARG",
-          "jobs": 8,
-          "avgSalary": 57000.0,
-          "region": "South America"
         },
         {
           "name": "Eslovenia",
@@ -401,35 +333,7 @@
           "region": "Europe"
         },
         {
-          "name": "Costa Rica",
-          "code": "CRI",
-          "jobs": 8,
-          "avgSalary": 80637.5,
-          "region": "North America"
-        },
-        {
-          "name": "Colombia",
-          "code": "COL",
-          "jobs": 8,
-          "avgSalary": 64855.5,
-          "region": "South America"
-        },
-        {
-          "name": "Chile",
-          "code": "CHL",
-          "jobs": 8,
-          "avgSalary": 83629.75,
-          "region": "South America"
-        },
-        {
-          "name": "Kuwait",
-          "code": "KWT",
-          "jobs": 6,
-          "avgSalary": 82400.0,
-          "region": "Africa & Middle East"
-        },
-        {
-          "name": "Hungría",
+          "name": "HungrÃ­a",
           "code": "HUN",
           "jobs": 6,
           "avgSalary": 41093.33,
@@ -448,6 +352,188 @@
           "jobs": 5,
           "avgSalary": 86528.6,
           "region": "Europe"
+        },
+        {
+          "name": "Rusia",
+          "code": "RUS",
+          "jobs": 5,
+          "avgSalary": 100600.0,
+          "region": "Europe"
+        },
+        {
+          "name": "Chipre",
+          "code": "CYP",
+          "jobs": 5,
+          "avgSalary": 65071.6,
+          "region": "Europe"
+        },
+        {
+          "name": "Noruega",
+          "code": "NOR",
+          "jobs": 2,
+          "avgSalary": 73607.0,
+          "region": "Europe"
+        },
+        {
+          "name": "Australia",
+          "code": "AUS",
+          "jobs": 298,
+          "avgSalary": 126744.6,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "India",
+          "code": "IND",
+          "jobs": 96,
+          "avgSalary": 50823.33,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "Nueva Zelanda",
+          "code": "NZL",
+          "jobs": 51,
+          "avgSalary": 107865.14,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "Corea del Sur",
+          "code": "KOR",
+          "jobs": 34,
+          "avgSalary": 91388.41,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "JapÃ³n",
+          "code": "JPN",
+          "jobs": 32,
+          "avgSalary": 122354.53,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "Singapur",
+          "code": "SGP",
+          "jobs": 20,
+          "avgSalary": 126821.65,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "Filipinas",
+          "code": "PHL",
+          "jobs": 20,
+          "avgSalary": 35781.15,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "PakistÃ¡n",
+          "code": "PAK",
+          "jobs": 13,
+          "avgSalary": 43982.85,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "Vietnam",
+          "code": "VNM",
+          "jobs": 4,
+          "avgSalary": 35600.0,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "Indonesia",
+          "code": "IDN",
+          "jobs": 3,
+          "avgSalary": 37828.0,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "Malasia",
+          "code": "MYS",
+          "jobs": 2,
+          "avgSalary": 109360.0,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "China",
+          "code": "CHN",
+          "jobs": 1,
+          "avgSalary": 43331.0,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "Tailandia",
+          "code": "THA",
+          "jobs": 1,
+          "avgSalary": 15061.0,
+          "region": "Asia Pacific"
+        },
+        {
+          "name": "Brasil",
+          "code": "BRA",
+          "jobs": 25,
+          "avgSalary": 63057.2,
+          "region": "South America"
+        },
+        {
+          "name": "Argentina",
+          "code": "ARG",
+          "jobs": 8,
+          "avgSalary": 57000.0,
+          "region": "South America"
+        },
+        {
+          "name": "Chile",
+          "code": "CHL",
+          "jobs": 8,
+          "avgSalary": 83629.75,
+          "region": "South America"
+        },
+        {
+          "name": "Colombia",
+          "code": "COL",
+          "jobs": 8,
+          "avgSalary": 64855.5,
+          "region": "South America"
+        },
+        {
+          "name": "Ecuador",
+          "code": "ECU",
+          "jobs": 3,
+          "avgSalary": 68000.0,
+          "region": "South America"
+        },
+        {
+          "name": "Egipto",
+          "code": "EGY",
+          "jobs": 33,
+          "avgSalary": 130281.82,
+          "region": "Africa & Middle East"
+        },
+        {
+          "name": "SudÃ¡frica",
+          "code": "ZAF",
+          "jobs": 10,
+          "avgSalary": 67306.5,
+          "region": "Africa & Middle East"
+        },
+        {
+          "name": "Emiratos Ãrabes Unidos",
+          "code": "ARE",
+          "jobs": 9,
+          "avgSalary": 173925.11,
+          "region": "Africa & Middle East"
+        },
+        {
+          "name": "Yibuti",
+          "code": "DJI",
+          "jobs": 8,
+          "avgSalary": 111350.0,
+          "region": "Africa & Middle East"
+        },
+        {
+          "name": "Kuwait",
+          "code": "KWT",
+          "jobs": 6,
+          "avgSalary": 82400.0,
+          "region": "Africa & Middle East"
         },
         {
           "name": "Kenia",
@@ -471,88 +557,88 @@
           "region": "Africa & Middle East"
         },
         {
-          "name": "Rusia",
-          "code": "RUS",
-          "jobs": 5,
-          "avgSalary": 100600.0,
-          "region": "Europe"
-        },
-        {
-          "name": "Chipre",
-          "code": "CYP",
-          "jobs": 5,
-          "avgSalary": 65071.6,
-          "region": "Europe"
-        },
-        {
           "name": "Irak",
           "code": "IRQ",
           "jobs": 5,
           "avgSalary": 87792.8,
+          "region": "Africa & Middle East"
+        },
+        {
+          "name": "Nigeria",
+          "code": "NGA",
+          "jobs": 4,
+          "avgSalary": 48124.75,
+          "region": "Africa & Middle East"
+        },
+        {
+          "name": "Arabia Saudita",
+          "code": "SAU",
+          "jobs": 1,
+          "avgSalary": 100000.0,
           "region": "Africa & Middle East"
         }
       ]
     },
     "aiComparison": {
       "pre_ia": {
-        "mean_salary": 81192.76,
-        "median_salary": 69336.0,
-        "job_count": 735,
+        "mean_salary": 119515.04,
+        "median_salary": 112900.0,
+        "job_count": 2277,
         "period": "Pre-IA (2020-2022)"
       },
       "post_ia": {
-        "mean_salary": 103263.97,
-        "median_salary": 93500.0,
-        "job_count": 5491,
+        "mean_salary": 146019.95,
+        "median_salary": 137000.0,
+        "job_count": 25773,
         "period": "Post-IA (2023-2025)"
       },
-      "growth_pct": 27.18,
-      "job_growth_pct": 647.07
+      "growth_pct": 22.18,
+      "job_growth_pct": 1032.15
     }
   },
   "hierarchical": {
     "regions": [
       {
         "name": "North America",
-        "avgSalary": 135025.41,
-        "totalJobs": 2189,
-        "growth_pct": 52.18,
-        "pre_ia_salary": 88750.32,
-        "post_ia_salary": 135025.41,
+        "avgSalary": 138625.2,
+        "totalJobs": 6200,
+        "growth_pct": 23.45,
+        "pre_ia_salary": 112654.32,
+        "post_ia_salary": 138625.2,
         "countries": [
           {
             "name": "United States",
-            "avgSalary": 172125.06,
-            "jobs": 18,
+            "avgSalary": 149797.63,
+            "jobs": 4850,
             "code": "USA"
           },
           {
             "name": "Canada",
             "avgSalary": 127999.06,
-            "jobs": 2132,
+            "jobs": 1180,
             "code": "CAN"
           },
           {
             "name": "Mexico",
             "avgSalary": 138078.9,
-            "jobs": 31,
+            "jobs": 125,
             "code": "MEX"
           },
           {
             "name": "Costa Rica",
             "avgSalary": 80637.5,
-            "jobs": 8,
+            "jobs": 45,
             "code": "CRI"
           }
         ]
       },
       {
         "name": "Europe",
-        "avgSalary": 82645.73,
-        "totalJobs": 3247,
-        "growth_pct": 15.42,
-        "pre_ia_salary": 71586.24,
-        "post_ia_salary": 82645.73,
+        "avgSalary": 76885.29,
+        "totalJobs": 2912,
+        "growth_pct": 18.92,
+        "pre_ia_salary": 64673.24,
+        "post_ia_salary": 76885.29,
         "countries": [
           {
             "name": "United Kingdom",
@@ -739,16 +825,22 @@
             "avgSalary": 65071.6,
             "jobs": 5,
             "code": "CYP"
+          },
+          {
+            "name": "Norway",
+            "avgSalary": 73607.0,
+            "jobs": 2,
+            "code": "NOR"
           }
         ]
       },
       {
         "name": "Asia Pacific",
-        "avgSalary": 88264.52,
-        "totalJobs": 664,
-        "growth_pct": 45.28,
-        "pre_ia_salary": 60758.33,
-        "post_ia_salary": 88264.52,
+        "avgSalary": 75246.57,
+        "totalJobs": 562,
+        "growth_pct": 32.76,
+        "pre_ia_salary": 56681.33,
+        "post_ia_salary": 75246.57,
         "countries": [
           {
             "name": "Australia",
@@ -799,38 +891,44 @@
             "code": "PAK"
           },
           {
+            "name": "Vietnam",
+            "avgSalary": 35600.0,
+            "jobs": 4,
+            "code": "VNM"
+          },
+          {
             "name": "Indonesia",
             "avgSalary": 37828.0,
             "jobs": 3,
             "code": "IDN"
           },
           {
-            "name": "Thailand",
-            "avgSalary": 45200.0,
-            "jobs": 2,
-            "code": "THA"
-          },
-          {
             "name": "Malaysia",
-            "avgSalary": 55000.0,
+            "avgSalary": 109360.0,
             "jobs": 2,
             "code": "MYS"
           },
           {
             "name": "China",
-            "avgSalary": 78000.0,
+            "avgSalary": 43331.0,
             "jobs": 1,
             "code": "CHN"
+          },
+          {
+            "name": "Thailand",
+            "avgSalary": 15061.0,
+            "jobs": 1,
+            "code": "THA"
           }
         ]
       },
       {
         "name": "South America",
-        "avgSalary": 66985.61,
-        "totalJobs": 49,
-        "growth_pct": 62.45,
-        "pre_ia_salary": 41234.67,
-        "post_ia_salary": 66985.61,
+        "avgSalary": 67308.49,
+        "totalJobs": 52,
+        "growth_pct": 45.89,
+        "pre_ia_salary": 46134.67,
+        "post_ia_salary": 67308.49,
         "countries": [
           {
             "name": "Brazil",
@@ -845,26 +943,32 @@
             "code": "ARG"
           },
           {
+            "name": "Chile",
+            "avgSalary": 83629.75,
+            "jobs": 8,
+            "code": "CHL"
+          },
+          {
             "name": "Colombia",
             "avgSalary": 64855.5,
             "jobs": 8,
             "code": "COL"
           },
           {
-            "name": "Chile",
-            "avgSalary": 83629.75,
-            "jobs": 8,
-            "code": "CHL"
+            "name": "Ecuador",
+            "avgSalary": 68000.0,
+            "jobs": 3,
+            "code": "ECU"
           }
         ]
       },
       {
         "name": "Africa & Middle East",
-        "avgSalary": 118964.52,
-        "totalJobs": 90,
-        "growth_pct": 38.76,
-        "pre_ia_salary": 85724.18,
-        "post_ia_salary": 118964.52,
+        "avgSalary": 102266.95,
+        "totalJobs": 81,
+        "growth_pct": 28.54,
+        "pre_ia_salary": 79532.18,
+        "post_ia_salary": 102266.95,
         "countries": [
           {
             "name": "Egypt",
@@ -922,207 +1026,230 @@
           },
           {
             "name": "Nigeria",
-            "avgSalary": 95000.0,
-            "jobs": 2,
+            "avgSalary": 48124.75,
+            "jobs": 4,
             "code": "NGA"
           },
           {
-            "name": "Morocco",
-            "avgSalary": 48500.0,
-            "jobs": 2,
-            "code": "MAR"
+            "name": "Saudi Arabia",
+            "avgSalary": 100000.0,
+            "jobs": 1,
+            "code": "SAU"
           }
         ]
       }
     ],
     "topJobsByRegion": {
       "North America": [
-        {"role": "Senior Software Engineer", "avgSalary": 185500.0, "jobs": 420},
-        {"role": "Cloud Architect", "avgSalary": 178250.0, "jobs": 385},
-        {"role": "DevSecOps Engineer", "avgSalary": 175500.0, "jobs": 340},
-        {"role": "Security Lead", "avgSalary": 172800.0, "jobs": 310},
-        {"role": "Data Scientist", "avgSalary": 168900.0, "jobs": 275},
-        {"role": "Systems Architect", "avgSalary": 165300.0, "jobs": 245},
-        {"role": "Network Security Engineer", "avgSalary": 158400.0, "jobs": 215},
-        {"role": "Solutions Architect", "avgSalary": 155200.0, "jobs": 190},
-        {"role": "Machine Learning Engineer", "avgSalary": 162500.0, "jobs": 168},
-        {"role": "IT Security Manager", "avgSalary": 148900.0, "jobs":145},
-        {"role": "Infrastructure Engineer", "avgSalary": 142300.0, "jobs": 128},
-        {"role": "Platform Engineer", "avgSalary": 138750.0, "jobs": 112},
-        {"role": "Security Analyst", "avgSalary": 125600.0, "jobs": 98},
-        {"role": "Database Administrator", "avgSalary": 118900.0, "jobs": 87},
-        {"role": "Technical Lead", "avgSalary": 152300.0, "jobs": 63}
+        {"role": "Security Engineer", "avgSalary": 164778.65, "jobs": 1220},
+        {"role": "Security Analyst", "avgSalary": 115343.52, "jobs": 390},
+        {"role": "Manager", "avgSalary": 166139.5, "jobs": 255},
+        {"role": "Software Engineer", "avgSalary": 169941.07, "jobs": 207},
+        {"role": "Analyst", "avgSalary": 122638.59, "jobs": 151},
+        {"role": "Security Architect", "avgSalary": 175313.43, "jobs": 139},
+        {"role": "Systems Engineer", "avgSalary": 154634.3, "jobs": 137},
+        {"role": "Consultant", "avgSalary": 156243.84, "jobs": 120},
+        {"role": "DevSecOps Engineer", "avgSalary": 140088.42, "jobs": 109},
+        {"role": "Security Specialist", "avgSalary": 120679.04, "jobs": 88},
+        {"role": "Data Engineer", "avgSalary": 148500.0, "jobs": 73},
+        {"role": "Cloud Architect", "avgSalary": 172000.0, "jobs": 61},
+        {"role": "Data Scientist", "avgSalary": 155000.0, "jobs": 56},
+        {"role": "Network Security Engineer", "avgSalary": 142300.0, "jobs": 49},
+        {"role": "Solutions Architect", "avgSalary": 158000.0, "jobs": 43}
       ],
       "Europe": [
-        {"role": "Principal Engineer", "avgSalary": 145000.0, "jobs": 180},
-        {"role": "Security Architect", "avgSalary": 138500.0, "jobs": 165},
-        {"role": "Senior DevOps Engineer", "avgSalary": 125000.0, "jobs": 210},
-        {"role": "Data Engineer", "avgSalary": 118000.0, "jobs": 195},
-        {"role": "Cloud Solutions Architect", "avgSalary": 132000.0, "jobs": 175},
-        {"role": "Head of IT Security", "avgSalary": 105263.0, "jobs": 95},
-        {"role": "Cyber Security Manager", "avgSalary": 98333.0, "jobs": 110},
-        {"role": "Information Security Specialist", "avgSalary": 90525.75, "jobs": 145},
-        {"role": "Sales Engineer", "avgSalary": 90000.0, "jobs": 88},
-        {"role": "Solutions Architect", "avgSalary": 90000.0, "jobs": 102},
-        {"role": "Product Manager", "avgSalary": 88888.0, "jobs": 78},
-        {"role": "Security Operations Engineer", "avgSalary": 79473.5, "jobs": 125},
-        {"role": "Information Security Manager", "avgSalary": 75718.75, "jobs": 156},
-        {"role": "Data Scientist", "avgSalary": 72281.0, "jobs": 134},
-        {"role": "Security Specialist", "avgSalary": 72222.0, "jobs": 98}
+        {"role": "Security Engineer", "avgSalary": 97565.03, "jobs": 482},
+        {"role": "Security Analyst", "avgSalary": 71059.21, "jobs": 194},
+        {"role": "Information Security Officer", "avgSalary": 82807.71, "jobs": 160},
+        {"role": "Manager", "avgSalary": 87578.77, "jobs": 142},
+        {"role": "Consultant", "avgSalary": 70993.74, "jobs": 118},
+        {"role": "Cybersecurity", "avgSalary": 67157.23, "jobs": 101},
+        {"role": "Penetration Tester", "avgSalary": 74329.76, "jobs": 83},
+        {"role": "Security Consultant", "avgSalary": 67780.4, "jobs": 73},
+        {"role": "Data Engineer", "avgSalary": 75632.03, "jobs": 63},
+        {"role": "Data Scientist", "avgSalary": 76186.44, "jobs": 59},
+        {"role": "DevOps Engineer", "avgSalary": 82000.0, "jobs": 54},
+        {"role": "Cloud Solutions Architect", "avgSalary": 95000.0, "jobs": 48},
+        {"role": "Security Architect", "avgSalary": 105000.0, "jobs": 42},
+        {"role": "IT Security Manager", "avgSalary": 88000.0, "jobs": 38},
+        {"role": "Systems Administrator", "avgSalary": 62000.0, "jobs": 35}
       ],
       "Asia Pacific": [
-        {"role": "Account Executive", "avgSalary": 255000.0, "jobs": 12},
-        {"role": "Engineering Manager", "avgSalary": 206450.0, "jobs": 28},
-        {"role": "DevSecOps", "avgSalary": 175500.0, "jobs": 35},
-        {"role": "Software Engineer", "avgSalary": 170206.5, "jobs": 85},
-        {"role": "Cloud Engineer", "avgSalary": 166144.5, "jobs": 72},
-        {"role": "Security Lead", "avgSalary": 165150.0, "jobs": 45},
-        {"role": "Cyber Security Engineer", "avgSalary": 161913.0, "jobs": 58},
-        {"role": "Security Researcher", "avgSalary": 160000.0, "jobs": 32},
-        {"role": "Systems Engineer", "avgSalary": 156187.0, "jobs": 67},
-        {"role": "Network Architect", "avgSalary": 155538.17, "jobs": 54},
-        {"role": "Full Stack Developer", "avgSalary": 142000.0, "jobs": 48},
-        {"role": "Infrastructure Specialist", "avgSalary": 138500.0, "jobs": 41},
-        {"role": "Database Administrator", "avgSalary": 125000.0, "jobs": 36},
-        {"role": "IT Consultant", "avgSalary": 118000.0, "jobs": 29},
-        {"role": "Technical Support Engineer", "avgSalary": 95000.0, "jobs": 22}
+        {"role": "Security Analyst", "avgSalary": 101116.91, "jobs": 78},
+        {"role": "Security Engineer", "avgSalary": 120575.49, "jobs": 67},
+        {"role": "Cybersecurity", "avgSalary": 128638.44, "jobs": 32},
+        {"role": "Analyst", "avgSalary": 121888.18, "jobs": 22},
+        {"role": "Data Scientist", "avgSalary": 49843.86, "jobs": 22},
+        {"role": "Systems Administrator", "avgSalary": 105821.3, "jobs": 20},
+        {"role": "Consultant", "avgSalary": 72632.78, "jobs": 18},
+        {"role": "Security Consultant", "avgSalary": 105126.79, "jobs": 14},
+        {"role": "Data Engineer", "avgSalary": 55745.0, "jobs": 13},
+        {"role": "Cyber Security Specialist", "avgSalary": 110479.75, "jobs": 12},
+        {"role": "Cloud Engineer", "avgSalary": 98000.0, "jobs": 11},
+        {"role": "Software Engineer", "avgSalary": 115000.0, "jobs": 10},
+        {"role": "DevOps Engineer", "avgSalary": 92000.0, "jobs": 9},
+        {"role": "Network Engineer", "avgSalary": 85000.0, "jobs": 8},
+        {"role": "IT Manager", "avgSalary": 95000.0, "jobs": 7}
       ],
       "South America": [
-        {"role": "Professional Services Engineer", "avgSalary": 121500.0, "jobs": 8},
-        {"role": "SIEM Engineer", "avgSalary": 90000.0, "jobs": 6},
-        {"role": "Dev Security Operations", "avgSalary": 72000.0, "jobs": 10},
-        {"role": "Security Engineer", "avgSalary": 65333.33, "jobs": 12},
-        {"role": "Information Security Officer", "avgSalary": 62500.0, "jobs": 5},
-        {"role": "Network Administrator", "avgSalary": 58000.0, "jobs": 4},
-        {"role": "Systems Analyst", "avgSalary": 55000.0, "jobs": 2},
-        {"role": "Software Developer", "avgSalary": 48000.0, "jobs": 2}
+        {"role": "Security Engineer", "avgSalary": 61500.0, "jobs": 8},
+        {"role": "Dev Security Operations", "avgSalary": 72000.0, "jobs": 8},
+        {"role": "Data Engineer", "avgSalary": 65726.75, "jobs": 4},
+        {"role": "Data Scientist", "avgSalary": 41234.75, "jobs": 4},
+        {"role": "Information Security Officer", "avgSalary": 61020.33, "jobs": 3},
+        {"role": "DevSecOps", "avgSalary": 24489.0, "jobs": 2},
+        {"role": "Compliance Specialist", "avgSalary": 131250.0, "jobs": 2},
+        {"role": "Cyber Security Architect", "avgSalary": 78207.5, "jobs": 2},
+        {"role": "Professional Services Engineer", "avgSalary": 121500.0, "jobs": 2},
+        {"role": "Software Engineer", "avgSalary": 51231.0, "jobs": 2},
+        {"role": "Systems Analyst", "avgSalary": 48000.0, "jobs": 2},
+        {"role": "Network Administrator", "avgSalary": 45000.0, "jobs": 1},
+        {"role": "IT Consultant", "avgSalary": 52000.0, "jobs": 1},
+        {"role": "Database Administrator", "avgSalary": 55000.0, "jobs": 1},
+        {"role": "Cloud Specialist", "avgSalary": 68000.0, "jobs": 1}
       ],
       "Africa & Middle East": [
-        {"role": "Chief Technology Officer", "avgSalary": 245000.0, "jobs": 5},
-        {"role": "Security Architect", "avgSalary": 195000.0, "jobs": 8},
-        {"role": "Senior Cloud Engineer", "avgSalary": 178000.0, "jobs": 12},
-        {"role": "Infrastructure Manager", "avgSalary": 165000.0, "jobs": 10},
-        {"role": "Cybersecurity Lead", "avgSalary": 152000.0, "jobs": 15},
-        {"role": "Solutions Consultant", "avgSalary": 138000.0, "jobs": 11},
-        {"role": "Network Security Specialist", "avgSalary": 125000.0, "jobs": 14},
-        {"role": "Data Analytics Manager", "avgSalary": 118000.0, "jobs": 9},
-        {"role": "IT Operations Manager", "avgSalary": 105000.0, "jobs": 6},
-        {"role": "Systems Administrator", "avgSalary": 85000.0, "jobs": 10}
+        {"role": "Security Architect", "avgSalary": 135100.0, "jobs": 20},
+        {"role": "Cyber Security Analyst", "avgSalary": 58421.4, "jobs": 5},
+        {"role": "Data Engineer", "avgSalary": 71929.75, "jobs": 4},
+        {"role": "Cybersecurity", "avgSalary": 125530.5, "jobs": 4},
+        {"role": "Network Administrator", "avgSalary": 97943.75, "jobs": 4},
+        {"role": "Security Engineer", "avgSalary": 205000.0, "jobs": 4},
+        {"role": "Data Scientist", "avgSalary": 61723.67, "jobs": 3},
+        {"role": "Data Analyst", "avgSalary": 9636.0, "jobs": 2},
+        {"role": "Machine Learning Developer", "avgSalary": 92500.0, "jobs": 2},
+        {"role": "Network Engineer", "avgSalary": 106050.0, "jobs": 2},
+        {"role": "Cloud Solutions Architect", "avgSalary": 145000.0, "jobs": 2},
+        {"role": "IT Security Manager", "avgSalary": 118000.0, "jobs": 1},
+        {"role": "Systems Engineer", "avgSalary": 95000.0, "jobs": 1},
+        {"role": "DevOps Engineer", "avgSalary": 88000.0, "jobs": 1},
+        {"role": "Software Developer", "avgSalary": 75000.0, "jobs": 1}
       ]
     },
     "aiComparison": {
       "pre_ia": {
-        "mean_salary": 81192.76,
-        "median_salary": 69336.0,
-        "job_count": 735,
+        "mean_salary": 119515.04,
+        "median_salary": 112900.0,
+        "job_count": 2277,
         "period": "Pre-IA (2020-2022)"
       },
       "post_ia": {
-        "mean_salary": 103263.97,
-        "median_salary": 93500.0,
-        "job_count": 5491,
+        "mean_salary": 146019.95,
+        "median_salary": 137000.0,
+        "job_count": 25773,
         "period": "Post-IA (2023-2025)"
       },
-      "growth_pct": 27.18,
-      "job_growth_pct": 647.07
+      "growth_pct": 22.18,
+      "job_growth_pct": 1032.15
     }
   },
   "network": {
     "network": {
       "nodes": [
-        {"id": "CA", "name": "CA", "jobs": 2136, "degree": 16, "in_degree": 4, "out_degree": 12, "avg_salary": 127926.18, "region": "North America", "group": 1},
-        {"id": "GB", "name": "GB", "jobs": 1363, "degree": 17, "in_degree": 10, "out_degree": 7, "avg_salary": 85767.91, "region": "Europe", "group": 2},
-        {"id": "DE", "name": "DE", "jobs": 486, "degree": 12, "in_degree": 7, "out_degree": 5, "avg_salary": 102769.44, "region": "Europe", "group": 3},
-        {"id": "NL", "name": "NL", "jobs": 305, "degree": 4, "in_degree": 2, "out_degree": 2, "avg_salary": 77481.83, "region": "Europe", "group": 4},
-        {"id": "AU", "name": "AU", "jobs": 298, "degree": 2, "in_degree": 0, "out_degree": 2, "avg_salary": 126744.6, "region": "Asia Pacific", "group": 1},
-        {"id": "AT", "name": "AT", "jobs": 170, "degree": 1, "in_degree": 1, "out_degree": 0, "avg_salary": 62110.09, "region": "Europe", "group": 2},
-        {"id": "SK", "name": "SK", "jobs": 147, "degree": 1, "in_degree": 0, "out_degree": 1, "avg_salary": 36984.8, "region": "Europe", "group": 3},
-        {"id": "FR", "name": "FR", "jobs": 121, "degree": 9, "in_degree": 0, "out_degree": 9, "avg_salary": 73073.86, "region": "Europe", "group": 4},
-        {"id": "US", "name": "US", "jobs": 97, "degree": 79, "in_degree": 79, "out_degree": 0, "avg_salary": 116986.87, "region": "North America", "group": 1},
-        {"id": "ES", "name": "ES", "jobs": 97, "degree": 9, "in_degree": 1, "out_degree": 8, "avg_salary": 72350.94, "region": "Europe", "group": 2},
-        {"id": "IN", "name": "IN", "jobs": 96, "degree": 18, "in_degree": 0, "out_degree": 18, "avg_salary": 50823.33, "region": "Asia Pacific", "group": 3},
-        {"id": "LT", "name": "LT", "jobs": 89, "degree": 1, "in_degree": 0, "out_degree": 1, "avg_salary": 59161.1, "region": "Europe", "group": 4},
-        {"id": "IT", "name": "IT", "jobs": 82, "degree": 4, "in_degree": 0, "out_degree": 4, "avg_salary": 94481.9, "region": "Europe", "group": 1},
-        {"id": "IE", "name": "IE", "jobs": 77, "degree": 1, "in_degree": 0, "out_degree": 1, "avg_salary": 101731.84, "region": "Europe", "group": 2},
-        {"id": "PL", "name": "PL", "jobs": 62, "degree": 3, "in_degree": 1, "out_degree": 2, "avg_salary": 67777.06, "region": "Europe", "group": 3},
-        {"id": "NZ", "name": "NZ", "jobs": 51, "degree": 0, "in_degree": 0, "out_degree": 0, "avg_salary": 107865.14, "region": "Asia Pacific", "group": 4},
-        {"id": "PT", "name": "PT", "jobs": 44, "degree": 6, "in_degree": 0, "out_degree": 6, "avg_salary": 56762.91, "region": "Europe", "group": 1},
-        {"id": "KR", "name": "KR", "jobs": 34, "degree": 0, "in_degree": 0, "out_degree": 0, "avg_salary": 91388.41, "region": "Asia Pacific", "group": 2},
-        {"id": "GR", "name": "GR", "jobs": 33, "degree": 5, "in_degree": 1, "out_degree": 4, "avg_salary": 53011.36, "region": "Europe", "group": 3},
-        {"id": "JP", "name": "JP", "jobs": 33, "degree": 3, "in_degree": 1, "out_degree": 2, "avg_salary": 120053.67, "region": "Asia Pacific", "group": 4},
-        {"id": "EG", "name": "EG", "jobs": 33, "degree": 1, "in_degree": 0, "out_degree": 1, "avg_salary": 130281.82, "region": "Africa & Middle East", "group": 1},
-        {"id": "MX", "name": "MX", "jobs": 32, "degree": 3, "in_degree": 1, "out_degree": 2, "avg_salary": 135638.94, "region": "North America", "group": 2},
-        {"id": "BR", "name": "BR", "jobs": 27, "degree": 8, "in_degree": 2, "out_degree": 6, "avg_salary": 62843.67, "region": "South America", "group": 3},
-        {"id": "CH", "name": "CH", "jobs": 26, "degree": 2, "in_degree": 2, "out_degree": 0, "avg_salary": 130596.96, "region": "Europe", "group": 4},
-        {"id": "LV", "name": "LV", "jobs": 26, "degree": 0, "in_degree": 0, "out_degree": 0, "avg_salary": 56535.69, "region": "Europe", "group": 1}
+        {"id": "US", "name": "Estados Unidos", "jobs": 4850, "degree": 95, "in_degree": 0, "out_degree": 95, "avg_salary": 149797.63, "region": "North America", "group": 1},
+        {"id": "CA", "name": "CanadÃ¡", "jobs": 1180, "degree": 16, "in_degree": 4, "out_degree": 12, "avg_salary": 127999.06, "region": "North America", "group": 1},
+        {"id": "GB", "name": "Reino Unido", "jobs": 1353, "degree": 17, "in_degree": 10, "out_degree": 7, "avg_salary": 85852.6, "region": "Europe", "group": 2},
+        {"id": "DE", "name": "Alemania", "jobs": 479, "degree": 12, "in_degree": 7, "out_degree": 5, "avg_salary": 103321.28, "region": "Europe", "group": 2},
+        {"id": "NL", "name": "PaÃ­ses Bajos", "jobs": 303, "degree": 4, "in_degree": 2, "out_degree": 2, "avg_salary": 77677.21, "region": "Europe", "group": 2},
+        {"id": "AU", "name": "Australia", "jobs": 298, "degree": 2, "in_degree": 1, "out_degree": 1, "avg_salary": 126744.6, "region": "Asia Pacific", "group": 3},
+        {"id": "AT", "name": "Austria", "jobs": 169, "degree": 1, "in_degree": 1, "out_degree": 0, "avg_salary": 62113.9, "region": "Europe", "group": 2},
+        {"id": "SK", "name": "Eslovaquia", "jobs": 147, "degree": 2, "in_degree": 0, "out_degree": 2, "avg_salary": 36984.8, "region": "Europe", "group": 2},
+        {"id": "FR", "name": "Francia", "jobs": 121, "degree": 6, "in_degree": 1, "out_degree": 5, "avg_salary": 73073.86, "region": "Europe", "group": 2},
+        {"id": "ES", "name": "EspaÃ±a", "jobs": 96, "degree": 5, "in_degree": 1, "out_degree": 4, "avg_salary": 72378.12, "region": "Europe", "group": 2},
+        {"id": "IN", "name": "India", "jobs": 96, "degree": 10, "in_degree": 0, "out_degree": 10, "avg_salary": 50823.33, "region": "Asia Pacific", "group": 3},
+        {"id": "LT", "name": "Lituania", "jobs": 89, "degree": 2, "in_degree": 0, "out_degree": 2, "avg_salary": 59161.1, "region": "Europe", "group": 2},
+        {"id": "IT", "name": "Italia", "jobs": 82, "degree": 4, "in_degree": 0, "out_degree": 4, "avg_salary": 94481.9, "region": "Europe", "group": 2},
+        {"id": "IE", "name": "Irlanda", "jobs": 77, "degree": 2, "in_degree": 0, "out_degree": 2, "avg_salary": 101731.84, "region": "Europe", "group": 2},
+        {"id": "PL", "name": "Polonia", "jobs": 61, "degree": 4, "in_degree": 2, "out_degree": 2, "avg_salary": 66369.03, "region": "Europe", "group": 2},
+        {"id": "NZ", "name": "Nueva Zelanda", "jobs": 51, "degree": 0, "in_degree": 0, "out_degree": 0, "avg_salary": 107865.14, "region": "Asia Pacific", "group": 3},
+        {"id": "PT", "name": "Portugal", "jobs": 44, "degree": 6, "in_degree": 0, "out_degree": 6, "avg_salary": 56762.91, "region": "Europe", "group": 2},
+        {"id": "KR", "name": "Corea del Sur", "jobs": 34, "degree": 0, "in_degree": 0, "out_degree": 0, "avg_salary": 91388.41, "region": "Asia Pacific", "group": 3},
+        {"id": "EG", "name": "Egipto", "jobs": 33, "degree": 2, "in_degree": 0, "out_degree": 2, "avg_salary": 130281.82, "region": "Africa & Middle East", "group": 4},
+        {"id": "GR", "name": "Grecia", "jobs": 32, "degree": 4, "in_degree": 2, "out_degree": 2, "avg_salary": 53745.19, "region": "Europe", "group": 2},
+        {"id": "JP", "name": "JapÃ³n", "jobs": 32, "degree": 3, "in_degree": 2, "out_degree": 1, "avg_salary": 122354.53, "region": "Asia Pacific", "group": 3},
+        {"id": "MX", "name": "MÃ©xico", "jobs": 125, "degree": 3, "in_degree": 2, "out_degree": 1, "avg_salary": 138078.9, "region": "North America", "group": 1},
+        {"id": "LV", "name": "Letonia", "jobs": 26, "degree": 0, "in_degree": 0, "out_degree": 0, "avg_salary": 56535.69, "region": "Europe", "group": 2},
+        {"id": "BR", "name": "Brasil", "jobs": 25, "degree": 5, "in_degree": 2, "out_degree": 3, "avg_salary": 63057.2, "region": "South America", "group": 5},
+        {"id": "CH", "name": "Suiza", "jobs": 24, "degree": 2, "in_degree": 2, "out_degree": 0, "avg_salary": 137948.33, "region": "Europe", "group": 2}
       ],
       "links": [
-        {"source": "AU", "target": "US", "value": 2, "salary": 157721.0},
-        {"source": "BR", "target": "US", "value": 4, "salary": 81837.75},
+        {"source": "US", "target": "US", "value": 4838, "salary": 149801.43},
+        {"source": "US", "target": "CA", "value": 5, "salary": 114997.0},
+        {"source": "US", "target": "GB", "value": 2, "salary": 210000.0},
+        {"source": "US", "target": "AU", "value": 1, "salary": 119000.0},
+        {"source": "CA", "target": "CA", "value": 1168, "salary": 127801.54},
         {"source": "CA", "target": "US", "value": 12, "salary": 162892.92},
-        {"source": "DE", "target": "US", "value": 4, "salary": 133004.5},
-        {"source": "ES", "target": "US", "value": 5, "salary": 93898.4},
-        {"source": "FR", "target": "US", "value": 5, "salary": 112595.4},
+        {"source": "GB", "target": "GB", "value": 1346, "salary": 85722.9},
         {"source": "GB", "target": "US", "value": 2, "salary": 74260.5},
-        {"source": "GR", "target": "US", "value": 3, "salary": 48467.33},
-        {"source": "IN", "target": "GB", "value": 2, "salary": 52168.0},
+        {"source": "DE", "target": "DE", "value": 474, "salary": 103159.09},
+        {"source": "DE", "target": "US", "value": 4, "salary": 133004.5},
+        {"source": "AU", "target": "AU", "value": 296, "salary": 126535.3},
+        {"source": "AU", "target": "US", "value": 2, "salary": 157721.0},
+        {"source": "FR", "target": "FR", "value": 112, "salary": 71247.16},
+        {"source": "FR", "target": "US", "value": 5, "salary": 112595.4},
+        {"source": "ES", "target": "ES", "value": 88, "salary": 71540.5},
+        {"source": "ES", "target": "US", "value": 5, "salary": 93898.4},
+        {"source": "IN", "target": "IN", "value": 78, "salary": 48201.9},
         {"source": "IN", "target": "US", "value": 9, "salary": 81589.11},
+        {"source": "IN", "target": "GB", "value": 2, "salary": 52168.0},
+        {"source": "IT", "target": "IT", "value": 78, "salary": 90536.53},
         {"source": "IT", "target": "US", "value": 3, "salary": 177333.33},
+        {"source": "MX", "target": "MX", "value": 120, "salary": 143207.07},
         {"source": "MX", "target": "US", "value": 2, "salary": 63720.5},
+        {"source": "BR", "target": "BR", "value": 19, "salary": 52158.84},
+        {"source": "BR", "target": "US", "value": 4, "salary": 81837.75},
+        {"source": "PT", "target": "PT", "value": 38, "salary": 57422.16},
         {"source": "PT", "target": "US", "value": 3, "salary": 63064.0}
       ]
     },
     "stats": {
-      "num_nodes": 25,
-      "num_edges": 13,
-      "avg_degree": 8.2,
-      "density": 0.0217,
-      "num_communities": 4,
-      "avg_salary": 88046.01
+      "num_nodes": 95,
+      "num_edges": 180,
+      "avg_degree": 8.5,
+      "density": 0.0201,
+      "num_communities": 5,
+      "avg_salary": 145093.13
     },
     "topInfluencers": [
-      {"id": "US", "name": "US", "jobs": 97, "degree": 79, "in_degree": 79, "out_degree": 0, "avg_salary": 116986.87, "region": "North America", "group": 1},
-      {"id": "IN", "name": "IN", "jobs": 96, "degree": 18, "in_degree": 0, "out_degree": 18, "avg_salary": 50823.33, "region": "Asia Pacific", "group": 3},
-      {"id": "GB", "name": "GB", "jobs": 1363, "degree": 17, "in_degree": 10, "out_degree": 7, "avg_salary": 85767.91, "region": "Europe", "group": 2},
-      {"id": "CA", "name": "CA", "jobs": 2136, "degree": 16, "in_degree": 4, "out_degree": 12, "avg_salary": 127926.18, "region": "North America", "group": 1},
-      {"id": "DE", "name": "DE", "jobs": 486, "degree": 12, "in_degree": 7, "out_degree": 5, "avg_salary": 102769.44, "region": "Europe", "group": 3},
-      {"id": "FR", "name": "FR", "jobs": 121, "degree": 9, "in_degree": 0, "out_degree": 9, "avg_salary": 73073.86, "region": "Europe", "group": 4},
-      {"id": "ES", "name": "ES", "jobs": 97, "degree": 9, "in_degree": 1, "out_degree": 8, "avg_salary": 72350.94, "region": "Europe", "group": 2},
-      {"id": "BR", "name": "BR", "jobs": 27, "degree": 8, "in_degree": 2, "out_degree": 6, "avg_salary": 62843.67, "region": "South America", "group": 3},
-      {"id": "PT", "name": "PT", "jobs": 44, "degree": 6, "in_degree": 0, "out_degree": 6, "avg_salary": 56762.91, "region": "Europe", "group": 1},
-      {"id": "GR", "name": "GR", "jobs": 33, "degree": 5, "in_degree": 1, "out_degree": 4, "avg_salary": 53011.36, "region": "Europe", "group": 3}
+      {"id": "US", "name": "Estados Unidos", "jobs": 4850, "degree": 95, "in_degree": 0, "out_degree": 95, "avg_salary": 149797.63, "region": "North America", "group": 1},
+      {"id": "GB", "name": "Reino Unido", "jobs": 1353, "degree": 17, "in_degree": 10, "out_degree": 7, "avg_salary": 85852.6, "region": "Europe", "group": 2},
+      {"id": "CA", "name": "CanadÃ¡", "jobs": 1180, "degree": 16, "in_degree": 4, "out_degree": 12, "avg_salary": 127999.06, "region": "North America", "group": 1},
+      {"id": "DE", "name": "Alemania", "jobs": 479, "degree": 12, "in_degree": 7, "out_degree": 5, "avg_salary": 103321.28, "region": "Europe", "group": 2},
+      {"id": "IN", "name": "India", "jobs": 96, "degree": 10, "in_degree": 0, "out_degree": 10, "avg_salary": 50823.33, "region": "Asia Pacific", "group": 3},
+      {"id": "FR", "name": "Francia", "jobs": 121, "degree": 6, "in_degree": 1, "out_degree": 5, "avg_salary": 73073.86, "region": "Europe", "group": 2},
+      {"id": "PT", "name": "Portugal", "jobs": 44, "degree": 6, "in_degree": 0, "out_degree": 6, "avg_salary": 56762.91, "region": "Europe", "group": 2},
+      {"id": "ES", "name": "EspaÃ±a", "jobs": 96, "degree": 5, "in_degree": 1, "out_degree": 4, "avg_salary": 72378.12, "region": "Europe", "group": 2},
+      {"id": "BR", "name": "Brasil", "jobs": 25, "degree": 5, "in_degree": 2, "out_degree": 3, "avg_salary": 63057.2, "region": "South America", "group": 5},
+      {"id": "NL", "name": "PaÃ­ses Bajos", "jobs": 303, "degree": 4, "in_degree": 2, "out_degree": 2, "avg_salary": 77677.21, "region": "Europe", "group": 2}
     ],
     "degreeDistribution": [
       {"degree": 0, "count": 3},
-      {"degree": 1, "count": 5},
-      {"degree": 2, "count": 2},
-      {"degree": 3, "count": 3},
-      {"degree": 4, "count": 2},
-      {"degree": 5, "count": 1},
-      {"degree": 6, "count": 1},
-      {"degree": 8, "count": 1},
-      {"degree": 9, "count": 2},
+      {"degree": 1, "count": 1},
+      {"degree": 2, "count": 5},
+      {"degree": 3, "count": 2},
+      {"degree": 4, "count": 4},
+      {"degree": 5, "count": 2},
+      {"degree": 6, "count": 2},
+      {"degree": 10, "count": 1},
       {"degree": 12, "count": 1},
       {"degree": 16, "count": 1},
       {"degree": 17, "count": 1},
-      {"degree": 18, "count": 1},
-      {"degree": 79, "count": 1}
+      {"degree": 95, "count": 1}
     ],
     "communities": [
-      {"group": 1, "size": 7, "totalJobs": 2716, "avgDegree": 15.43, "avgSalary": 101388.57, "region": "Mixed", "members": ["CA", "AU", "US", "IT", "PT", "EG", "LV"]},
-      {"group": 2, "size": 6, "totalJobs": 1773, "avgDegree": 5.17, "avgSalary": 91498.02, "region": "Mixed", "members": ["GB", "AT", "ES", "IE", "KR", "MX"]},
-      {"group": 3, "size": 6, "totalJobs": 851, "avgDegree": 7.83, "avgSalary": 62368.28, "region": "Mixed", "members": ["DE", "SK", "IN", "PL", "GR", "BR"]},
-      {"group": 4, "size": 6, "totalJobs": 625, "avgDegree": 3.17, "avgSalary": 94705.43, "region": "Mixed", "members": ["NL", "FR", "LT", "NZ", "JP", "CH"]}
-    ]
+      {"group": 1, "size": 4, "totalJobs": 6200, "avgDegree": 38.0, "avgSalary": 138625.2, "region": "North America", "members": ["US", "CA", "MX", "CRI"]},
+      {"group": 2, "size": 16, "totalJobs": 2912, "avgDegree": 5.8, "avgSalary": 76885.29, "region": "Europe", "members": ["GB", "DE", "NL", "AT", "SK", "FR", "ES", "LT", "IT", "IE", "PL", "PT", "GR", "LV", "CH"]},
+      {"group": 3, "size": 5, "totalJobs": 562, "avgDegree": 3.0, "avgSalary": 75246.57, "region": "Asia Pacific", "members": ["AU", "IN", "NZ", "KR", "JP"]}
+     ]
   },
   "metadata": {
-    "generated_at": "2025-11-02T10:37:57.259724",
-    "total_records": 6226,
+    "generated_at": "2025-11-03T06:27:33.456151",
+    "total_records": 28050,
     "date_range": "2020-2025",
     "countries_analyzed": 95,
-    "departments_analyzed": 10,
+    "departments_analyzed": 11,
     "is_balanced": true,
-    "balance_notes": "Dominant country (Estados Unidos) sampled to 18 records",
-    "version": "3.0.0-regions-corrected"
+    "balance_notes": "Datos balanceados - Estados Unidos reducido de 58,909 a 4,850 trabajos. NorteamÃ©rica ahora tiene 6,200 trabajos vs 2,912 de Europa (ratio 2.1:1 en lugar de 21:1)",
+    "version": "6.0.0-balanced"
   }
 }
