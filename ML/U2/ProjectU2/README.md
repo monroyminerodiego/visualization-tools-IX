@@ -1,7 +1,3 @@
-Claro, aquí tienes una propuesta de `README.md` para la carpeta `ML/U2/ProjectU2`, basado en la estructura y los archivos que has proporcionado.
-
------
-
 # Proyecto Unidad 2: Análisis del Mercado Laboral de IA
 
 Este directorio contiene todos los notebooks de análisis de datos, scripts de procesamiento y archivos de datos (tanto crudos como procesados) utilizados para el Proyecto de la Unidad 2. El objetivo de este análisis es explorar el mercado laboral de la Inteligencia Artificial, centrándose en las tendencias temporales, jerárquicas y relacionales/espaciotemporales.
