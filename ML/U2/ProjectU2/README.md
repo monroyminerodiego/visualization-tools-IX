@@ -1,5 +1,3 @@
-Aquí tienes el texto del README en inglés, en formato normal:
-
 # Project Unit 2: AI Job Market Analysis
 
 This directory contains all the data analysis notebooks, processing scripts, and data files (both raw and processed) used for the Unit 2 Project. The objective of this analysis is to explore the Artificial Intelligence job market, focusing on temporal, hierarchical, and relational/spatiotemporal trends.
