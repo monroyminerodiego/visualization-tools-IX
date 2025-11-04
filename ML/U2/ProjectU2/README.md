@@ -1,54 +1,56 @@
-# Proyecto Unidad 2: Análisis del Mercado Laboral de IA
+Aquí tienes el texto del README en inglés, en formato normal:
 
-Este directorio contiene todos los notebooks de análisis de datos, scripts de procesamiento y archivos de datos (tanto crudos como procesados) utilizados para el Proyecto de la Unidad 2. El objetivo de este análisis es explorar el mercado laboral de la Inteligencia Artificial, centrándose en las tendencias temporales, jerárquicas y relacionales/espaciotemporales.
+# Project Unit 2: AI Job Market Analysis
 
-##  Estructura del Directorio
+This directory contains all the data analysis notebooks, processing scripts, and data files (both raw and processed) used for the Unit 2 Project. The objective of this analysis is to explore the Artificial Intelligence job market, focusing on temporal, hierarchical, and relational/spatiotemporal trends.
+
+## Directory Structure
 
 ```
 ML/U2/ProjectU2/
 │
 ├── 01_Temporal/
 │   └── Data/
-│       └── jobs_ai_skills.csv       # Datos procesados para análisis temporal
+│       └── jobs_ai_skills.csv           # Processed data for temporal analysis
 │
 ├── 02_Hierarchical/
 │   └── Data/
-│       ├── jobs_distribution.json   # JSON para visualización jerárquica
-│       └── jobs_potential_countries.json # JSON para visualización jerárquica
+│       ├── jobs_distribution.json       # JSON for hierarchical visualization
+│       └── jobs_potential_countries.json # JSON for hierarchical visualization
 │
 ├── 03_Relational/
 │   └── Data/
-│       └── employees_level.json     # JSON para análisis relacional
+│       └── employees_level.json         # JSON for relational analysis
 │
 ├── data/
-│   ├── projectU2.csv                # Dataset principal de salarios de IA
-│   ├── jobs_ai_skills.csv           # Dataset de habilidades de IA
-│   ├── countries_locations.json     # JSON para mapas (espaciotemporal)
-│   ├── employees_level.json         # JSON para análisis de nivel (relacional)
-│   ├── jobs_distribution.json       # JSON para distribución de trabajos (jerárquico)
-│   └── jobs_potential_countries.json # JSON para análisis de países (jerárquico)
+│   ├── projectU2.csv                    # Main dataset for AI salaries
+│   ├── jobs_ai_skills.csv               # AI skills dataset
+│   ├── countries_locations.json         # JSON for maps (spatiotemporal)
+│   ├── employees_level.json             # JSON for level analysis (relational)
+│   ├── jobs_distribution.json           # JSON for job distribution (hierarchical)
+│   └── jobs_potential_countries.json    # JSON for country analysis (hierarchical)
 │
-├── Analysis_v2.ipynb                # Notebook de análisis (versión 2)
+├── Analysis_v2.ipynb                    # Analysis notebook (version 2)
 ```
 
-##  Metodología y Flujo de Trabajo
+## Methodology and Workflow
 
-El flujo de trabajo de este componente de Machine Learning es el siguiente:
+The workflow for this Machine Learning component is as follows:
 
-1.  **Datos Crudos:** El análisis comienza con el dataset principal `data/projectU2.csv`, que contiene información detallada sobre salarios, roles, ubicaciones y niveles de experiencia en el sector de la IA.
-2.  **Análisis y Procesamiento:** Los notebooks de Jupyter (como `Analysis_v2.ipynb` y `analisis_espaciotemporal.ipynb`) se utilizan para:
-      * Limpiar y pre-procesar los datos.
-      * Realizar análisis exploratorio (EDA).
-      * Agrupar, filtrar y transformar los datos para responder a las preguntas de investigación.
-3.  **Tipos de Análisis:** El proyecto se divide en tres enfoques analíticos principales, que se reflejan en la estructura de carpetas:
-      * **Temporal (`01_Temporal`):** Analiza cómo han evolucionado los roles y salarios a lo largo del tiempo.
-      * **Jerárquico (`02_Hierarchical`):** Utiliza visualizaciones (como Treemaps) para descomponer la estructura del mercado laboral por categoría de trabajo, nivel de experiencia y tamaño de empresa.
-      * **Relacional/Espaciotemporal (`03_Relational`):** Explora las relaciones entre variables (ej. nivel de habilidad vs. salario) y la distribución geográfica (ej. salarios promedio por país) de los trabajos de IA.
-4.  **Generación de Salidas (JSON):** Los notebooks procesan los datos y generan archivos `_json_` limpios y agregados (ej. `jobs_distribution.json`, `countries_locations.json`, `employees_level.json`).
-5.  **Consumo de la API:** Estos archivos JSON son los productos finales de este directorio. Son leídos directamente por el servicio `API` (específicamente por el endpoint `API/Endpoints/Unit2/proyecto.py`) para servir los datos pre-calculados al *frontend* de manera eficiente.
+1.  **Raw Data:** The analysis begins with the main dataset `data/projectU2.csv`, which contains detailed information on salaries, roles, locations, and experience levels in the AI sector.
+2.  **Analysis & Processing:** The Jupyter notebooks (like `Analysis_v2.ipynb` and `analisis_espaciotemporal.ipynb`) are used to:
+      * Clean and pre-process the data.
+      * Perform exploratory data analysis (EDA).
+      * Group, filter, and transform the data to answer the research questions.
+3.  **Analysis Types:** The project is divided into three main analytical approaches, which are reflected in the folder structure:
+      * **Temporal (`01_Temporal`):** Analyzes how roles and salaries have evolved over time.
+      * **Hierarchical (`02_Hierarchical`):** Uses visualizations (like Treemaps) to break down the job market structure by job category, experience level, and company size.
+      * **Relational/Spatiotemporal (`03_Relational`):** Explores relationships between variables (e.g., skill level vs. salary) and the geographic distribution (e.g., average salaries by country) of AI jobs.
+4.  **JSON Output Generation:** The notebooks process the data and generate clean, aggregated `JSON` files (e.g., `jobs_distribution.json`, `countries_locations.json`, `employees_level.json`).
+5.  **API Consumption:** These JSON files are the final products of this directory. They are read directly by the `API` service (specifically by the `API/Endpoints/Unit2/proyecto.py` endpoint) to efficiently serve the pre-calculated data to the frontend.
 
-###  Notebooks de Análisis
+### Analysis Notebooks
 
-  * **`Analysis_v2.ipynb`:** Contiene el análisis para las visualizaciones jerárquicas (Treemaps) y relacionales (gráficos de dispersión, barras).
+  * **`Analysis_v2.ipynb`:** Contains the analysis for the hierarchical (Treemaps) and relational (scatter plots, bar charts) visualizations.
 
 -----
