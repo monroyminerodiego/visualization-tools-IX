@@ -957,3 +957,392 @@ svg {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   STRATEGIC INSIGHTS TAB - RECRUITMENT SCENARIOS
+   ═══════════════════════════════════════════════════════════════════ */
+
+.insights-container {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.insights-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px 30px;
+    background: linear-gradient(135deg, var(--apple-blue) 0%, #0051D5 100%);
+    border-radius: var(--radius-xl);
+    color: white;
+    box-shadow: var(--shadow-lg);
+}
+
+.insights-header h2 {
+    font-size: 2.4em;
+    margin-bottom: 12px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.insights-header p {
+    font-size: 1.05em;
+    opacity: 0.9;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.scenario-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.scenario-card {
+    background: var(--apple-white);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    border: 1px solid var(--apple-gray);
+    transition: all var(--transition);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.scenario-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--apple-blue), var(--apple-blue-hover));
+}
+
+.scenario-card.winning::before {
+    background: linear-gradient(90deg, #34C759, #30d158);
+}
+
+.scenario-card.losing::before {
+    background: linear-gradient(90deg, #FF3B30, #ff453a);
+}
+
+.scenario-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--apple-gray-dark);
+}
+
+.scenario-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--apple-gray);
+}
+
+.scenario-icon {
+    font-size: 42px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--apple-gray-light);
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+}
+
+.scenario-title h3 {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--apple-text);
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+}
+
+.scenario-subtitle {
+    font-size: 0.95em;
+    color: var(--apple-text-secondary);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.scenario-strategy {
+    background: var(--apple-gray-light);
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 24px;
+    border-left: 3px solid var(--apple-blue);
+    line-height: 1.6;
+}
+
+.scenario-strategy strong {
+    color: var(--apple-blue);
+    font-size: 1.1em;
+}
+
+.investment-breakdown {
+    margin: 20px 0;
+}
+
+.investment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: var(--apple-gray-light);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition);
+    border: 1px solid transparent;
+}
+
+.investment-item:hover {
+    background: var(--apple-white);
+    transform: translateX(3px);
+    border-color: var(--apple-gray);
+    box-shadow: var(--shadow-sm);
+}
+
+.investment-country {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: var(--apple-text);
+}
+
+.investment-country .flag {
+    font-size: 24px;
+}
+
+.investment-amount {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: var(--apple-blue);
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.result-metric {
+    background: var(--apple-white);
+    padding: 24px 20px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    border: 1px solid var(--apple-gray);
+    transition: all var(--transition);
+}
+
+.result-metric:hover {
+    border-color: var(--apple-gray-dark);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+.result-value {
+    font-size: 2.2em;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.result-value.positive {
+    color: #34C759;
+}
+
+.result-value.negative {
+    color: #FF3B30;
+}
+
+.result-value.neutral {
+    color: var(--apple-blue);
+}
+
+.result-label {
+    font-size: 0.95em;
+    color: var(--apple-text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.2px;
+}
+
+.comparison-table {
+    background: var(--apple-white);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    margin: 40px 0;
+    border: 1px solid var(--apple-gray);
+    overflow-x: auto;
+    box-shadow: var(--shadow-sm);
+}
+
+.comparison-table h3 {
+    text-align: center;
+    font-size: 1.6em;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: var(--apple-text);
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.comparison-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.comparison-table th {
+    background: linear-gradient(135deg, var(--apple-blue) 0%, #0051D5 100%);
+    color: white;
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+}
+
+.comparison-table th:first-child {
+    border-top-left-radius: var(--radius-sm);
+}
+
+.comparison-table th:last-child {
+    border-top-right-radius: var(--radius-sm);
+}
+
+.comparison-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--apple-gray);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.comparison-table tr:hover {
+    background: var(--apple-gray-light);
+}
+
+.comparison-table .metric-name {
+    font-weight: 600;
+    color: var(--apple-text);
+}
+
+.comparison-table .value-bad {
+    color: #FF3B30;
+    font-weight: 600;
+}
+
+.comparison-table .value-good {
+    color: #34C759;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.key-takeaway {
+    background: linear-gradient(135deg, var(--growth-positive) 0%, #30d158 100%);
+    color: white;
+    padding: 40px 35px;
+    border-radius: var(--radius-xl);
+    margin: 50px 0;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.key-takeaway h3 {
+    font-size: 1.8em;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.key-takeaway p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.key-takeaway strong {
+    font-size: 1.2em;
+    text-decoration: underline;
+}
+
+.data-sources {
+    background: var(--apple-gray-light);
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    margin-top: 40px;
+    border-left: 3px solid var(--apple-blue);
+    border: 1px solid var(--apple-gray);
+}
+
+.data-sources h4 {
+    color: var(--apple-text);
+    margin-bottom: 18px;
+    font-size: 1.3em;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.data-sources ul {
+    list-style: none;
+    padding: 0;
+}
+
+.data-sources li {
+    padding: 8px 0;
+    color: var(--apple-text-secondary);
+    line-height: 1.6;
+}
+
+.data-sources li::before {
+    content: '✅';
+    margin-right: 10px;
+}
+
+.data-sources li.warning::before {
+    content: '⚠️';
+}
+
+/* Responsive Design for Insights Tab */
+@media (max-width: 768px) {
+    .scenario-comparison {
+        grid-template-columns: 1fr;
+    }
+    
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .insights-header h2 {
+        font-size: 1.6em;
+    }
+    
+    .insights-header p {
+        font-size: 0.95em;
+    }
+    
+    .comparison-table {
+        font-size: 0.9em;
+    }
+}

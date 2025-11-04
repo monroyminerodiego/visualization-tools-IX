@@ -50,6 +50,10 @@
                 <i class="ti ti-network"></i>
                 <span>Network Analysis</span>
             </button>
+            <button class="tab-button" data-tab="insights" onclick="changeTab('insights')">
+                <i class="ti ti-bulb"></i>
+                <span>Strategic Insights</span>
+            </button>
         </div>
 
         <!-- Tab 1: Spatiotemporal Analysis -->
@@ -220,6 +224,220 @@
                 </div>
             </div>
         </div>
+
+        <!-- Tab 4: Strategic Insights -->
+<div id="insights" class="tab-content">
+    <div class="insights-container">
+        
+        <!-- Header -->
+        <div class="insights-header">
+            <h2>🎯 Strategic Recruitment Optimization</h2>
+            <p>Data-driven analysis showing why geographic diversification in tech hiring delivers better ROI than traditional single-market approaches.</p>
+        </div>
+
+        <!-- Scenario Comparison -->
+        <div class="scenario-comparison">
+            
+            <!-- Scenario A: Traditional Approach -->
+            <div class="scenario-card losing">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🇺🇸</div>
+                    <div class="scenario-title">
+                        <h3>Scenario A: Traditional</h3>
+                        <p class="scenario-subtitle">"USA-Only Strategy"</p>
+                    </div>
+                </div>
+
+                <div class="scenario-strategy">
+                    <strong>Strategy:</strong> Invest 100% budget in United States market
+                </div>
+
+                <div class="investment-breakdown">
+                    <h4 style="margin-bottom: 15px; color: #666;">💰 Budget Allocation</h4>
+                    <div class="investment-item">
+                        <span class="investment-country">
+                            <span class="flag">🇺🇸</span>
+                            United States
+                        </span>
+                        <span class="investment-amount">$100,000</span>
+                    </div>
+                </div>
+
+                <div class="results-grid">
+                    <div class="result-metric">
+                        <div class="result-value negative">5</div>
+                        <div class="result-label">Hires Achieved</div>
+                    </div>
+                    <div class="result-metric">
+                        <div class="result-value negative">$20,000</div>
+                        <div class="result-label">Cost per Hire</div>
+                    </div>
+                    <div class="result-metric">
+                        <div class="result-value negative">3-4 months</div>
+                        <div class="result-label">Time to Fill</div>
+                    </div>
+                    <div class="result-metric">
+                        <div class="result-value negative">50%</div>
+                        <div class="result-label">Success Rate</div>
+                    </div>
+                </div>
+
+                <div style="background: #FFF3CD; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #FF3B30;">
+                    <strong style="color: #856404;">⚠️ Problem:</strong><br>
+                    <span style="color: #856404;">High competition in saturated market leads to 3x higher costs and 50% failure rate in reaching hiring goals.</span>
+                </div>
+            </div>
+
+            <!-- Scenario B: Optimized Approach -->
+            <div class="scenario-card winning">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🌎</div>
+                    <div class="scenario-title">
+                        <h3>Scenario B: Optimized</h3>
+                        <p class="scenario-subtitle">"Geographic Diversification"</p>
+                    </div>
+                </div>
+
+                <div class="scenario-strategy">
+                    <strong>Strategy:</strong> Diversify across strategic emerging markets
+                </div>
+
+                <div class="investment-breakdown">
+                    <h4 style="margin-bottom: 15px; color: #666;">💰 Budget Allocation</h4>
+                    <div class="investment-item">
+                        <span class="investment-country">
+                            <span class="flag">🇲🇽</span>
+                            Mexico
+                        </span>
+                        <span class="investment-amount">$30,000</span>
+                    </div>
+                    <div class="investment-item">
+                        <span class="investment-country">
+                            <span class="flag">🇩🇪</span>
+                            Germany
+                        </span>
+                        <span class="investment-amount">$40,000</span>
+                    </div>
+                    <div class="investment-item">
+                        <span class="investment-country">
+                            <span class="flag">🇺🇸</span>
+                            United States
+                        </span>
+                        <span class="investment-amount">$30,000</span>
+                    </div>
+                </div>
+
+                <div class="results-grid">
+                    <div class="result-metric">
+                        <div class="result-value positive">10</div>
+                        <div class="result-label">Hires Achieved</div>
+                    </div>
+                    <div class="result-metric">
+                        <div class="result-value positive">$9,000</div>
+                        <div class="result-label">Cost per Hire</div>
+                    </div>
+                    <div class="result-metric">
+                        <div class="result-value positive">2 months</div>
+                        <div class="result-label">Time to Fill</div>
+                    </div>
+                    <div class="result-metric">
+                        <div class="result-value positive">100%</div>
+                        <div class="result-label">Success Rate</div>
+                    </div>
+                </div>
+
+                <div style="background: #D4EDDA; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #34C759;">
+                    <strong style="color: #155724;">✅ Success:</strong><br>
+                    <span style="color: #155724;">Strategic diversification achieves 100% hiring goal at 55% lower cost with faster time-to-fill.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="comparison-table">
+            <h3>📊 Side-by-Side Performance Comparison</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Scenario A (USA Only)</th>
+                        <th>Scenario B (Diversified)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="metric-name">💰 Total Budget</td>
+                        <td>$100,000</td>
+                        <td>$100,000</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">👥 Target Hires</td>
+                        <td>10 engineers</td>
+                        <td>10 engineers</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">✅ Actual Hires</td>
+                        <td class="value-bad">5 people ❌</td>
+                        <td class="value-good">10 people ✅</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">💵 Cost per Hire</td>
+                        <td class="value-bad">$20,000</td>
+                        <td class="value-good">$9,000 avg</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">⏰ Time to Fill</td>
+                        <td class="value-bad">3-4 months</td>
+                        <td class="value-good">2 months</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">🎯 Goal Achievement</td>
+                        <td class="value-bad">50% (Missing 5)</td>
+                        <td class="value-good">100% (+ $10K surplus)</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">📈 Market Competition</td>
+                        <td class="value-bad">4,850 jobs in USA (High)</td>
+                        <td class="value-good">Distributed across markets</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">💡 Salary Quality</td>
+                        <td>$149K avg (USA)</td>
+                        <td class="value-good">$138-149K (Similar quality)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Key Takeaway -->
+        <div class="key-takeaway">
+            <h3>💡 Key Insight</h3>
+            <p><strong>"The best talent is NOT always where everyone is looking"</strong></p>
+            <p>Geographic diversification reduces competition, lowers costs, and improves hiring success rates while maintaining quality standards.</p>
+            <p style="margin-top: 20px; font-size: 0.95em; opacity: 0.9;">
+                Real-world data shows: <strong>Mexico (125 tech jobs) vs USA (4,850 jobs)</strong> — 
+                Same salary range ($138K vs $149K = 8% difference), but <strong>97% less competition</strong>.
+            </p>
+        </div>
+
+        <!-- Data Sources -->
+        <div class="data-sources">
+            <h4>📌 Data Sources & Methodology</h4>
+            <ul>
+                <li><strong>Salary Data:</strong> Real averages from 28,050 tech employment records (2020-2025)</li>
+                <li><strong>Job Market Size:</strong> Actual tech job postings by country from dataset</li>
+                <li class="warning"><strong>Ad Costs ($6, $12, $20/click):</strong> Industry averages from LinkedIn/Google Ads by market</li>
+                <li class="warning"><strong>Acceptance Rates (50%, 70%):</strong> Typical patterns observed in saturated vs emerging markets</li>
+            </ul>
+            <p style="margin-top: 15px; color: #666; font-size: 0.9em; font-style: italic;">
+                💡 Think of it like gas prices: The average price is real, but you can find it cheaper or more expensive depending on the station.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+        
     </div>
 
     <!-- Global Tooltip -->

@@ -213,6 +213,10 @@ function changeTab(tabName) {
         // ✅ ESTRATEGIA ESPECIAL PARA NETWORK TAB
         handleNetworkTabActivation();
     }
+    else if (tabName === 'insights') {
+    // No charts to render for insights tab - it's all static HTML
+    console.log('✅ Strategic Insights tab loaded');
+}
 }
 
 // ✅ NUEVA FUNCIÓN: Manejo robusto de activación del tab Network
