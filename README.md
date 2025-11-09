@@ -16,6 +16,7 @@
 | :--- | :--- |
 | **[🚀 Project 1](#Project-1)** | Unit 1 project. |
 | **[💼 Portfolio 2](#Portfolio-2)** | Unit 2 portfolio. |
+| **[🚀 Project 2](#Project-2)** | Unit 2 project. |
 
 ---
 
@@ -333,6 +334,61 @@ python app.py
 This will start a Flask local server and it will allow you to explore the visualizations through your browser.
 In the UI, select the Portfolio button and then the Checkpoint 2 option.
 
+## Project-2
+
+## Objective
+To create, design and present a dashboard, tailored to business, that employs spatiotemporal, hierarchical, and relational charts that effectively communicates key insights about the job potential in multiple countries, in order to create a versatile marketing campaign that aims to hire people based on a certain criteria. The job potential takes into account the salary of employees, number of employees that work for a company located in a specific country and the job type.
+
+## Microservices
+
+### [(Public) API](./API/README.md)
+
+### [(Public) Web](./Web/Unidad_2/Docs/Project/README.md)
+
+### [(Private) ML](./ML/U2/ProjectU2/README.md)
+
+## Dataset used
+
+The dataset employed for this project is `projectU2.csv` located in the `ML/U2/ProjectU2/data/` directory. This dataset contains information about various job positions across different countries.
+
+## Charts selected
+
+### Spatiotemporal charts  
+- **_Choropleth map_**: Interactive visualization that displays the geographic distribution of tech jobs across countries. The color intensity encoding enables quick identification of job density patterns and regional concentrations in the global tech market.
+- **_Horizontal bar chart_**: Presents a clear ranking of countries by tech employment numbers, allowing for easy comparison of market sizes and identification of leading tech hubs in absolute terms.
+- **_Line chart_**: Tracks the temporal evolution of tech salaries, emphasizing trend changes and significant events like AI adoption. The continuous representation helps visualize growth patterns and market dynamics over time.
+- **_Streamgraph_**: Shows the evolution and proportion of different metrics over time through stacked areas, highlighting the relative changes in composition and overall growth trends simultaneously.
+
+### Hierarchical charts  
+- **_Interactive tree map_**: Represents nested hierarchical data of regions, countries, and departments through subdivided rectangles, where size encodes the number of jobs. Interactive features allow drilling down through the hierarchy levels.
+- **_Bubble scatter plot_**: Combines multiple dimensions (jobs, salaries, total investment) through position and size encoding, revealing relationships between different metrics while maintaining hierarchical grouping by region.
+- **_Sunburst_**: Displays hierarchical data in a radial layout, showing the proportion of jobs across regions and their top roles. The circular arrangement efficiently uses space while maintaining parent-child relationships.
+- **_Horizontal bar chart_**: Implements a hierarchical approach to compare proportions across different levels (regions, departments) while maintaining a familiar and easily interpretable format.
+
+### Relational charts  
+- **_Community detection chart_**: Visualizes relationships between countries through node-link diagrams, revealing clusters and communities based on shared characteristics in the tech job market.
+- **_Network graph_**: Represents connections between entities in the tech ecosystem, where nodes represent countries and edges represent relationships, helping identify key players and their interconnections.
+
+
+## Execution
+
+To run this project, create a virtual environment in the same level of the repository's root folder and install the required libraries. Use the following commands:
+``` bash
+
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+pip install -r requirements.txt
+
+```
+After creating the virtual environment and installing the required libraries, run the following command to launch the web app:
+
+``` bash
+
+cd visualization-tools-IX/Web/
+python app.py
+
+```
+Type in your web browser `http://127.0.0.1:502/` and navigate to Unit 2 Project section to visualize the dashboard.
 
 ## Autor(es)
 * [Alan Valbuena](https://github.com/AlanVAal)
