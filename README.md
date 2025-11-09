@@ -343,9 +343,9 @@ To create, design and present a dashboard, tailored to business, that employs sp
 
 ### [(Public) API](./API/README.md)
 
-### [(Public) Web](./Web/Unidad_2/Docs/Project/README.md)
-
 ### [(Private) ML](./ML/U2/ProjectU2/README.md)
+
+### [(Public) Web](./Web/Unidad_2/Docs/Project/README.MD)
 
 ## Dataset used
 
