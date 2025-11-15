@@ -55,6 +55,7 @@ async function loadNetworkData() {
         console.log('🔍 Current URL:', window.location.href);
         
         const possiblePaths = [
+            '/visualization-tools/portfolio/unit2/checkpoint3/congress_network_data.json',
             '/portfolio/unit2/checkpoint3/congress_network_data.json',
             '/static/Portfolio/js/checkpoint3/congress_network_data.json',
             './congress_network_data.json',

@@ -81,7 +81,6 @@ async function loadTechSalaryData() {
         console.log('🔍 Current URL:', window.location.href);
         
         const possiblePaths = [
-            '/visualization-tools/project/tech_salary_analytics.json',
             '/project/tech_salary_analytics.json',  // Nueva ruta Flask
             '/static/Project/js/tech_salary_analytics.json',
             './tech_salary_analytics.json',
