@@ -119,7 +119,7 @@ def project_unit2():
         app.logger.error(f"Error cargando proyecto unidad 2: {e}")
         return f"Ocurrió un error al cargar el proyecto de la unidad 2: <pre>{error}</pre>", 500
 
-@app.route('/project/tech_salary_analytics.json')
+@app.route('/project/tech_salary_analytics')
 def tech_salary_analytics_json():
     """Servir JSON de Tech Salary Analytics directamente"""
     static_dir = os.path.join(os.path.dirname(__file__), 'Unidad_2', 'static', 'Project', 'js')
