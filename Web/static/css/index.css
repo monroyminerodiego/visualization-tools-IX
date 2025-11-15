@@ -15,25 +15,25 @@
     --gray-500: #64748b;
     --gray-700: #334155;
     --gray-900: #0f172a;
-    
+
     /* Primary Blue Palette */
     --blue-primary: #2563eb;
     --blue-secondary: #3b82f6;
     --blue-light: #60a5fa;
     --blue-lighter: #93c5fd;
     --blue-dark: #1d4ed8;
-    
+
     /* Accent Colors */
     --accent-teal: #14b8a6;
     --accent-indigo: #6366f1;
     --accent-cyan: #06b6d4;
-    
+
     /* Glassmorphism */
     --glass-bg: rgba(255, 255, 255, 0.18);
     --glass-border: rgba(255, 255, 255, 0.25);
     --glass-shadow: 0 8px 32px rgba(37, 99, 235, 0.08);
     --glass-shadow-hover: 0 16px 64px rgba(37, 99, 235, 0.12);
-    
+
     /* Typography */
     --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --border-radius: 16px;
@@ -59,7 +59,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
+    background:
         radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.06) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(20, 184, 166, 0.05) 0%, transparent 50%),
         radial-gradient(circle at 60% 40%, rgba(99, 102, 241, 0.04) 0%, transparent 50%);
@@ -481,6 +481,7 @@ body::before {
         opacity: 0;
         transform: translateY(-40px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -492,6 +493,7 @@ body::before {
         opacity: 0;
         transform: translateY(40px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -503,6 +505,7 @@ body::before {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -510,18 +513,24 @@ body::before {
 }
 
 @keyframes gentlePulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.05);
     }
 }
 
 @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translate(-50%, -50%) translateY(0);
     }
+
     50% {
         transform: translate(-50%, -50%) translateY(-30px);
     }
@@ -531,6 +540,7 @@ body::before {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
@@ -543,37 +553,37 @@ body::before {
         flex-direction: column;
         gap: 15px;
     }
-    
+
     .main-title i {
         font-size: 2.5rem;
     }
-    
+
     .team-names {
         gap: 12px;
     }
-    
+
     .team-member {
         font-size: 0.8rem;
         padding: 6px 12px;
     }
-    
+
     .units-container {
         grid-template-columns: 1fr;
         gap: 30px;
     }
-    
+
     .unit-buttons {
         flex-direction: column;
     }
-    
+
     .container {
         padding: 30px 15px;
     }
-    
+
     .header-content {
         padding: 40px 30px;
     }
-    
+
     .unit-card {
         padding: 30px;
     }
@@ -583,35 +593,69 @@ body::before {
     .main-title {
         font-size: 2.25rem;
     }
-    
+
     .main-title i {
         font-size: 2rem;
     }
-    
+
     .team-names {
         gap: 8px;
     }
-    
+
     .team-member {
         font-size: 0.75rem;
         padding: 4px 10px;
     }
-    
+
     .unit-card {
         padding: 24px;
     }
-    
+
     .modal-content {
         width: 95%;
         margin: 20px;
     }
-    
+
     .modal-header,
     .modal-body {
         padding: 24px;
     }
-    
+
     .header-content {
         padding: 30px 20px;
     }
+}
+
+/* Home Button Styles */
+.home-button {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 0.8rem 1.5rem;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.8s ease-out;
+}
+
+.home-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.home-button:active {
+    transform: translateY(0);
 }
