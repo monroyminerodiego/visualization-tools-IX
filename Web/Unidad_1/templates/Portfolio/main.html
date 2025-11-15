@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Datos de Streaming - Modular</title>
+    
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    
+    <!-- CSS Modular - Rutas corregidas para Flask -->
+    <link rel="stylesheet" href="/unidad1/portafolio/css/themes.css">
+    <link rel="stylesheet" href="/unidad1/portafolio/css/main.css">
+    <link rel="stylesheet" href="/unidad1/portafolio/css/components.css">
+    <link rel="stylesheet" href="/unidad1/portafolio/css/charts.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <!-- Botón de regreso al inicio -->
+            <button class="back-to-home-btn" onclick="goToHome()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Volver al Inicio
+            </button>
+
+            <!-- Botón de toggle de tema -->
+            <button 
+                id="theme-toggle-btn" 
+                class="theme-toggle-btn" 
+                data-theme-toggle="true"
+                onclick="themeManager.toggleTheme()"
+                aria-label="Cambiar tema"
+                title="Cambiar tema">
+                <span class="theme-icon"></span>
+                <span class="theme-text"></span>
+            </button>
+
+            <div class="header-content">
+                <h1>📊 Análisis de Datos de Streaming</h1>
+                <p>Dashboard Modular de Análisis</p>
+            </div>
+        </div>
+
+        <!-- Contenedor para cargar secciones dinámicamente -->
+        <div id="dashboard-sections"></div>
+    </div>
+
+    <!-- Scripts Modulares - Rutas corregidas -->
+    <script src="/unidad1/portafolio/js/utils/themeManager.js"></script>
+    <script src="/unidad1/portafolio/js/utils/chartConfig.js"></script>
+    <script src="/unidad1/portafolio/js/utils/tabManager.js"></script>
+    
+    <script src="/unidad1/portafolio/js/config/dashboardConfig.js"></script>
+    
+    <script src="/unidad1/portafolio/js/charts/engagementCharts.js"></script>
+    <script src="/unidad1/portafolio/js/charts/segmentationChart.js"></script>
+    <script src="/unidad1/portafolio/js/charts/technicalChart.js"></script>
+    <script src="/unidad1/portafolio/js/charts/temporalChart.js"></script>
+    <script src="/unidad1/portafolio/js/charts/valueChart.js"></script>
+    
+    <script src="/unidad1/portafolio/js/main.js"></script>
+
+    <script>
+        // Función para regresar al inicio
+        function goToHome() {
+            window.location.href = '/';
+        }
+
+        // Inicialización del sistema cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Suscribirse a cambios de tema
+            themeManager.subscribe((newTheme, oldTheme) => {
+                console.log(`Tema cambiado de ${oldTheme} a ${newTheme}`);
+                
+                // Actualizar gráficas de Chart.js
+                if (typeof Chart !== 'undefined') {
+                    Chart.helpers.each(Chart.instances, function(chartInstance) {
+                        if (chartInstance.chart) {
+                            updateChartTheme(chartInstance.chart);
+                        }
+                    });
+                }
+            });
+
+            // Escuchar evento personalizado de cambio de tema
+            document.addEventListener('themeChange', function(event) {
+                const { theme, themeData } = event.detail;
+                console.log('Evento de cambio de tema:', theme, themeData);
+            });
+        });
+
+        // Función para actualizar el tema de un gráfico de Chart.js
+        function updateChartTheme(chart) {
+            if (!chart || !chart.options) return;
+            
+            const colors = DashboardConfig.getChartColorsForCurrentTheme();
+            
+            // Actualizar colores de leyendas
+            if (chart.options.plugins && chart.options.plugins.legend) {
+                chart.options.plugins.legend.labels.color = colors.text;
+            }
+            
+            // Actualizar tooltips
+            if (chart.options.plugins && chart.options.plugins.tooltip) {
+                chart.options.plugins.tooltip.backgroundColor = colors.surface;
+                chart.options.plugins.tooltip.titleColor = colors.text;
+                chart.options.plugins.tooltip.bodyColor = colors.text;
+                chart.options.plugins.tooltip.borderColor = colors.primary;
+            }
+            
+            // Actualizar escalas
+            if (chart.options.scales) {
+                Object.keys(chart.options.scales).forEach(scaleKey => {
+                    const scale = chart.options.scales[scaleKey];
+                    if (scale.ticks) {
+                        scale.ticks.color = colors.textSecondary;
+                    }
+                    if (scale.grid) {
+                        scale.grid.color = colors.textSecondary + '20';
+                    }
+                });
+            }
+            
+            chart.update();
+        }
+
+        // Utilidades de tema disponibles globalmente
+        window.ThemeUtils = {
+            getCurrentColors: () => DashboardConfig.getChartColorsForCurrentTheme(),
+            isDarkTheme: () => themeManager.isDarkTheme(),
+            getChartConfig: () => DashboardConfig.getThemeAwareChartConfig(),
+            getColorPalette: () => DashboardConfig.getChartColorPalette(),
+            applyThemeToChart: (chart) => updateChartTheme(chart)
+        };
+    </script>
+</body>
+</html>

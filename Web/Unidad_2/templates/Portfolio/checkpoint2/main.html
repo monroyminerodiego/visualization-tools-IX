@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terra Cotta Foods - Global Market Analytics</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+    
+    <!-- Plotly.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.26.0/plotly.min.js"></script>
+    
+    <!-- Tabler Icons -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" as="style">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    
+    <!-- CSS - Relative path from templates to static -->
+    <link rel="stylesheet" href="../../../static/Portfolio/css/checkpoint2/main.css">
+</head>
+<body>
+
+    <div class="dashboard">
+        <!-- Header -->
+        <div class="header">
+            <h1>Terra Cotta Foods</h1>
+            <p>Global Market Expansion Analytics</p>
+            
+            <!-- Back Button inside header -->
+            <button class="back-button" onclick="window.history.back()">
+                <i class="ti ti-arrow-left"></i>
+                <span>Back</span>
+            </button>
+        </div>
+
+        <!-- KPI Cards Section -->
+        <div class="kpi-section">
+            <div class="kpi-card">
+                <i class="ti ti-world kpi-icon"></i>
+                <div class="kpi-label">Total Global GDP</div>
+                <div class="kpi-value" id="total-gdp">$0.0T</div>
+            </div>
+            <div class="kpi-card">
+                <i class="ti ti-trending-up kpi-icon"></i>
+                <div class="kpi-label">Top 5 Concentration</div>
+                <div class="kpi-value" id="top5-concentration">0%</div>
+            </div>
+            <div class="kpi-card">
+                <i class="ti ti-map-pin kpi-icon"></i>
+                <div class="kpi-label">Regions Covered</div>
+                <div class="kpi-value" id="regions-covered">0</div>
+            </div>
+            <div class="kpi-card">
+                <i class="ti ti-users kpi-icon"></i>
+                <div class="kpi-label">Total Population</div>
+                <div class="kpi-value" id="total-population">0B</div>
+            </div>
+        </div>
+
+        <!-- Tab System -->
+        <div class="tabs">
+            <button class="tab-button active" data-tab="market-overview" onclick="changeTab('market-overview')">
+                <i class="ti ti-hierarchy-2"></i>
+                <span>Market Overview</span>
+            </button>
+            <button class="tab-button" data-tab="regional-analysis" onclick="changeTab('regional-analysis')">
+                <i class="ti ti-chart-pie"></i>
+                <span>Regional Analysis</span>
+            </button>
+            <button class="tab-button" data-tab="strategic-insights" onclick="changeTab('strategic-insights')">
+                <i class="ti ti-bulb"></i>
+                <span>Recommendations</span>
+            </button>
+        </div>
+
+        <!-- Tab 1: Market Overview -->
+        <div id="market-overview" class="tab-content active">
+            
+            <!-- Treemap Container -->
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-hierarchy"></i>
+                    Purchasing Power Hierarchy
+                </div>
+                <div class="chart-description">
+                    Interactive <strong>hierarchical visualization</strong> showing the Global → Region → Country structure. 
+                    The <strong>size</strong> represents Total GDP (market capacity), which is the key indicator for 
+                    distribution center investment decisions. <strong>Click on any region</strong> to explore individual countries.
+                </div>
+                <div id="treemap-chart"></div>
+            </div>
+
+            <!-- Scatter Plot Container -->
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-chart-dots"></i>
+                    Viability Matrix: Population vs Purchasing Power
+                </div>
+                <div class="chart-description">
+                    <strong>Correlation analysis</strong> revealing the relationship between workforce size 
+                    (X-Axis: Population on logarithmic scale) and individual purchasing power (Y-Axis: GDP per capita). 
+                    The <strong>bubble size</strong> represents Total GDP. This visualization directly answers: 
+                    <em>Where is there sufficient population for manufacturing with economic viability?</em>
+                </div>
+                <div id="scatter-chart"></div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Regional Analysis -->
+        <div id="regional-analysis" class="tab-content">
+            
+            <!-- Chart Grid -->
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-layout-grid"></i>
+                    Multi-Dimensional Regional Comparison
+                </div>
+                <div class="chart-description">
+                    <strong>4-metric dashboard</strong> comparing regions across key strategic dimensions: 
+                    <strong>Total GDP</strong> (market capacity), <strong>Average GDP per Capita</strong> (purchasing power), 
+                    <strong>Number of Countries</strong> (risk diversification), and <strong>Total Population</strong> (available workforce). 
+                    This multi-dimensional view justifies decisions of "why Region X over Region Y?"
+                </div>
+                <div id="matrix-chart"></div>
+            </div>
+
+            <!-- Sunburst Chart Container -->
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-sun"></i>
+                    Proportional Market Structure
+                </div>
+                <div class="chart-description">
+                    <strong>Hierarchical sunburst chart</strong> showing the proportional contribution of each market to the global total. 
+                    The <strong>inner ring</strong> represents regions, the <strong>outer ring</strong> shows individual countries. 
+                    Click on segments to zoom in and explore detailed market composition.
+                </div>
+                <div id="sunburst-chart"></div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Strategic Insights -->
+        <div id="strategic-insights" class="tab-content">
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="ti ti-bulb"></i>
+                    Strategic Recommendations for Expansion
+                </div>
+                <div class="chart-description">
+                    <strong>Executive analysis</strong> with priority markets and 
+                    actionable recommendations for Terra Cotta Foods' expansion strategy in 
+                    Latin America and Asia Pacific.
+                </div>
+                <div id="recommendations-table"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+
+    <!-- JavaScript - Relative path from templates to static -->
+    <script src="../../../static/Portfolio/js/checkpoint2/main.js"></script>
+</body>
+</html>

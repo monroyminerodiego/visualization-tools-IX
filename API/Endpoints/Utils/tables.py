@@ -169,81 +169,11 @@ class PostgresTables(Resource):
                 "info": traceback.format_exc().splitlines()
             }, 500
 
-    
-    
-    
-    # =============== METODOS HTTP ===============
-    def get(self, table_name=None, filters=None, limit=None, offset=None):
+    def __execute_insert(self, table_name, data_list):
         """
-        Endpoint HTTP o método directo
-        
-        Si se llama como endpoint HTTP: usa request.args
-        Si se pasan parámetros: los usa directamente
+        Ejecuta la inserción en PostgreSQL
         """
-        if table_name:
-            # Llamada directa con parámetros
-            mock_args = self.__create_args_from_params(table_name, filters, limit, offset)
-            parsed_data, error_response, status_code = self.__parse_args(mock_args)
-            
-            if error_response:
-                return error_response, status_code
-            
-            table_name, where_conditions, params, limit, offset = parsed_data
-            return self.__execute_query(table_name, where_conditions, params, limit, offset)
-        else:
-            # Llamada como endpoint HTTP
-            parsed_data, error_response, status_code = self.__parse_args(request.args)
-            
-            if error_response:
-                return error_response, status_code
-            
-            table_name, where_conditions, params, limit, offset = parsed_data
-            return self.__execute_query(table_name, where_conditions, params, limit, offset)
-
-    def post(self):
         try:
-            # ===== Data
-            payload = request.json
-            table_name = payload.get("table")
-            data = payload.get("data")
-        
-            # ===== Validaciones
-            if not table_name:
-                return {
-                    "status": "error",
-                    "info": "Valida que se encuentre 'table' en el payload"
-                }, 400
-            
-            if not data:
-                return {
-                    "status": "error",
-                    "info": "Valida que se encuentre 'data' en el payload"
-                }, 400
-            
-            # ===== Normalizar data a lista de diccionarios
-            if isinstance(data, dict):
-                # Si es un solo diccionario, convertir a lista
-                data_list = [data]
-            elif isinstance(data, list):
-                # Si es una lista, validar que todos sean diccionarios
-                if not all(isinstance(item, dict) for item in data):
-                    return {
-                        "status": "error",
-                        "info": "Todos los elementos en 'data' deben ser objetos/diccionarios"
-                    }, 400
-                data_list = data
-            else:
-                return {
-                    "status": "error",
-                    "info": "Valida que 'data' sea un objeto o una lista de objetos"
-                }, 400
-            
-            if not data_list:
-                return {
-                    "status": "error",
-                    "info": "La lista 'data' no puede estar vacía"
-                }, 400
-            
             with closing(self.get_connection()) as conn:
                 with conn.cursor() as cursor:
                     # ===== Verificar si la tabla existe
@@ -356,40 +286,17 @@ class PostgresTables(Resource):
                     "data": inserted_records
                 }, 201
         
-        # ===== Manejo de errores
         except Exception:
             return {
                 "status": "error", 
                 "info": traceback.format_exc().splitlines()
             }, 500
 
-    def patch(self):
+    def __execute_update(self, table_name, filters, data):
+        """
+        Ejecuta la actualización en PostgreSQL
+        """
         try:
-            # ===== Data
-            payload = request.json
-            table_name = payload.get("table")
-            filters = payload.get("filters", {})
-            data = payload.get("data")
-
-            # ===== Validaciones
-            if not table_name:
-                return {
-                    "status": "error", 
-                    "info": "Valida que se encuentre 'table' en el payload"
-                }, 400
-
-            if not filters:
-                return {
-                    "status": "error", 
-                    "info": "Valida que se encuentren 'filters' en el payload para identificar registros"
-                }, 400
-
-            if not data or not isinstance(data, dict):
-                return {
-                    "status": "error", 
-                    "info": "Valida que se encuentre 'data' como objeto en el payload"
-                }, 400
-
             # ===== Construir query UPDATE
             set_clauses = []
             where_clauses = []
@@ -402,8 +309,15 @@ class PostgresTables(Resource):
             
             # Condiciones WHERE
             for key, value in filters.items():
-                where_clauses.append(f"{key} = %s")
-                params.append(value)
+                if isinstance(value, list):
+                    # Múltiples valores - usar IN
+                    placeholders = ", ".join(["%s"] * len(value))
+                    where_clauses.append(f"{key} IN ({placeholders})")
+                    params.extend(value)
+                else:
+                    # Un solo valor
+                    where_clauses.append(f"{key} = %s")
+                    params.append(value)
             
             update_query = f"""
                 UPDATE {table_name} 
@@ -432,42 +346,23 @@ class PostgresTables(Resource):
                 "affected_rows": affected_rows
             }, 200
         
-        # ===== Manejo de errores
         except Exception:
             return {
                 "status": "error", 
                 "info": traceback.format_exc().splitlines()
             }, 500
 
-    def delete(self):
+    def __execute_delete(self, table_name, where_conditions, params):
+        """
+        Ejecuta la eliminación en PostgreSQL
+        """
         try:
-            # ===== Data
-            payload = request.json
-            table_name = payload.get("table")
-            filters = payload.get("filters")
-
-            # ===== Validaciones
-            if not table_name:
-                return {
-                    "status": "error", 
-                    "info": "Valida que se encuentre 'table' en el payload"
-                }, 400
-
-            # ===== Eliminar toda la tabla si no hay filtros
-            if not filters:
-                delete_query = f"DELETE FROM {table_name}"
-                params = []
-            else:
-                # ===== Eliminar registros específicos
-                where_clauses = []
-                params = []
-                
-                for key, value in filters.items():
-                    where_clauses.append(f"{key} = %s")
-                    params.append(value)
-                
-                delete_query = f"DELETE FROM {table_name} WHERE {' AND '.join(where_clauses)}"
-
+            # ===== Construir query DELETE
+            delete_query = f"DELETE FROM {table_name}"
+            
+            if where_conditions:
+                delete_query += " WHERE " + " AND ".join(where_conditions)
+            
             # ===== Ejecutar consulta
             with closing(self.get_connection()) as conn:
                 with conn.cursor() as cursor:
@@ -478,20 +373,209 @@ class PostgresTables(Resource):
             if affected_rows == 0:
                 return {
                     "status": "error",
-                    "info": "No se encontraron registros para eliminar"
+                    "info": "No se encontraron registros que coincidan con los filtros"
                 }, 404
-
+            
             return {
                 "status": "deleted",
                 "database": "postgresql",
                 "table": table_name,
                 "info": f"Se eliminaron {affected_rows} registros",
-                "deleted_count": affected_rows
+                "affected_rows": affected_rows
             }, 200
+        
+        except Exception:
+            return {
+                "status": "error",
+                "info": traceback.format_exc().splitlines()
+            }, 500
 
-        # ===== Manejo de errores
+
+    
+    
+    # =============== METODOS HTTP ===============
+    def get(self, table_name=None, filters=None, limit=None, offset=None):
+        """
+        Endpoint HTTP o método directo
+        
+        Si se llama como endpoint HTTP: usa request.args
+        Si se pasan parámetros: los usa directamente
+        """
+        if table_name:
+            # Llamada directa con parámetros
+            mock_args = self.__create_args_from_params(table_name, filters, limit, offset)
+            parsed_data, error_response, status_code = self.__parse_args(mock_args)
+            
+            if error_response:
+                return error_response, status_code
+            
+            table_name, where_conditions, params, limit, offset = parsed_data
+            return self.__execute_query(table_name, where_conditions, params, limit, offset)
+        else:
+            # Llamada como endpoint HTTP
+            parsed_data, error_response, status_code = self.__parse_args(request.args)
+            
+            if error_response:
+                return error_response, status_code
+            
+            table_name, where_conditions, params, limit, offset = parsed_data
+            return self.__execute_query(table_name, where_conditions, params, limit, offset)
+
+    def post(self, table_name=None, data=None):
+        """
+        Endpoint HTTP o método directo
+        
+        Si se llama como endpoint HTTP: usa request.json
+        Si se pasan parámetros: los usa directamente
+        """
+        try:
+            # ===== Determinar origen de datos
+            if table_name is not None and data is not None:
+                # Llamada directa con parámetros
+                payload = {
+                    "table": table_name,
+                    "data": data
+                }
+            else:
+                # Llamada como endpoint HTTP
+                payload = request.json
+                table_name = payload.get("table")
+                data = payload.get("data")
+        
+            # ===== Validaciones
+            if not table_name:
+                return {
+                    "status": "error",
+                    "info": "Valida que se encuentre 'table' en el payload"
+                }, 400
+            
+            if not data:
+                return {
+                    "status": "error",
+                    "info": "Valida que se encuentre 'data' en el payload"
+                }, 400
+            
+            # ===== Normalizar data a lista de diccionarios
+            if isinstance(data, dict):
+                # Si es un solo diccionario, convertir a lista
+                data_list = [data]
+            elif isinstance(data, list):
+                # Si es una lista, validar que todos sean diccionarios
+                if not all(isinstance(item, dict) for item in data):
+                    return {
+                        "status": "error",
+                        "info": "Todos los elementos en 'data' deben ser objetos/diccionarios"
+                    }, 400
+                data_list = data
+            else:
+                return {
+                    "status": "error",
+                    "info": "Valida que 'data' sea un objeto o una lista de objetos"
+                }, 400
+            
+            if not data_list:
+                return {
+                    "status": "error",
+                    "info": "La lista 'data' no puede estar vacía"
+                }, 400
+            
+            # ===== Ejecutar inserción
+            return self.__execute_insert(table_name, data_list)
+        
         except Exception:
             return {
                 "status": "error", 
                 "info": traceback.format_exc().splitlines()
             }, 500
+
+    def patch(self, table_name=None, filters=None, data=None):
+        """
+        Endpoint HTTP o método directo
+        
+        Si se llama como endpoint HTTP: usa request.json
+        Si se pasan parámetros: los usa directamente
+        """
+        try:
+            # ===== Determinar origen de datos
+            if table_name is not None and filters is not None and data is not None:
+                # Llamada directa con parámetros
+                payload = {
+                    "table": table_name,
+                    "filters": filters,
+                    "data": data
+                }
+            else:
+                # Llamada como endpoint HTTP
+                payload = request.json
+                table_name = payload.get("table")
+                filters = payload.get("filters", {})
+                data = payload.get("data")
+
+            # ===== Validaciones
+            if not table_name:
+                return {
+                    "status": "error", 
+                    "info": "Valida que se encuentre 'table' en el payload"
+                }, 400
+
+            if not filters:
+                return {
+                    "status": "error", 
+                    "info": "Valida que se encuentren 'filters' en el payload para identificar registros"
+                }, 400
+
+            if not data or not isinstance(data, dict):
+                return {
+                    "status": "error", 
+                    "info": "Valida que se encuentre 'data' como objeto en el payload"
+                }, 400
+
+            # ===== Ejecutar actualización
+            return self.__execute_update(table_name, filters, data)
+        
+        except Exception:
+            return {
+                "status": "error", 
+                "info": traceback.format_exc().splitlines()
+            }, 500
+
+    def delete(self, table_name=None, filters=None):
+        """
+        Endpoint HTTP o método directo
+        
+        Si se llama como endpoint HTTP: usa request.args
+        Si se pasan parámetros: los usa directamente
+        """
+        try:
+            # ===== Determinar origen de datos
+            if table_name is not None:
+                # Llamada directa con parámetros
+                if filters is None:
+                    filters = {}
+                mock_args = self.__create_args_from_params(table_name, filters)
+                parsed_data, error_response, status_code = self.__parse_args(mock_args)
+            else:
+                # Llamada como endpoint HTTP
+                parsed_data, error_response, status_code = self.__parse_args(request.args)
+            
+            if error_response:
+                return error_response, status_code
+            
+            table_name, where_conditions, params, _, _ = parsed_data
+            
+            # ===== Validación: requiere al menos un filtro
+            if not where_conditions:
+                return {
+                    "status": "error",
+                    "info": "Se requiere al menos un filtro para eliminar registros. Para eliminar toda la tabla, usa DROP TABLE."
+                }, 400
+            
+            # ===== Ejecutar eliminación
+            return self.__execute_delete(table_name, where_conditions, params)
+        
+        except Exception:
+            return {
+                "status": "error",
+                "info": traceback.format_exc().splitlines()
+            }, 500
+        

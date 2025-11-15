@@ -42,16 +42,16 @@ services:
   #   networks:
   #     - visualization_net
 
-  inyector_visualization:
-    build:
-      context: ./Inyector
-    container_name: inyector_visualization
-    env_file:
-      - .env
-    depends_on:
-      - api_visualization
-    networks:
-      - visualization_net
+  # inyector_visualization:
+  #   build:
+  #     context: ./Inyector
+  #   container_name: inyector_visualization
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - api_visualization
+  #   networks:
+  #     - visualization_net
 
   mongo_visualization:
     image: mongo:6.0

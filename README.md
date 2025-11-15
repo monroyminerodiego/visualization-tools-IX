@@ -1,4 +1,28 @@
-# visualization-tools-IX
+# Visual-Modeling-for-Information-IX
+
+<div align="center">
+
+# Visual Modeling for Information projects and portfolios
+
+<p>
+  Repository that gathers all the projects and portfolios created for the subject Visual Modeling for Information, part of the Universidad Politécnica de Yucatán curriculum.
+</p>
+
+---
+
+### 📚 Table of Contents
+
+| Section | Description |
+| :--- | :--- |
+| **[🚀 Project 1](#Project-1)** | Unit 1 project. |
+| **[💼 Portfolio 2](#Portfolio-2)** | Unit 2 portfolio. |
+| **[🚀 Project 2](#Project-2)** | Unit 2 project. |
+
+---
+
+</div>
+
+## Project-1
 
 ## Objective
 To design, implement, and deploy a multi-service data engineering solution that analyzes simulated video streaming data and presents key insights via an interactive dashboard, fulfilling all project and portfolio requirements for the "Visual Modeling" course.
@@ -279,6 +303,92 @@ To execute from the **docker-compose.yml**, you must be located in the `/visuali
 | `docker compose up --build` | Build and run all microservices. Use `-d` as an aditional param to run docker in background. |
 | `docker compose down`       | Stops the containers. |
 | `docker compose down -v`    | Stop the containers and removes the data volumes. |
+
+## Portfolio-2
+
+## _Checkpoint 1_
+The first checkpoint showcases the practical application of visualization concepts covered in the course. It includes curated examples that reflect the design decisions, frameworks, and storytelling strategies developed throughout the project. This section is intended to demonstrate how theoretical insights—such as those documented in big_ideas_document.md, design_rationale.md, and who_what_how_framework.md—translate into compelling visual narratives.
+
+### Execution
+To launch the interactive web application:
+- Navigate to the Web folder in your terminal.
+- Run the following command:
+``` bash
+pip install -r requirements.txt
+python app.py
+```
+This will start a Flask local server and it will allow you to explore the visualizations through your browser.
+In the UI, select the Portfolio button.
+
+## _Checkpoint 2_
+The second checkpoint provides an overview of hierarchical visualizations through a practice application, applied in a study case of that involves an expansion strategy of a large food company. This part of the second portfolio encompasses the discovering and presentation of information in a hierarchical way, showing the advantages of this approach, such as the relation that certain values have with other ones or the presence of them.
+
+### Execution
+Just as the previous checkpoint, to launch the interactive web application:
+- Navigate to the Web folder in your terminal.
+- Run the following commands:
+``` bash
+pip install -r requirements.txt
+python app.py
+```
+This will start a Flask local server and it will allow you to explore the visualizations through your browser.
+In the UI, select the Portfolio button and then the Checkpoint 2 option.
+
+## Project-2
+
+## Objective
+To create, design and present a dashboard, tailored to business, that employs spatiotemporal, hierarchical, and relational charts that effectively communicates key insights about the job potential in multiple countries, in order to create a versatile marketing campaign that aims to hire people based on a certain criteria. The job potential takes into account the salary of employees, number of employees that work for a company located in a specific country and the job type.
+
+## Microservices
+
+### [(Public) API](./API/README.md)
+
+### [(Private) ML](./ML/U2/ProjectU2/README.md)
+
+### [(Public) Web](./Web/Unidad_2/Docs/Project/README.MD)
+
+## Dataset used
+
+The dataset employed for this project is `projectU2.csv` located in the `ML/U2/ProjectU2/data/` directory. This dataset contains information about various job positions across different countries.
+
+## Charts selected
+
+### Spatiotemporal charts  
+- **_Choropleth map_**: Interactive visualization that displays the geographic distribution of tech jobs across countries. The color intensity encoding enables quick identification of job density patterns and regional concentrations in the global tech market.
+- **_Horizontal bar chart_**: Presents a clear ranking of countries by tech employment numbers, allowing for easy comparison of market sizes and identification of leading tech hubs in absolute terms.
+- **_Line chart_**: Tracks the temporal evolution of tech salaries, emphasizing trend changes and significant events like AI adoption. The continuous representation helps visualize growth patterns and market dynamics over time.
+- **_Streamgraph_**: Shows the evolution and proportion of different metrics over time through stacked areas, highlighting the relative changes in composition and overall growth trends simultaneously.
+
+### Hierarchical charts  
+- **_Interactive tree map_**: Represents nested hierarchical data of regions, countries, and departments through subdivided rectangles, where size encodes the number of jobs. Interactive features allow drilling down through the hierarchy levels.
+- **_Bubble scatter plot_**: Combines multiple dimensions (jobs, salaries, total investment) through position and size encoding, revealing relationships between different metrics while maintaining hierarchical grouping by region.
+- **_Sunburst_**: Displays hierarchical data in a radial layout, showing the proportion of jobs across regions and their top roles. The circular arrangement efficiently uses space while maintaining parent-child relationships.
+- **_Horizontal bar chart_**: Implements a hierarchical approach to compare proportions across different levels (regions, departments) while maintaining a familiar and easily interpretable format.
+
+### Relational charts  
+- **_Community detection chart_**: Visualizes relationships between countries through node-link diagrams, revealing clusters and communities based on shared characteristics in the tech job market.
+- **_Network graph_**: Represents connections between entities in the tech ecosystem, where nodes represent countries and edges represent relationships, helping identify key players and their interconnections.
+
+
+## Execution
+
+To run this project, create a virtual environment in the same level of the repository's root folder and install the required libraries. Use the following commands:
+``` bash
+
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+pip install -r requirements.txt
+
+```
+After creating the virtual environment and installing the required libraries, run the following command to launch the web app:
+
+``` bash
+
+cd visualization-tools-IX/Web/
+python app.py
+
+```
+Type in your web browser `http://127.0.0.1:502/` and navigate to Unit 2 Project section to visualize the dashboard.
 
 ## Autor(es)
 * [Alan Valbuena](https://github.com/AlanVAal)
