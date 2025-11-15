@@ -162,7 +162,7 @@ function navigateToProject(unitNumber) {
     }
     
     // Construct the correct URL using the unit number
-    const url = `/visualization-tools/project/unit${unitNumber}`;
+    const url = `/project/unit${unitNumber}`;
     
     console.log(`Navigating to project unit ${unitNumber}:`, url);
     
@@ -194,7 +194,7 @@ function navigateToPortfolio(unitNumber) {
     }
     
     // Construct the correct URL using the unit number
-    const url = `/visualization-tools/portfolio/unit${unitNumber}`;
+    const url = `/portfolio/unit${unitNumber}`;
     
     console.log(`Navigating to portfolio unit ${unitNumber}:`, url);
     
